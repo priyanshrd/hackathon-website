@@ -15,7 +15,7 @@ const SubmitIdea = () => {
   };
 
   return (
-    <div className="bg-black min-h-screen p-8">
+    <div className="bg-black min-h-[calc(100vh-4rem)] p-8">
       <h1 className="text-4xl font-bold text-green-500 mb-8 text-center animate-fade-in">
         Submit Your Idea
       </h1>

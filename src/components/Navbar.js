@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-black sticky top-0 z-50 shadow-lg">
+    <nav className="bg-black fixed top-0 left-0 w-full z-50 shadow-lg">
       <div className="container mx-auto flex justify-between items-center p-4">
         <Link to="/" className="text-2xl font-bold text-green-500 hover:text-green-300 transition duration-300">
           Tech Tank 2025

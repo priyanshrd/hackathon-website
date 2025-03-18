@@ -10,13 +10,15 @@ import About from './pages/About';
 const App = () => {
   return (
     <Router>
-      <Navbar /> {/* Navbar is now included here */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/timeline" element={<Timeline />} />
-        <Route path="/submit" element={<SubmitIdea />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
+      <Navbar />
+      <div className="pt-16"> {/* Add padding-top equal to navbar height */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/timeline" element={<Timeline />} />
+          <Route path="/submit" element={<SubmitIdea />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
     </Router>
   );
 };

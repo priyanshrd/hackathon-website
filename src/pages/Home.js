@@ -3,7 +3,7 @@ import React from 'react';
 
 const Home = () => {
   return (
-    <div className="bg-black min-h-[91vh] flex items-center justify-center p-4">
+    <div className="bg-black min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
       <div className="text-center">
         <h1 className="text-4xl md:text-6xl font-bold text-green-500 mb-4 animate-fade-in">
           Tech Tank 2025
