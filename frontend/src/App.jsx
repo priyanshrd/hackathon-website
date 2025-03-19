@@ -18,9 +18,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/timeline" element={<Timeline />} />
-            <Route path="/submit" element={<SubmitIdea />} />
-            <Route path="/about" element={<Stepper />} />
-            {/* <Route path="/about" element={<Stepper />} /> */}
+            <Route path="/hackathon" element={<Stepper />} />
+            <Route path="/idea" element={<SubmitIdea />} />
+            {/* <Route path="/workshop" element={<SubmitIdea />} /> */}
+            <Route path="/about" element={<About />} />
           </Routes>
         </div>
       </div>

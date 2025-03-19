@@ -227,7 +227,7 @@ const RegisterPage = ({ isOpen, onClose }) => {
                   Payment Details
                 </h3>
                 <div className="flex flex-col items-center mb-4">
-                  <div className="bg-white p-4 rounded-lg shadow-sm mb-4">
+                  <div className="bg-white rounded-lg shadow-sm mb-4">
                     <img
                       src="../../public/QRcode.jpg"
                       alt="Payment QR Code"
