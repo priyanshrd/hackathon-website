@@ -190,7 +190,6 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                 ))}
               </div>
 
-              {/* Payment Section */}
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold mb-4 text-gray-700">Payment Details</h3>
                 <div className="flex flex-col items-center mb-4">

@@ -5,6 +5,7 @@ import AnimatedNavbar from "./components/AnimatedNavbar";
 import Home from "./pages/Home";
 import Timeline from "./pages/Timeline";
 import SubmitIdea from "./pages/SubmitIdea";
+import Stepper from "./components/stepperform.jsx";
 import About from "./pages/About";
 
 const App = () => {
@@ -17,7 +18,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/submit" element={<SubmitIdea />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/about" element={<Stepper />} />
+            {/* <Route path="/about" element={<Stepper />} /> */}
           </Routes>
         </div>
       </div>
