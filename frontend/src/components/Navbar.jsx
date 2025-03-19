@@ -80,6 +80,7 @@ const Navbar = () => {
     { name: 'Home', path: '/', icon: <HomeIcon /> },
     { name: 'Timeline', path: '/timeline', icon: <TimelineIcon /> },
     { name: 'Submit Idea', path: '/submit', icon: <IdeaIcon /> },
+    { name: 'Submission Board', path: '/submission-board', icon: <TimelineIcon /> },
     { name: 'About', path: '/about', icon: <AboutIcon /> },
   ];
 

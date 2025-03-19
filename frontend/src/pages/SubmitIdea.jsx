@@ -1,7 +1,10 @@
 // src/pages/SubmitIdea.js
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SubmitIdea = () => {
+  const navigate = useNavigate(); // Initialize navigate
   const [formData, setFormData] = useState({
     teamName: "",
     idea: "",
@@ -11,20 +14,24 @@ const SubmitIdea = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fileName, setFileName] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    console.log("Form Data:", formData);
-    // TODO: Send form data to the backend
 
-    // Simulate submission process
-    setTimeout(() => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/submissions', {
+        teamName: formData.teamName,
+        description: formData.idea, // Send the full description
+      });
+
+      alert('Your idea has been submitted successfully!');
+      navigate('/submission-board'); // Redirect to the Submission Board
+    } catch (error) {
+      console.error('Error submitting idea:', error);
+      alert('Failed to submit your idea. Please try again.');
+    } finally {
       setIsSubmitting(false);
-      // Reset form after submission
-      setFormData({ teamName: "", idea: "", file: null });
-      setFileName("");
-      alert("Your idea has been submitted successfully!");
-    }, 1500);
+    }
   };
 
   const handleFileChange = (e) => {

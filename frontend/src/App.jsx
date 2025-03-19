@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Timeline from "./pages/Timeline";
 import SubmitIdea from "./pages/SubmitIdea";
 import About from "./pages/About";
+import SubmissionBoard from "./pages/submissionBoard";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/submit" element={<SubmitIdea />} />
           <Route path="/about" element={<About />} />
+          <Route path="/submission-board" element={<SubmissionBoard />} /> 
         </Routes>
       </div>
     </Router>

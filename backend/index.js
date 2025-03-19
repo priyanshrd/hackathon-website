@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 // Routes
 app.use('/api/payment', require('./routes/payment'));
-app.use('/api/submit', require('./routes/submission'));
+app.use('/api/submissions', require('./routes/submission'));
 
 // Start the server
 app.listen(PORT, () => {
