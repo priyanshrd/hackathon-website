@@ -84,10 +84,10 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="navbar-container">
+    <nav className="navbar-container ">
       {/* Top bar */}
       <div 
-        className={`top-0 left-0 w-full z-50 transition-all duration-500 bg-black ${
+        className={`top-0 left-0 w-full z-50 transition-all duration-500 bg-[#02062e] ${
           scrolled ? 'py-2 bg-[#072ac8]/90 shadow-lg shadow-[#072ac8]/20' : 'py-4'
         }`}
       >
