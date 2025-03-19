@@ -1,20 +1,19 @@
-// src/components/AnimatedNavbar.jsx
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
-// CSS variables - you can adjust these as needed
+// CSS variables for colors
 const colors = {
-  primary: '#072ac8',     // Dark blue
-  secondary: '#1e96fc',   // Medium blue
-  tertiary: '#a2d6f9',    // Light blue
-  accent: '#fcf300',      // Bright yellow
-  accentAlt: '#ffc600',   // Golden yellow
-  textLight: '#ffffff',   // White text
-  dark: '#0a0a0a',        // Almost black
+  primary: "#072ac8",
+  secondary: "#1e96fc",
+  tertiary: "#a2d6f9",
+  accent: "#fcf300",
+  accentAlt: "#ffc600",
+  textLight: "#ffffff",
+  dark: "#0a0a0a",
 };
 
-// Icons - you can replace these with your own SVG icons
+// Icons
 const HomeIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -39,91 +38,55 @@ const AboutIcon = () => (
   </svg>
 );
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const AnimatedNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  
+
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(offset > 50);
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isOpen && !event.target.closest('.navbar-container')) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
-
-  // Define navigation items
+  // Navigation items
   const navItems = [
-    { name: 'Home', path: '/', icon: <HomeIcon /> },
-    { name: 'Timeline', path: '/timeline', icon: <TimelineIcon /> },
-    { name: 'Submit Idea', path: '/submit', icon: <IdeaIcon /> },
-    { name: 'About', path: '/about', icon: <AboutIcon /> },
+    { name: "Home", path: "/", icon: <HomeIcon /> },
+    { name: "Timeline", path: "/timeline", icon: <TimelineIcon /> },
+    { name: "Submit Idea", path: "/submit", icon: <IdeaIcon /> },
+    { name: "About", path: "/about", icon: <AboutIcon /> },
   ];
 
   return (
-    <nav className="bg-black shadow-lg fixed w-full top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="text-yellow-500 text-xl font-bold flex items-center">
-              <img src="/assets/logo.png" alt="Logo" className="h-8 w-8 mr-2" />
-              Tech Tanks 2025
-            </Link>
-          </div>
-          
-          <div className="flex items-center space-x-4">
+    <nav className={`fixed w-full z-50 ${scrolled ? "bg-primary shadow-lg" : "bg-dark"} transition-all duration-500`}>
+      <div className="container mx-auto px-4 flex justify-between items-center h-16">
+        {/* Logo */}
+        <Link to="/" className="text-white text-xl font-bold flex items-center">
+          <img src="/assets/logo.png" alt="Logo" className="h-8 w-8 mr-2" />
+          Tech Tanks 2025
+        </Link>
+
+        {/* Navigation Links */}
+        <div className="flex space-x-4">
+          {navItems.map((item) => (
             <Link
-              to="/"
-              className="text-yellow-500 px-3 py-2 rounded-md hover:bg-yellow-600 transition duration-300"
+              key={item.name}
+              to={item.path}
+              className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                location.pathname === item.path ? "text-accent" : "text-textLight"
+              } hover:text-accent hover:bg-accentAlt transition`}
             >
-              Home
+              {item.icon}
+              <span className="ml-2">{item.name}</span>
             </Link>
-            <Link
-              to="/timeline"
-              className="text-white px-3 py-2 rounded-md hover:bg-gray-700 transition duration-300"
-            >
-              Timeline
-            </Link>
-            <Link
-              to="/submit"
-              className="text-white px-3 py-2 rounded-md hover:bg-gray-700 transition duration-300"
-            >
-              Submit
-            </Link>
-            <Link
-              to="/about"
-              className="text-white px-3 py-2 rounded-md hover:bg-gray-700 transition duration-300"
-            >
-              About
-            </Link>
-          </div>
+          ))}
         </div>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default AnimatedNavbar;
