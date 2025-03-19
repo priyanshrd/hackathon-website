@@ -84,183 +84,44 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="navbar-container ">
-      {/* Top bar */}
-      <div 
-        className={`top-0 left-0 w-full z-50 transition-all duration-500 bg-[#02062e] ${
-          scrolled ? 'py-2 bg-[#072ac8]/90 shadow-lg shadow-[#072ac8]/20' : 'py-4'
-        }`}
-      >
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          {/* Logo */}
-          <Link 
-            to="/" 
-            className="text-2xl font-extrabold text-white flex items-center"
-          >
-            <motion.div
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center"
-            >
-              <span className="bg-[#fcf300] text-[#072ac8] px-2 py-1 rounded-lg mr-2">TT</span>
-              <span>Tech Tank</span>
-            </motion.div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-6">
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.name}
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Link
-                  to={item.path}
-                  className={`px-3 py-2 flex items-center space-x-2 rounded-lg transition-all duration-300 ${
-                    location.pathname === item.path 
-                      ? 'bg-[#fcf300] text-[#072ac8] font-medium shadow-md shadow-[#fcf300]/20' 
-                      : 'text-white hover:bg-[#1e96fc]/20'
-                  }`}
-                >
-                  <span>{item.icon}</span>
-                  <span>{item.name}</span>
-                </Link>
-              </motion.div>
-            ))}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <Link 
-                to="/register" 
-                className="px-6 py-2 bg-gradient-to-r from-[#fcf300] to-[#ffc600] text-[#072ac8] font-bold rounded-lg 
-                hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300 transform hover:translate-y-[-2px]"
-              >
-                Register Now
-              </Link>
-            </motion.div>
+    <nav className="bg-black shadow-lg fixed w-full top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <Link to="/" className="text-yellow-500 text-xl font-bold flex items-center">
+              <img src="/assets/logo.png" alt="Logo" className="h-8 w-8 mr-2" />
+              Tech Tanks 2025
+            </Link>
           </div>
-
-          {/* Hamburger Menu */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-white focus:outline-none relative z-50"
-            aria-label="Menu"
-          >
-            <div className="w-10 h-10 flex items-center justify-center">
-              <motion.div
-                animate={isOpen ? "open" : "closed"}
-                className="w-6 h-5 flex flex-col justify-between"
-              >
-                <motion.span 
-                  className="w-6 h-0.5 bg-white block rounded-full"
-                  variants={{
-                    closed: { rotate: 0, y: 0 },
-                    open: { rotate: 45, y: 9 },
-                  }}
-                  transition={{ duration: 0.3 }}
-                />
-                <motion.span 
-                  className="w-6 h-0.5 bg-white block rounded-full"
-                  variants={{
-                    closed: { opacity: 1 },
-                    open: { opacity: 0 },
-                  }}
-                  transition={{ duration: 0.3 }}
-                />
-                <motion.span 
-                  className="w-6 h-0.5 bg-white block rounded-full"
-                  variants={{
-                    closed: { rotate: 0, y: 0 },
-                    open: { rotate: -45, y: -9 },
-                  }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.div>
-            </div>
-          </button>
+          
+          <div className="flex items-center space-x-4">
+            <Link
+              to="/"
+              className="text-yellow-500 px-3 py-2 rounded-md hover:bg-yellow-600 transition duration-300"
+            >
+              Home
+            </Link>
+            <Link
+              to="/timeline"
+              className="text-white px-3 py-2 rounded-md hover:bg-gray-700 transition duration-300"
+            >
+              Timeline
+            </Link>
+            <Link
+              to="/submit"
+              className="text-white px-3 py-2 rounded-md hover:bg-gray-700 transition duration-300"
+            >
+              Submit
+            </Link>
+            <Link
+              to="/about"
+              className="text-white px-3 py-2 rounded-md hover:bg-gray-700 transition duration-300"
+            >
+              About
+            </Link>
+          </div>
         </div>
       </div>
-
-      {/* Mobile Side Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black z-40 lg:hidden"
-              onClick={() => setIsOpen(false)}
-            />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 20, stiffness: 100 }}
-              className="fixed top-0 right-0 w-4/5 max-w-xs h-full bg-[#072ac8] z-50 lg:hidden shadow-xl"
-            >
-              <div className="flex flex-col h-full p-6">
-                <div className="flex justify-end mb-8">
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="text-white focus:outline-none"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                
-                <div className="flex flex-col space-y-4">
-                  {navItems.map((item, index) => (
-                    <motion.div
-                      key={item.name}
-                      initial={{ x: 50, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <Link
-                        to={item.path}
-                        onClick={() => setIsOpen(false)}
-                        className={`p-3 flex items-center space-x-4 rounded-xl transition-all duration-300 ${
-                          location.pathname === item.path 
-                            ? 'bg-[#fcf300] text-[#072ac8] font-medium' 
-                            : 'text-white hover:bg-[#1e96fc]/20'
-                        }`}
-                      >
-                        <span className="text-xl">{item.icon}</span>
-                        <span className="text-lg">{item.name}</span>
-                      </Link>
-                    </motion.div>
-                  ))}
-                </div>
-                
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="mt-auto"
-                >
-                  <Link
-                    to="/register"
-                    onClick={() => setIsOpen(false)}
-                    className="block w-full py-3 bg-[#fcf300] text-[#072ac8] font-bold rounded-xl 
-                    text-center hover:bg-[#ffc600] hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300"
-                  >
-                    Register Now
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </nav>
   );
 };

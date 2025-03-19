@@ -1,22 +1,26 @@
 // src/pages/Home.js
-import React from 'react';
+import React, { useState } from 'react';
+import RegistrationModal from '../components/RegistrationModal';
 
 const Home = () => {
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+
   return (
-    <div className="bg-[#02062e] min-h-[100vh] flex items-center justify-center p-4">
-      <div className="text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 animate-fade-in">
-          Tech Tank 2025
-        </h1>
-        <p className="text-lg md:text-xl text-white mb-8 animate-fade-in">
-          Join the biggest hackathon hosted by ACM and GDG!
-        </p>
-        <button
-          className="bg-green-500 text-black px-6 py-3 rounded-lg text-lg font-semibold hover:bg-green-600 hover:scale-105 transition duration-300 animate-bounce"
-        >
-          Register Now
-        </button>
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
+      <h1 className="text-4xl font-bold mb-8">Welcome to Tech Tanks 2025</h1>
+      
+      <button
+        onClick={() => setIsRegistrationOpen(true)}
+        className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-lg 
+          shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1"
+      >
+        Register Now
+      </button>
+
+      <RegistrationModal
+        isOpen={isRegistrationOpen}
+        onClose={() => setIsRegistrationOpen(false)}
+      />
     </div>
   );
 };
