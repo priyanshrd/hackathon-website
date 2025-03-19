@@ -38,7 +38,7 @@ const AboutIcon = () => (
   </svg>
 );
 
-const AnimatedNavbar = ({ setIsRegistrationOpen }) => {
+const AnimatedNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -134,13 +134,13 @@ const AnimatedNavbar = ({ setIsRegistrationOpen }) => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <button 
-                onClick={() => setIsRegistrationOpen(true)}
+              <Link 
+                to="/register" 
                 className="px-6 py-2 bg-gradient-to-r from-[#fcf300] to-[#ffc600] text-[#072ac8] font-bold rounded-lg 
                 hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300 transform hover:translate-y-[-2px]"
               >
                 Register Now
-              </button>
+              </Link>
             </motion.div>
           </div>
 
@@ -246,13 +246,14 @@ const AnimatedNavbar = ({ setIsRegistrationOpen }) => {
                   transition={{ delay: 0.4 }}
                   className="mt-auto"
                 >
-                  <button
-                    onClick={() => setIsRegistrationOpen(true)}
+                  <Link
+                    to="/register"
+                    onClick={() => setIsOpen(false)}
                     className="block w-full py-3 bg-[#fcf300] text-[#072ac8] font-bold rounded-xl 
                     text-center hover:bg-[#ffc600] hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300"
                   >
                     Register Now
-                  </button>
+                  </Link>
                 </motion.div>
               </div>
             </motion.div>

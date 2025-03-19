@@ -119,7 +119,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                       type="text"
                       value={teamName}
                       onChange={(e) => setTeamName(e.target.value)}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
+                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                       required
                     />
                   </div>
@@ -130,7 +130,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                     <select
                       value={memberCount}
                       onChange={handleMemberCountChange}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
+                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                       required
                     >
                       {[1,2,3,4,5].map(num => (
@@ -157,7 +157,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                           type="text"
                           value={member.name}
                           onChange={(e) => handleMemberChange(index, 'name', e.target.value)}
-                          className="w-full p-2 border border-gray-300 rounded-md text-black"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           required
                         />
                       </div>
@@ -169,7 +169,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                           type="email"
                           value={member.email}
                           onChange={(e) => handleMemberChange(index, 'email', e.target.value)}
-                          className="w-full p-2 border border-gray-300 rounded-md text-black"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           required
                         />
                       </div>
@@ -181,7 +181,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                           type="tel"
                           value={member.phoneNumber}
                           onChange={(e) => handleMemberChange(index, 'phoneNumber', e.target.value)}
-                          className="w-full p-2 border border-gray-300 rounded-md text-black"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           required
                         />
                       </div>
@@ -209,7 +209,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                       type="text"
                       value={transactionId}
                       onChange={(e) => setTransactionId(e.target.value)}
-                      className="w-full p-2 border border-gray-300 rounded-md text-black"
+                      className="w-full p-2 border border-gray-300 rounded-md"
                       required
                       placeholder="Enter your transaction ID"
                     />
