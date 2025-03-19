@@ -125,7 +125,7 @@ const AnimatedNavbar = () => {
     { name: "Timeline", path: "/timeline", icon: <TimelineIcon /> },
     { name: "Hackathon", path: "/hackathon", icon: <IdeaIcon /> },
     { name: "Submit Idea", path: "/idea", icon: <IdeaIcon /> },
-    // { name: "Workshop", path: "/workshop", icon: <IdeaIcon /> },
+    { name: "Workshop", path: "/workshop", icon: <IdeaIcon /> },
     { name: "About", path: "/about", icon: <AboutIcon /> },
   ];
 

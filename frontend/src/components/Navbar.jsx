@@ -15,7 +15,6 @@ const colors = {
   dark: "#0a0a0a", // Almost black
 };
 
-// Icons - you can replace these with your own SVG icons
 const HomeIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
