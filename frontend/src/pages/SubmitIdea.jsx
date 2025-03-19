@@ -36,11 +36,8 @@ const SubmitIdea = () => {
   };
 
   return (
-    <div className="bg-[#0a0a0a] min-h-[calc(100vh)] p-8">
+    <div className="bg-[#02062e] min-h-[calc(100vh)] p-8">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-4xl font-bold text-[#1e96fc] mb-2 text-center">
-          Submit Your Idea
-        </h1>
         <p className="text-[#a2d6f9] text-center mb-8">
           Share your innovative concept with our team
         </p>

@@ -7,6 +7,7 @@ import Timeline from "./pages/Timeline";
 import SubmitIdea from "./pages/SubmitIdea";
 import Stepper from "./components/stepperform.jsx";
 import About from "./pages/About";
+import RegisterPage from "./pages/Registration";
 
 const App = () => {
   return (
