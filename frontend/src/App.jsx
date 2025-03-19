@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Timeline from "./pages/Timeline";
 import SubmitIdea from "./pages/SubmitIdea";
 import About from "./pages/About";
+import RegisterPage from "./pages/Registration";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/submit" element={<SubmitIdea />} />
             <Route path="/about" element={<About />} />
+            <Route path="/register" element={<RegisterPage isOpen={true} />} />
           </Routes>
         </div>
       </div>
