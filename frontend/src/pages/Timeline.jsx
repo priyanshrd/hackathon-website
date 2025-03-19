@@ -21,7 +21,7 @@ const Timeline = () => {
   ];
 
   return (
-    <div className="bg-black min-h-[100vh] p-8">
+    <div className="bg-black min-h-[100vh] p-8  pt-20">
       <h1 className="text-4xl font-bold text-green-500 mb-8 text-center animate-fade-in">
         Timeline
       </h1>
