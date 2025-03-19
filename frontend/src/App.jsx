@@ -11,9 +11,7 @@ const App = () => {
   return (
     <Router>
       <Navbar />
-      <div className="pt-16">
-        {" "}
-        {/* Add padding-top equal to navbar height */}
+      <div className="m-0 p-0">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/timeline" element={<Timeline />} />
