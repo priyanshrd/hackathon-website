@@ -3,12 +3,12 @@ import React from 'react';
 
 const Home = () => {
   return (
-    <div className="bg-[#0a0a0a] min-h-[100vh] flex items-center justify-center p-4">
+    <div className="bg-[#02062e] min-h-[100vh] flex items-center justify-center p-4">
       <div className="text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-green-500 mb-4 animate-fade-in">
+        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 animate-fade-in">
           Tech Tank 2025
         </h1>
-        <p className="text-lg md:text-xl text-green-300 mb-8 animate-fade-in">
+        <p className="text-lg md:text-xl text-white mb-8 animate-fade-in">
           Join the biggest hackathon hosted by ACM and GDG!
         </p>
         <button
