@@ -1,10 +1,12 @@
 
-require('dotenv').config(); // Load environment variables at the top
+ // Load environment variables at the top
+const dotenv= require('dotenv')
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const Team = require('../models/Team');
 
+dotenv.config()
 
 router.post('/register', async (req, res) => {
   try {
@@ -57,11 +59,13 @@ router.post('/register', async (req, res) => {
 const sendRegistrationEmail = async (email, teamName) => {
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: "gmail",
+      port: 465,
+      secure: true,
       auth: {
-        user: process.env.EMAIL_USER, // Email address from environment variable
-        pass: process.env.EMAIL_PASS  // App-specific password from environment variable
-      }
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
     });
 
     const mailOptions = {
