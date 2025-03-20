@@ -440,11 +440,9 @@ const SubmitIdea = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex flex-col items-center justify-center py-8 px-4">
+    <div className="h-[90vh] bg-[#0a0a0a] flex flex-col items-center justify-center py-8 px-4">
       <div className="w-full max-w-4xl mx-auto bg-[#1a1a1a] rounded-xl shadow-lg p-4 sm:p-6 md:p-8 border border-[#3a3a3a]">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 sm:mb-10" style={{ color: colors.blue }}>
-          Idea Submission
-        </h1>
+        
         
         {renderStepper()}
         
