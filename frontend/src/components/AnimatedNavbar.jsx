@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../../public/tech_TANK.jpeg";
 
 // CSS variables - you can adjust these as needed
 const colors = {
-  primary: "#072ac8", // Dark blue
-  secondary: "#1e96fc", // Medium blue
-  tertiary: "#a2d6f9", // Light blue
-  accent: "#fcf300", // Bright yellow
+  primary: "#37abc8", // cyan 400
+  secondary: "#37abc8", // same
+  tertiary: "#37abc8", // same
+  accent: "#37abc8", // cyan 400
   accentAlt: "#ffc600", // Golden yellow
   textLight: "#ffffff", // White text
   dark: "#0a0a0a", // Almost black
@@ -87,6 +87,7 @@ const AnimatedNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate(); // Added useNavigate hook
 
   // Handle scroll effect
   useEffect(() => {
@@ -123,9 +124,7 @@ const AnimatedNavbar = () => {
   const navItems = [
     { name: "Home", path: "/", icon: <HomeIcon /> },
     { name: "Timeline", path: "/timeline", icon: <TimelineIcon /> },
-    // { name: "Hackathon", path: "/hackathon", icon: <IdeaIcon /> },
     { name: "Submit Idea", path: "/idea", icon: <IdeaIcon /> },
-    // { name: "Workshop", path: "/workshop", icon: <IdeaIcon /> },
     { name: "About", path: "/about", icon: <AboutIcon /> },
   ];
 
@@ -153,7 +152,11 @@ const AnimatedNavbar = () => {
             >
               <span>
                 {" "}
-                <img src={logo} alt="Logo" className="h-12 mr-2" />
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className="w-36 h-8 sm:h-8 md:h-8 object-cover object-center"
+                />{" "}
               </span>
             </motion.div>
           </Link>
@@ -171,7 +174,7 @@ const AnimatedNavbar = () => {
                   to={item.path}
                   className={`px-3 py-2 flex items-center space-x-2 rounded-lg transition-all duration-300 ${
                     location.pathname === item.path
-                      ? "bg-[#fcf300] text-[#072ac8] font-medium shadow-md shadow-[#fcf300]/20"
+                      ? "bg-[#37abc8] text-[#072ac8] font-medium shadow-md shadow-[#37abc8]/20"
                       : "text-white hover:bg-[#1e96fc]/20"
                   }`}
                 >
@@ -185,13 +188,12 @@ const AnimatedNavbar = () => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <Link
-                to="/register"
-                className="px-6 py-2 bg-gradient-to-r from-[#fcf300] to-[#ffc600] text-[#072ac8] font-bold rounded-lg 
-                hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300 transform hover:translate-y-[-2px]"
+              <button
+                onClick={() => navigate("/hackathon")} // Updated to use navigate
+                className="px-6 py-2 bg-gradient-to-r from-[#fcf300] to-[#ffc600] text-[#072ac8] font-bold rounded-lg hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300 transform hover:translate-y-[-2px]"
               >
                 Register Now
-              </Link>
+              </button>
             </motion.div>
           </div>
 
@@ -253,7 +255,7 @@ const AnimatedNavbar = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 20, stiffness: 100 }}
-              className="fixed top-0 right-0 w-4/5 max-w-xs h-full bg-[#072ac8] z-50 lg:hidden shadow-xl"
+              className="fixed top-0 right-0 w-4/5 max-w-xs h-full bg-gray-750/70 backdrop-blur-md z-50 lg:hidden shadow-xl"
             >
               <div className="flex flex-col h-full p-6">
                 <div className="flex justify-end mb-8">
@@ -290,7 +292,7 @@ const AnimatedNavbar = () => {
                         onClick={() => setIsOpen(false)}
                         className={`p-3 flex items-center space-x-4 rounded-xl transition-all duration-300 ${
                           location.pathname === item.path
-                            ? "bg-[#fcf300] text-[#072ac8] font-medium"
+                            ? "bg-[#37abc8] text-[#072ac8] font-medium"
                             : "text-white hover:bg-[#1e96fc]/20"
                         }`}
                       >
@@ -307,14 +309,15 @@ const AnimatedNavbar = () => {
                   transition={{ delay: 0.4 }}
                   className="mt-auto"
                 >
-                  <Link
-                    to="/hackathon"
-                    onClick={() => setIsOpen(false)}
-                    className="block w-full py-3 bg-[#fcf300] text-[#072ac8] font-bold rounded-xl 
-                    text-center hover:bg-[#ffc600] hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300"
+                  <button
+                    onClick={() => {
+                      navigate("/hackathon"); // Updated to use navigate
+                      setIsOpen(false);
+                    }}
+                    className="block w-full py-3 bg-[#fcf300] text-[#072ac8] font-bold rounded-xl text-center hover:bg-[#ffc600] hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300"
                   >
                     Register Now
-                  </Link>
+                  </button>
                 </motion.div>
               </div>
             </motion.div>
