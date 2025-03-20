@@ -76,7 +76,6 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
 
     console.log("Received registration request:", { teamName });
 
-    // ✅ Parse members if it's a string
     if (typeof members === "string") {
       try {
         members = JSON.parse(members); // Convert to an array
@@ -86,29 +85,25 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
       }
     }
 
-    // ✅ Validate members array
     if (!Array.isArray(members) || members.length === 0) {
       console.log("Invalid members array:", members);
       return res.status(400).json({ error: "Invalid team member details" });
     }
 
-    // ✅ Check for duplicate team names
     const existingTeam = await Team.findOne({ teamName });
     if (existingTeam) {
       console.log("Team name already exists:", teamName);
       return res.status(400).json({ error: "Team name already exists" });
     }
 
-    // ✅ Convert transaction screenshot to Base64 (if provided)
     let imageBase64 = null;
     if (req.file) {
       imageBase64 = req.file.buffer.toString("base64");
     }
 
-    // ✅ Save team to database
     const team = new Team({
       teamName,
-      members, // Now correctly parsed
+      members,
       transactionId,
       screenshot: imageBase64,
     });
@@ -126,7 +121,6 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
   }
 });
 
-// Add a route to get all teams (for admin purposes)
 router.get("/teams", async (req, res) => {
   try {
     const teams = await Team.find({});
