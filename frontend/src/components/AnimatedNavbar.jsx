@@ -123,9 +123,9 @@ const AnimatedNavbar = () => {
   const navItems = [
     { name: "Home", path: "/", icon: <HomeIcon /> },
     { name: "Timeline", path: "/timeline", icon: <TimelineIcon /> },
-    { name: "Hackathon", path: "/hackathon", icon: <IdeaIcon /> },
+    // { name: "Hackathon", path: "/hackathon", icon: <IdeaIcon /> },
     { name: "Submit Idea", path: "/idea", icon: <IdeaIcon /> },
-    { name: "Workshop", path: "/workshop", icon: <IdeaIcon /> },
+    // { name: "Workshop", path: "/workshop", icon: <IdeaIcon /> },
     { name: "About", path: "/about", icon: <AboutIcon /> },
   ];
 
@@ -308,7 +308,7 @@ const AnimatedNavbar = () => {
                   className="mt-auto"
                 >
                   <Link
-                    to="/register"
+                    to="/hackathon"
                     onClick={() => setIsOpen(false)}
                     className="block w-full py-3 bg-[#fcf300] text-[#072ac8] font-bold rounded-xl 
                     text-center hover:bg-[#ffc600] hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300"
