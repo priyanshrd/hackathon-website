@@ -1,7 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -18,11 +18,11 @@ const connectDB = async () => {
       serverSelectionTimeoutMS: 15000, // Timeout after 15 seconds
       socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
     };
-    
+
     await mongoose.connect(process.env.MONGO_URI, options);
-    console.log('MongoDB Connected Successfully');
+    console.log("MongoDB Connected Successfully");
   } catch (err) {
-    console.error('MongoDB Connection Error:', err.message);
+    console.error("MongoDB Connection Error:", err.message);
     // Exit process with failure
     process.exit(1);
   }
@@ -32,14 +32,14 @@ const connectDB = async () => {
 connectDB();
 
 // Routes
-app.use('/api/payment', require('./routes/payment'));
-app.use('/api/submit', require('./routes/submission'));
-app.use('/api/registration', require('./routes/registration'));
+app.use("/api/payment", require("./routes/payment"));
+app.use("/api/submit", require("./routes/submission"));
+app.use("/api/registration", require("./routes/registration"));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error('Server Error:', err.stack);
-  res.status(500).json({ error: 'Something went wrong on the server!' });
+  console.error("Server Error:", err.stack);
+  res.status(500).json({ error: "Something went wrong on the server!" });
 });
 
 // Start the server

@@ -8,7 +8,8 @@ import SubmitIdea from "./pages/SubmitIdea";
 import Stepper from "./components/stepperform.jsx";
 import About from "./pages/About";
 // import RegisterPage from "./pages/Registration";
-import Workshop from './pages/Workshop.jsx'
+import Workshop from "./pages/Workshop.jsx";
+import WorkshopScreenshots from "./pages/test.jsx";
 const App = () => {
   return (
     <Router>
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/idea" element={<SubmitIdea />} />
             <Route path="/workshop" element={<Workshop />} />
             <Route path="/about" element={<About />} />
+            <Route path="/test" element={<WorkshopScreenshots />} />
           </Routes>
         </div>
       </div>
