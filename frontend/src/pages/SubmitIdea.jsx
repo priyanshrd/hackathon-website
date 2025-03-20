@@ -400,45 +400,57 @@ const SubmitIdea = () => {
     );
   };
 
-  // Render success animation
   const renderSuccessAnimation = () => {
-    return (
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      exit={{ scale: 0 }}
+      className="bg-[#1a1a1a] rounded-lg p-8 flex flex-col items-center shadow-lg border border-[#3a3a3a] max-w-md mx-auto"
+    >
       <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0 }}
-        className="bg-[#1a1a1a] rounded-lg p-8 flex flex-col items-center shadow-lg border border-[#3a3a3a] max-w-md mx-auto"
+        animate={{
+          scale: [1, 1.2, 1],
+          rotate: [0, 360],
+        }}
+        transition={{ duration: 0.5 }}
+        className="text-6xl mb-4"
       >
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 360]
-          }}
-          transition={{ duration: 0.5 }}
-          className="text-6xl mb-4"
-        >
-          ✅
-        </motion.div>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{ color: colors.yellow }}
-          className="text-2xl font-bold mb-4"
-        >
-          Idea Submitted Successfully!
-        </motion.h2>
-        <motion.p
+        <motion.svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#03C03C"
+          strokeWidth={2}
+          className="w-16 h-16 text-lightgreen"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-center text-white"
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Thank you for your submission. We'll review your idea and get back to you within 5 business days.
-        </motion.p>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M5 13l4 4L19 7"
+          />
+        </motion.svg>
       </motion.div>
-    );
-  };
-
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        style={{ color: colors.yellow }}
+        className="text-2xl font-bold pb-2"
+      >
+        Idea Submitted Successfully!
+      </motion.h2>
+      <motion.h3
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-md font-bold text-white"
+      >
+          Thank you for your submission. We'll review your idea and get back to you within 5 business days.
+      </motion.h3>
+    </motion.div>
+};
+  
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex flex-col items-center justify-center py-8 px-4">
       <div className="w-full max-w-4xl mx-auto bg-[#1a1a1a] rounded-xl shadow-lg p-4 sm:p-6 md:p-8 border border-[#3a3a3a]">

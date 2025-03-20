@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import logo from "../../public/tech_TANK.jpeg";
+import { useNavigate } from 'react-router-dom';
 
 const About = () => {
+
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState({});
   const sectionRefs = useRef({});
 
@@ -78,7 +81,7 @@ const About = () => {
             and business minds come together to build scalable, investor-ready solutions.
           </p>
           <a 
-            href="#register" 
+            onClick={() => {navigate('/hackathon');}} 
             className="inline-block px-8 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300 transform hover:-translate-y-1"
             style={{ animation: 'fade-in-up 1s 1.2s both' }}
           >
@@ -341,7 +344,7 @@ const About = () => {
                 <h3 className="text-2xl font-bold mb-2 text-[#38AAC9]">Hackathon Team</h3>
                 <p className="mb-6">Team of 2-3</p>
                 <div className="text-3xl font-bold mb-8 text-[#E4CD15]">₹500/team</div>
-                <a href="#" className="inline-block px-6 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300">
+                <a onClick={() => {navigate('/hackathon');}}  className="inline-block px-6 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300">
                   Register Team
                 </a>
               </div>
@@ -350,7 +353,7 @@ const About = () => {
                 <h3 className="text-2xl font-bold mb-2 text-[#38AAC9]">Solo Workshop</h3>
                 <p className="mb-6">Individual participants</p>
                 <div className="text-3xl font-bold mb-8 text-[#E4CD15]">₹200/student</div>
-                <a href="#" className="inline-block px-6 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300">
+                <a onClick={() => {navigate('/workshop');}}  className="inline-block px-6 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300">
                   Register Solo
                 </a>
               </div>
@@ -365,7 +368,6 @@ const About = () => {
         </div>
       </footer>
 
-      {/* CSS Animations */}
       <style jsx>{`
         @keyframes scale-in {
           from { transform: scale(0); }
