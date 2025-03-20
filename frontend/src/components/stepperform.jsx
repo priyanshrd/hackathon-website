@@ -134,7 +134,7 @@ const Stepper = () => {
                   index + 1
                 )}
               </button>
-              <span className="text-xs sm:text-sm mt-2 text-white text-center">
+              <span className="text-md sm:text-white text-[#1a1a1a] mt-2  text-center">
                 {index === 0 && "Email"}
                 {index === 1 && "Team Info"}
                 {index === 2 && "Members"}
@@ -173,12 +173,12 @@ const Stepper = () => {
         <form onSubmit={handleEmailSubmit} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-lg font-medium text-white mb-2">
-              How about an input?
+              Enter your Email
             </label>
             <input
               type="email"
               id="email"
-              placeholder="Your email?"
+              placeholder="johndoe@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-4 text-lg bg-[#2a2a2a] border border-[#3a3a3a] text-white rounded-lg focus:ring-2 focus:ring-[#38AAC9] focus:border-[#38AAC9]"
@@ -360,7 +360,10 @@ const Stepper = () => {
         className="w-full max-w-2xl mx-auto px-4"
       >
         <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg border border-[#3a3a3a]">
-          <h3 className="text-xl font-semibold mb-4 text-white">Payment Details</h3>
+        <div className="flex items-center space-x-2 text-white pb-2">
+            <h3 className="text-xl font-semibold">Payment Details - </h3>
+            <span className="text-xl font-semibold text-[#E4CD15]">₹500</span>
+          </div>
           
           <div className="flex flex-col items-center mb-6">
             <div className="bg-[#2a2a2a] p-6 rounded-lg shadow-lg border border-[#3a3a3a] mb-6 w-full max-w-md">
@@ -431,7 +434,6 @@ const Stepper = () => {
     );
   };
 
-  // Render success animation
   const renderSuccessAnimation = () => {
     return (
       <motion.div
@@ -443,12 +445,28 @@ const Stepper = () => {
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
-            rotate: [0, 360]
+            rotate: [0, 360],
           }}
           transition={{ duration: 0.5 }}
           className="text-6xl mb-4"
         >
-          ✅
+          <motion.svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            className="w-16 h-16 text-lightgreen"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M5 13l4 4L19 7"
+            />
+          </motion.svg>
         </motion.div>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -461,6 +479,7 @@ const Stepper = () => {
       </motion.div>
     );
   };
+  
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex flex-col items-center justify-center py-8 px-4">

@@ -30,7 +30,7 @@ const Workshop = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
-    
+
     try {
       const response = await axios.post('http://localhost:5000/api/workshop/register', {
         name,
@@ -38,7 +38,7 @@ const Workshop = () => {
         phoneNumber,
         transactionId
       });
-      
+
       if (response.status === 201) {
         setShowSuccessAnimation(true);
         setTimeout(() => {
@@ -82,8 +82,8 @@ const Workshop = () => {
       <div className="flex flex-wrap justify-center md:justify-between w-full mb-8 max-w-2xl mx-auto px-2 sm:px-4">
         {Array.from({ length: totalSteps }).map((_, index) => (
           <React.Fragment key={index}>
-            <div className="flex flex-col items-center mb-4 sm:mb-0">
-              <button 
+            <div className="flex flex-col pr-1 items-center mb-4 sm:mb-0">
+              <button
                 onClick={() => goToStep(index + 1)}
                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-base sm:text-lg font-bold transition-all duration-300 border-2 focus:outline-none"
                 style={{
@@ -100,13 +100,13 @@ const Workshop = () => {
                   index + 1
                 )}
               </button>
-              <span className="text-xs sm:text-sm mt-2 text-white text-center">
+              <span className="text-md sm:text-white text-[#1a1a1a] mt-2  text-center">
                 {index === 0 && "Personal Info"}
                 {index === 1 && "Payment"}
               </span>
             </div>
             {index < totalSteps - 1 && (
-              <div 
+              <div
                 className="hidden md:block flex-1 h-1 mx-2 self-center"
                 style={{
                   backgroundColor: index + 1 < currentStep ? colors.blue : colors.lightGray,
@@ -193,14 +193,16 @@ const Workshop = () => {
         className="w-full max-w-md mx-auto px-4"
       >
         <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg border border-[#3a3a3a]">
-          <h3 className="text-xl font-semibold mb-4 text-white">Payment Details</h3>
-          
+          <div className="flex items-center space-x-2 text-white pb-2">
+            <h3 className="text-xl font-semibold">Payment Details - </h3>
+            <span className="text-xl font-semibold text-[#E4CD15]">₹200</span>
+          </div>
           <div className="flex flex-col items-center mb-6">
             <div className="bg-[#2a2a2a] p-4 rounded-lg shadow-lg mb-6 w-full">
               <div className="flex items-center justify-center">
-              <img 
+                <img
                   src="../../public/QRcode.jpg"
-                  alt="Payment QR Code" 
+                  alt="Payment QR Code"
                   className="max-w-[200px] max-h-[180px] mx-auto"
                   onError={(e) => {
                     e.target.onerror = null;
@@ -209,7 +211,7 @@ const Workshop = () => {
                 />
               </div>
             </div>
-            
+
             <div className="w-full">
               <label className="block text-sm font-medium text-white mb-2">
                 Transaction ID
@@ -224,13 +226,13 @@ const Workshop = () => {
               />
             </div>
           </div>
-          
+
           {error && (
             <div className="bg-red-900 border border-red-700 text-white px-4 py-3 rounded mb-4">
               {error}
             </div>
           )}
-          
+
           <div className="flex justify-between mt-6">
             <button
               onClick={prevStep}
@@ -301,9 +303,9 @@ const Workshop = () => {
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 sm:mb-10" style={{ color: colors.blue }}>
           Workshop Registration
         </h1>
-        
+
         {renderStepper()}
-        
+
         <AnimatePresence mode="wait">
           {showSuccessAnimation ? (
             renderSuccessAnimation()

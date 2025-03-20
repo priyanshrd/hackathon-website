@@ -1,43 +1,107 @@
-// src/pages/Timeline.js
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const Timeline = () => {
-  const events = [
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
+    };
+  }, []);
+
+  const timelineEvents = [
     {
-      day: 'Day 1: Kickoff',
-      time: '10:00 AM - Opening Ceremony',
-      description: 'Welcome and team formation.',
+      title: "Register for the Hackathon",
+      date: "March 24 - April 6, 2025",
+      description: "Register for the Hackathon (includes the workshop) or just the Workshop and gear up to build your own scalable, entrepreneurial success story."
     },
     {
-      day: 'Day 2: Hacking',
-      time: '9:00 AM - Coding Begins',
-      description: 'Start building your projects.',
+      title: "Online Prototype Submission (Round 1)",
+      date: "April 7 - April 9, 2025",
+      description: "Submit your problem statement aligned with the provided tracks. Teams will be evaluated based on innovation, feasibility, and scalability. Shortlisted teams move to Round 2."
     },
     {
-      day: 'Day 3: Presentations',
-      time: '2:00 PM - Project Demos',
-      description: 'Showcase your work to the judges.',
+      title: "Build & Refine Your Solution (Round 2)",
+      date: "April 11 - April 12, 2025",
+      description: "Work overnight in a high-energy innovation space. Dinner will be provided for all participants."
     },
+    {
+      title: "The Pitch (Final Round)",
+      date: "April 12, 2025",
+      description: "Present to a panel of judges & investors. Evaluations based on technical execution, business viability & innovation. Results announced via email & website the same day!"
+    }
   ];
 
   return (
-    <div className="bg-black min-h-[100vh] p-8  pt-20">
-      <h1 className="text-4xl font-bold text-green-500 mb-8 text-center animate-fade-in">
-        Timeline
-      </h1>
-      <div className="space-y-8 max-w-2xl mx-auto">
-        {events.map((event, index) => (
-          <div
-            key={index}
-            className="bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate-fade-in-up"
-          >
-            <h2 className="text-2xl font-semibold text-green-500">{event.day}</h2>
-            <p className="text-green-300 mt-2">{event.time}</p>
-            <p className="text-green-200 mt-2">{event.description}</p>
+    <section 
+      id="timeline" 
+      ref={sectionRef}
+      className={`py-20 px-4 bg-black ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-out`}
+    >
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
+          Hackathon Timeline
+          <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
+        </h2>
+        
+        <div className="relative">
+          {/* Timeline Line */}
+          <div className="absolute left-8 w-1 h-full bg-[#38AAC9]"></div>
+          
+          {/* Timeline Items */}
+          <div className="space-y-12">
+            {timelineEvents.map((event, index) => (
+              <div 
+                key={index} 
+                className="relative pl-16"
+                style={{ 
+                  animation: `fade-in-up 0.8s ${0.2 + index * 0.2}s both`,
+                  opacity: 0
+                }}
+              >
+                {/* Timeline Dot */}
+                <div className="absolute left-4 top-0 w-8 h-8 bg-[#E4CD15] rounded-full transform -translate-x-1/2 z-10"></div>
+                
+                {/* Timeline Content */}
+                <div className="p-6 bg-[#38AAC9]/10 rounded-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#38AAC9]/30 border-l-4 border-[#38AAC9]">
+                  <div className="text-[#E4CD15] font-bold mb-2">{event.date}</div>
+                  <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">{event.title}</h3>
+                  <p className="text-white">{event.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
-    </div>
+
+      {/* CSS Animations */}
+      <style jsx>{`
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </section>
   );
 };
 
