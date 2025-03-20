@@ -59,8 +59,9 @@ const Stepper = () => {
   const [screenshot, setScreenshot] = useState(null);
 
   const handleFileChange = (e) => {
-    setScreenshot(e.target.files[0]);
-    console.log(screenshot);
+    const file = e.target.files[0];
+    setScreenshot(file);
+    console.log("File selected:", file);
   };
 
   const handleSubmit = async (e) => {
@@ -74,30 +75,16 @@ const Stepper = () => {
       return;
     }
 
-    // Convert image to Base64
-    const toBase64 = (file) =>
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
-
     try {
-      const base64Image = await toBase64(screenshot);
-
       const formData = new FormData();
       formData.append("teamName", teamName);
       formData.append("transactionId", transactionId);
-      formData.append("screenshot", base64Image); // Send as Base64
+      formData.append("screenshot", screenshot); // Send as Base64
       formData.append("members", JSON.stringify(members)); // Convert array to string
 
       const response = await axios.post(
         "http://localhost:8080/api/registration/register",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+        formData
       );
 
       if (response.status === 201) {
@@ -241,7 +228,10 @@ const Stepper = () => {
       >
         <form onSubmit={handleEmailSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-lg font-medium text-white mb-2">
+            <label
+              htmlFor="email"
+              className="block text-lg font-medium text-white mb-2"
+            >
               Enter your Email
             </label>
             <input
@@ -442,11 +432,11 @@ const Stepper = () => {
         className="w-full max-w-2xl mx-auto px-4"
       >
         <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg border border-[#3a3a3a]">
-        <div className="flex items-center space-x-2 text-white pb-2">
+          <div className="flex items-center space-x-2 text-white pb-2">
             <h3 className="text-xl font-semibold">Payment Details - </h3>
             <span className="text-xl font-semibold text-[#E4CD15]">₹500</span>
           </div>
-          
+
           <div className="flex flex-col items-center mb-6">
             <div className="bg-[#2a2a2a] p-6 rounded-lg shadow-lg border border-[#3a3a3a] mb-6 w-full max-w-md">
               <div className="bg-[#1a1a1a] w-full h-48 flex items-center justify-center rounded-lg">
@@ -591,7 +581,6 @@ const Stepper = () => {
       </motion.div>
     );
   };
-  
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex flex-col items-center justify-center py-8 px-4">
