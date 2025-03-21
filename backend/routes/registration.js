@@ -1,89 +1,133 @@
-
- // Load environment variables at the top
-const dotenv= require('dotenv')
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const nodemailer = require('nodemailer');
-const Team = require('../models/Team');
+const Team = require("../models/Team");
+const WorkshopUser = require("../models/Workshop");
 
-dotenv.config()
+const multer = require("multer");
 
-router.post('/register', async (req, res) => {
+// Use multer to store files in memory (as buffer)
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+router.post("/workshop", upload.single("screenshot"), async (req, res) => {
   try {
-    const { teamName, memberCount, members, transactionId } = req.body;
+    console.log(req.body);
+    const { name, email, phoneNumber, transactionId } = req.body;
+    console.log("Received registration request:", { name, transactionId });
+    console.log(req.file);
 
-    console.log('Received registration request:', { teamName, memberCount });
-
-    // Validate team name uniqueness
-    const existingTeam = await Team.findOne({ teamName });
-    if (existingTeam) {
-      console.log('Team name already exists:', teamName);
-      return res.status(400).json({ error: 'Team name already exists' });
+    // Check if user already exists
+    const alreadyRegistered = await WorkshopUser.findOne({ email });
+    if (alreadyRegistered) {
+      console.log("User already exists:", alreadyRegistered.email);
+      return res.status(400).json({ error: "User email already exists" });
     }
 
-    // Validate member count
-    if (members.length !== memberCount) {
-      console.log('Member count mismatch:', { expected: memberCount, received: members.length });
-      return res.status(400).json({ error: 'Member count does not match provided members' });
+    // Convert image to Base64
+    let imageBase64 = null;
+    if (req.file) {
+      imageBase64 = req.file.buffer.toString("base64");
     }
 
-    // Create and save the team
-    const team = new Team({
-      teamName,
-      memberCount,
-      members,
-      transactionId
+    // Create a new user
+    const newUser = new WorkshopUser({
+      name,
+      email,
+      phoneNumber,
+      transactionId,
+      image: imageBase64, // Store the image in Base64 format
     });
 
-    const savedTeam = await team.save();
-    console.log('Team registered successfully:', savedTeam._id);
-
-    // Send email to the team lead
-    const teamLead = members.find(member => member.isTeamLead);
-    if (teamLead && teamLead.email) {
-      await sendRegistrationEmail(teamLead.email, teamName);
-    }
+    await newUser.save();
 
     res.status(201).json({
-      message: 'Team registered successfully',
-      teamId: savedTeam._id
+      message: "User registered successfully",
+      user: newUser,
     });
-
   } catch (error) {
-    console.error('Registration error:', error);
-    res.status(500).json({ error: error.message });
+    console.error("Error registering user:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-// Function to send registration email
-const sendRegistrationEmail = async (email, teamName) => {
+// Route to get all transaction screenshots
+router.get("/screenshots", async (req, res) => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
+    const users = await WorkshopUser.find({}, "name email transactionId image"); // Only fetch relevant fields
+
+    console.log(users);
+
+    if (!users || users.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "No transaction screenshots found" });
+    }
+
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching transaction screenshots:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/register", upload.single("screenshot"), async (req, res) => {
+  try {
+    let { teamName, members, transactionId } = req.body;
+
+    console.log("Received registration request:", { teamName });
+
+    if (typeof members === "string") {
+      try {
+        members = JSON.parse(members); // Convert to an array
+      } catch (err) {
+        console.log("Error parsing members:", err);
+        return res.status(400).json({ error: "Invalid team member details" });
+      }
+    }
+
+    if (!Array.isArray(members) || members.length === 0) {
+      console.log("Invalid members array:", members);
+      return res.status(400).json({ error: "Invalid team member details" });
+    }
+
+    const existingTeam = await Team.findOne({ teamName });
+    if (existingTeam) {
+      console.log("Team name already exists:", teamName);
+      return res.status(400).json({ error: "Team name already exists" });
+    }
+
+    let imageBase64 = null;
+    if (req.file) {
+      imageBase64 = req.file.buffer.toString("base64");
+    }
+
+    const team = new Team({
+      teamName,
+      members,
+      transactionId,
+      screenshot: imageBase64,
     });
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Hackathon Registration Confirmation',
-      text: `Thank you for registering your team "${teamName}" for the hackathon. We are excited to have you participate!
-      
-    Best regards,  
-    The Hackathon Team`
-    };
-    
+    const savedTeam = await team.save();
+    console.log("Team registered successfully:", savedTeam._id);
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully:', info.response);
+    res.status(201).json({
+      message: "Team registered successfully",
+      teamId: savedTeam._id,
+    });
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error("Registration error:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-};
+});
+
+router.get("/teams", async (req, res) => {
+  try {
+    const teams = await Team.find({});
+    res.json(teams);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = router;
