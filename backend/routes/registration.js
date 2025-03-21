@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Team = require("../models/Team");
 const WorkshopUser = require("../models/Workshop");
+const sendEmail = require("../utils/mailer");
 
 const multer = require("multer");
 
@@ -128,6 +129,19 @@ router.get("/teams", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+router.post("/send-email", async (req, res) => {
+  const { email, subject, message } = req.body;
+
+  if (!email || !subject || !message) {
+    return res
+      .status(400)
+      .json({ success: false, message: "All fields are required" });
+  }
+
+  const result = await sendEmail(email, subject, message);
+  res.json(result);
 });
 
 module.exports = router;

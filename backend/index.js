@@ -32,7 +32,7 @@ const connectDB = async () => {
 connectDB();
 
 // Routes
-app.use("/api/payment", require("./routes/payment"));
+// app.use("/api/payment", require("./routes/payment"));
 app.use("/api/submit", require("./routes/submission"));
 app.use("/api/registration", require("./routes/registration"));
 

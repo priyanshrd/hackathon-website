@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./TeamsData.css";
 
 const TeamsData = () => {
@@ -13,6 +14,43 @@ const TeamsData = () => {
       .then((data) => setTeams(data))
       .catch((error) => console.error("Error fetching teams:", error));
   }, []);
+
+  const handleStatusChange = async (team, status) => {
+    const leader = team.members.find((member) => member.isTeamLead);
+    if (!leader) {
+      alert("No team leader found for this team.");
+      return;
+    }
+
+    let subject, message;
+    if (status === "accept") {
+      subject = "Hackathon Registration Confirmed";
+      message = `Dear ${leader.name},<br><br>Your team's registration for the hackathon has been <b>approved</b>. See you at the event!<br><br>Best regards,<br>Tech Tank Team`;
+    } else {
+      subject = "Hackathon Registration Rejected";
+      message = `Dear ${leader.name},<br><br>Unfortunately, your team's registration for the hackathon has been <b>rejected</b>. Please contact support for further details.<br><br>Best regards,<br>Hackathon Team`;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/registration/send-email",
+        {
+          email: leader.email,
+          subject,
+          message,
+        }
+      );
+
+      if (response.data.success) {
+        alert(`Email sent successfully: ${status.toUpperCase()}ED`);
+      } else {
+        alert("Failed to send email.");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      alert("Error sending email. Please try again.");
+    }
+  };
 
   return (
     <div className="admin-container">
@@ -33,6 +71,7 @@ const TeamsData = () => {
               <th>Other Members</th>
               <th>Transaction ID</th>
               <th>Screenshot</th>
+              <th>Status</th> {/* New Column */}
             </tr>
           </thead>
           <tbody>
@@ -48,7 +87,7 @@ const TeamsData = () => {
                   <td>
                     {leader ? (
                       <div>
-                        <strong> Name: {leader.name}</strong> <br />
+                        <strong>Name: {leader.name}</strong> <br />
                         Email: {leader.email} <br />
                         Phone: {leader.phoneNumber || "N/A"}
                       </div>
@@ -79,6 +118,20 @@ const TeamsData = () => {
                     ) : (
                       "No Screenshot"
                     )}
+                  </td>
+                  <td>
+                    <button
+                      className="accept-button"
+                      onClick={() => handleStatusChange(team, "accept")}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="reject-button"
+                      onClick={() => handleStatusChange(team, "reject")}
+                    >
+                      Reject
+                    </button>
                   </td>
                 </tr>
               );
