@@ -54,7 +54,7 @@ router.post("/workshop", upload.single("screenshot"), async (req, res) => {
 // Route to get all transaction screenshots
 router.get("/screenshots", async (req, res) => {
   try {
-    const users = await WorkshopUser.find({}, "name email transactionId image"); // Only fetch relevant fields
+    const users = await WorkshopUser.find({}, "name email phoneNumber transactionId image"); // Only fetch relevant fields
 
     console.log(users);
 

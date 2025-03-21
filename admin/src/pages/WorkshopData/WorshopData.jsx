@@ -76,7 +76,7 @@ const WorkshopData = () => {
               <tr key={workshop.transactionId}>
                 <td>{workshop.name}</td>
                 <td>{workshop.email}</td>
-                <td>{workshop.phone || "N/A"}</td>
+                <td>{workshop.phoneNumber || "N/A"}</td>
                 <td>{workshop.transactionId}</td>
                 <td>
                   {workshop.image ? (
