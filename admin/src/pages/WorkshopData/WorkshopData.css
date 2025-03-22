@@ -1,72 +1,61 @@
-body {
-  background: #0a0a0a; /* Dark background */
-  color: #ffffff; /* White text */
-  font-family: Arial, sans-serif;
+/* Button container for alignment */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.admin-container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #0a0a0a; /* Dark background */
-  border-radius: 8px;
-}
-
-.home-button {
-  background: #37abc8;
-  color: #0a0a0a;
+/* General button styles */
+.accept-button,
+.reject-button {
+  padding: 12px 20px;
   font-size: 16px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
   font-weight: bold;
-  margin-bottom: 20px;
-  transition: 0.3s;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 5px;
+  box-shadow: 2px 2px 6px rgba(55, 171, 200, 0.5); /* Soft shadow */
 }
 
-.home-button:hover {
-  background: #ffc600;
-}
-
-h1 {
-  text-align: center;
-  color: #37abc8; /* Cyan primary */
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-th,
-td {
-  padding: 12px;
-  text-align: left;
-  border: 1px solid #37abc8; /* Cyan border */
-}
-
-th {
-  background: #37abc8; /* Cyan header */
+/* Accept button */
+.accept-button {
+  background: #37abc8; /* Cyan */
   color: #0a0a0a; /* Dark text */
 }
 
-td {
-  background: #0a0a0a; /* Dark background */
-  color: #ffffff; /* White text */
+.accept-button:hover {
+  background: #ffc600; /* Golden hover */
+  transform: scale(1.05);
 }
 
-.screenshot {
-  width: 180px; /* Increased width */
-  height: 300px; /* Increased height */
-
-  border: 2px solid #ffc600; /* Golden yellow */
-  display: block;
-  margin: auto;
+.accept-button:active {
+  background: #ffb000; /* Slightly darker gold */
 }
 
-.error {
-  color: #ffc600; /* Golden yellow */
-  text-align: center;
+/* Reject button */
+.reject-button {
+  background: #dc3545; /* Red */
+  color: white;
+}
+
+.reject-button:hover {
+  background: #ff6b6b; /* Lighter red */
+  transform: scale(1.05);
+}
+
+.reject-button:active {
+  background: #c82333;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .accept-button,
+  .reject-button {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+  }
 }

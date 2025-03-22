@@ -93,18 +93,20 @@ const WorkshopData = () => {
                   )}
                 </td>
                 <td>
-                  <button
-                    className="accept-button"
-                    onClick={() => handleStatusChange(workshop, "accept")}
-                  >
-                    Accept
-                  </button>
-                  <button
-                    className="reject-button"
-                    onClick={() => handleStatusChange(workshop, "reject")}
-                  >
-                    Reject
-                  </button>
+                  <div className="button-container">
+                    <button
+                      className="accept-button"
+                      onClick={() => handleStatusChange(workshop, "accept")}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="reject-button"
+                      onClick={() => handleStatusChange(workshop, "reject")}
+                    >
+                      Reject
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

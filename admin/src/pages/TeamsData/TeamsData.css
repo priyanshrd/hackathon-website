@@ -1,17 +1,30 @@
+/* General Styling */
 body {
   background: #0a0a0a;
   color: #ffffff;
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
+/* Container */
 .admin-container {
-  max-width: 1000px;
+  max-width: 95%;
   margin: 20px auto;
   padding: 20px;
   background: #0a0a0a;
   border-radius: 8px;
+  overflow-x: auto; /* Allows horizontal scrolling on small screens */
 }
 
+/* Heading */
+h1 {
+  text-align: center;
+  color: #37abc8;
+  font-size: 24px;
+}
+
+/* Home Button */
 .home-button {
   background: #37abc8;
   color: #0a0a0a;
@@ -23,21 +36,22 @@ body {
   font-weight: bold;
   margin-bottom: 20px;
   transition: 0.3s;
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 10px auto;
+  text-align: center;
 }
 
 .home-button:hover {
   background: #ffc600;
 }
 
-h1 {
-  text-align: center;
-  color: #37abc8;
-}
-
+/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 th,
@@ -69,8 +83,8 @@ li {
 
 /* Screenshot Styling */
 .screenshot {
-  width: 180px;
-  height: 300px;
+  width: 100px;
+  height: auto;
   object-fit: contain;
   border: 2px solid #ffc600;
   cursor: pointer;
@@ -92,6 +106,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .modal-content {
@@ -105,20 +120,85 @@ li {
   border: 3px solid #ffc600;
 }
 
+/* Responsive Table */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  th,
+  td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .screenshot {
+    width: 80px;
+    height: auto;
+  }
+
+  .modal {
+    width: 90%;
+    height: 90%;
+  }
+}
+
+/* Mobile-Friendly Layout */
+@media (max-width: 480px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border: 1px solid #37abc8;
+    padding: 10px;
+    background: #0a0a0a;
+    border-radius: 5px;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .screenshot {
+    width: 60px;
+  }
+
+  .modal {
+    width: 95%;
+    height: 95%;
+  }
+}
+
 /* General button styles */
 .accept-button,
 .reject-button {
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 10px 18px;
+  font-size: 16px;
   font-weight: bold;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   margin: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Accept button styling */
+/* Accept button */
 .accept-button {
   background-color: #28a745;
   color: white;
@@ -126,9 +206,14 @@ li {
 
 .accept-button:hover {
   background-color: #218838;
+  transform: scale(1.05);
 }
 
-/* Reject button styling */
+.accept-button:active {
+  background-color: #1e7e34;
+}
+
+/* Reject button */
 .reject-button {
   background-color: #dc3545;
   color: white;
@@ -136,59 +221,27 @@ li {
 
 .reject-button:hover {
   background-color: #c82333;
+  transform: scale(1.05);
 }
 
-/* Table styling for better readability */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+.reject-button:active {
+  background-color: #a71d2a;
 }
 
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
+/* Responsive layout */
+@media (max-width: 768px) {
+  .accept-button,
+  .reject-button {
+    width: 100%;
+    padding: 6px;
+    font-size: 12px;
+  }
 }
 
-th {
-  color: white;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-/* Screenshot styling */
-.screenshot {
-  width: 80px;
-  height: auto;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: transform 0.2s;
-}
-
-.screenshot:hover {
-  transform: scale(1.1);
-}
-
-/* Modal styling for enlarged image */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 30%;
-  height: 30%;
-  background: rgba(0, 0, 0, 0.8);
+/* Button container for better alignment */
+.button-container {
   display: flex;
-  align-items: center;
   justify-content: center;
-}
-
-.modal-content img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 8px;
+  gap: 10px;
+  flex-wrap: wrap;
 }

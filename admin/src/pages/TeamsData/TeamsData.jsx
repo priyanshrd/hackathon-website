@@ -122,18 +122,20 @@ const TeamsData = () => {
                     )}
                   </td>
                   <td>
-                    <button
-                      className="accept-button"
-                      onClick={() => handleStatusChange(team, "accept")}
-                    >
-                      Accept
-                    </button>
-                    <button
-                      className="reject-button"
-                      onClick={() => handleStatusChange(team, "reject")}
-                    >
-                      Reject
-                    </button>
+                    <div className="button-container">
+                      <button
+                        className="accept-button"
+                        onClick={() => handleStatusChange(team, "accept")}
+                      >
+                        Accept
+                      </button>
+                      <button
+                        className="reject-button"
+                        onClick={() => handleStatusChange(team, "reject")}
+                      >
+                        Reject
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );
