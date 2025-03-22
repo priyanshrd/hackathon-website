@@ -36,6 +36,10 @@ connectDB();
 app.use("/api/submit", require("./routes/submission"));
 app.use("/api/registration", require("./routes/registration"));
 
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error("Server Error:", err.stack);
