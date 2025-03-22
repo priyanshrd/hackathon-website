@@ -4,12 +4,14 @@ import axios from "axios";
 import "./TeamsData.css";
 
 const TeamsData = () => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
   const [teams, setTeams] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/registration/teams")
+    fetch(backend_url + "/api/registration/teams")
       .then((response) => response.json())
       .then((data) => setTeams(data))
       .catch((error) => console.error("Error fetching teams:", error));
@@ -33,7 +35,7 @@ const TeamsData = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/registration/send-email",
+        backend_url + "/api/registration/send-email",
         {
           email: leader.email,
           subject,

@@ -4,12 +4,14 @@ import axios from "axios";
 import "./WorkshopData.css";
 
 const WorkshopData = () => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
   const [workshops, setWorkshops] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/registration/screenshots")
+    fetch(backend_url + "/api/registration/screenshots")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -30,7 +32,7 @@ const WorkshopData = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/registration/send-email",
+        backend_url + "/api/registration/send-email",
         {
           email: workshop.email,
           subject,

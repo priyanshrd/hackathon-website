@@ -3,6 +3,8 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Stepper = () => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
   // Color palette
   const colors = {
     blue: "#38AAC9",
@@ -83,7 +85,7 @@ const Stepper = () => {
       formData.append("members", JSON.stringify(members)); // Convert array to string
 
       const response = await axios.post(
-        "http://localhost:8080/api/registration/register",
+        backend_url + "/api/registration/register",
         formData
       );
 
@@ -149,9 +151,10 @@ const Stepper = () => {
               <button
                 onClick={() => goToStep(index + 1)}
                 className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-base sm:text-lg font-bold transition-all duration-300 border-2 focus:outline-none
-                  ${index + 1 < currentStep
-                    ? `bg-${colors.blue} text-${colors.yellow} border-${colors.blue}`
-                    : index + 1 === currentStep
+                  ${
+                    index + 1 < currentStep
+                      ? `bg-${colors.blue} text-${colors.yellow} border-${colors.blue}`
+                      : index + 1 === currentStep
                       ? `bg-${colors.yellow} text-${colors.blue} border-${colors.yellow}`
                       : `bg-${colors.blue} text-${colors.yellow} border-${colors.blue}`
                   }`}
@@ -193,9 +196,10 @@ const Stepper = () => {
             {index < totalSteps - 1 && (
               <div
                 className={`hidden md:block flex-1 h-1 mx-2 self-center
-                  ${index + 1 < currentStep
-                    ? `bg-${colors.blue}`
-                    : index + 1 === currentStep
+                  ${
+                    index + 1 < currentStep
+                      ? `bg-${colors.blue}`
+                      : index + 1 === currentStep
                       ? `bg-gradient-to-r from-${colors.blue} to-${colors.lightGray}`
                       : `bg-${colors.lightGray}`
                   }`}
@@ -476,7 +480,9 @@ const Stepper = () => {
                   className="w-full p-3 bg-[#2a2a2a] border border-[#3a3a3a] text-white rounded-md focus:ring-2 focus:ring-[#38AAC9] focus:border-[#38AAC9] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-[#38AAC9] file:text-white hover:file:bg-[#38AAC9]/90"
                 />
               </div>
-              <p className="mt-1 text-xs text-[#cccccc]">Please upload payment confirmation</p>
+              <p className="mt-1 text-xs text-[#cccccc]">
+                Please upload payment confirmation
+              </p>
             </div>
           </div>
 
@@ -498,8 +504,9 @@ const Stepper = () => {
             <button
               onClick={handleSubmit}
               style={{ backgroundColor: colors.yellow }}
-              className={`px-3 sm:px-6 py-2 sm:py-3 rounded-full font-medium text-black hover:bg-opacity-90 transform hover:scale-105 transition duration-300 shadow-lg text-sm sm:text-base min-w-32 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+              className={`px-3 sm:px-6 py-2 sm:py-3 rounded-full font-medium text-black hover:bg-opacity-90 transform hover:scale-105 transition duration-300 shadow-lg text-sm sm:text-base min-w-32 ${
+                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               disabled={isSubmitting}
             >
               {isSubmitting ? (

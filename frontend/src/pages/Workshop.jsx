@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 
 const Workshop = () => {
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
   const colors = {
     blue: "#38AAC9",
     yellow: "#E4CD15",
@@ -46,7 +48,7 @@ const Workshop = () => {
     try {
       console.log(screenshot);
       const response = await axios.post(
-        "http://localhost:8080/api/registration/workshop",
+        backend_url + "/api/registration/workshop",
         formData
       );
 
@@ -243,7 +245,7 @@ const Workshop = () => {
                 />
               </div>
             </div>
-  
+
             <div className="w-full">
               <label className="block text-sm font-medium text-white mb-2">
                 Transaction ID
@@ -267,9 +269,11 @@ const Workshop = () => {
                   accept="image/*"
                   onChange={handleFileChange}
                   className="w-full p-3 bg-[#2a2a2a] border border-[#3a3a3a] text-white rounded-md focus:ring-2 focus:ring-[#38AAC9] focus:border-[#38AAC9] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-[#38AAC9] file:text-white hover:file:bg-[#38AAC9]/90"
-                  />
+                />
               </div>
-              <p className="mt-1 text-xs text-[#cccccc]">Please upload payment confirmation </p>
+              <p className="mt-1 text-xs text-[#cccccc]">
+                Please upload payment confirmation{" "}
+              </p>
             </div>
           </div>
 
@@ -291,8 +295,9 @@ const Workshop = () => {
             <button
               onClick={handleSubmit}
               style={{ backgroundColor: colors.yellow }}
-              className={`px-3 sm:px-6 py-2 sm:py-3 rounded-full font-medium text-black hover:bg-opacity-90 transform hover:scale-105 transition duration-300 shadow-lg text-sm sm:text-base min-w-32 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+              className={`px-3 sm:px-6 py-2 sm:py-3 rounded-full font-medium text-black hover:bg-opacity-90 transform hover:scale-105 transition duration-300 shadow-lg text-sm sm:text-base min-w-32 ${
+                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               disabled={isSubmitting}
             >
               {isSubmitting ? (
