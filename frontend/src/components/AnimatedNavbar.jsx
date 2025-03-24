@@ -110,11 +110,32 @@ const AnimatedNavbar = () => {
   ];
 
   const handleRegisterClick = () => {
-    const registerSection = document.getElementById('register');
-    if (registerSection) {
-      registerSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Close mobile menu if open
     setIsOpen(false);
+    
+    // Check if we're already on the home page
+    if (window.location.pathname !== '/') {
+      // Navigate to home page first
+      navigate('/');
+      
+      // Add an event listener to scroll after the page loads
+      const scrollToRegister = () => {
+        const registerSection = document.getElementById('register');
+        if (registerSection) {
+          registerSection.scrollIntoView({ behavior: 'smooth' });
+          // Remove the event listener after we've used it
+          window.removeEventListener('load', scrollToRegister);
+        }
+      };
+      
+      window.addEventListener('load', scrollToRegister);
+    } else {
+      // If already on home page, just scroll to section
+      const registerSection = document.getElementById('register');
+      if (registerSection) {
+        registerSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   return (

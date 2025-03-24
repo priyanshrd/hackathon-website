@@ -2,7 +2,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AnimatedNavbar from "./components/AnimatedNavbar";
-import Register from "./pages/Register";
 import Timeline from "./pages/Timeline";
 import SubmitIdea from "./pages/SubmitIdea";
 import ComingSoon from "./pages/ComingSoon.jsx";
@@ -18,7 +17,6 @@ const App = () => {
         <AnimatedNavbar />
         <div className="pt-16">
           <Routes>
-            <Route path="/register" element={<Register />} />
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/hackathon" element={<Stepper />} />
             {/* <Route path="/idea" element={<SubmitIdea />} /> */}
