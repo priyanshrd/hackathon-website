@@ -196,7 +196,7 @@ const Home = () => {
       {/* Registration Section */}
       <section
         ref={registrationRef}
-        className="py-20 px-4 relative min-h-screen flex items-center"
+        className="py-20 px-4 relative  flex items-center"
       >
         <motion.div
           ref={ref}
