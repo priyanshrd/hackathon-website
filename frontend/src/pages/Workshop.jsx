@@ -234,7 +234,7 @@ const Workshop = () => {
             <div className="bg-[#2a2a2a] p-4 rounded-lg shadow-lg mb-6 w-full">
               <div className="flex items-center justify-center">
                 <img
-                  src="/QRcode.jpg"
+                  src="/testQrCode.jpg"
                   alt="Payment QR Code"
                   className="max-w-[200px] max-h-[180px] mx-auto"
                   onError={(e) => {

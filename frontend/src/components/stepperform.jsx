@@ -443,7 +443,7 @@ const Stepper = () => {
             <div className="bg-[#2a2a2a] p-6 rounded-lg shadow-lg border border-[#3a3a3a] mb-6 w-full max-w-md">
               <div className="bg-[#1a1a1a] w-full h-48 flex items-center justify-center rounded-lg">
                 <img
-                  src="/QRcode.jpg"
+                  src="/testQrCode.jpg"
                   alt="Payment QR Code"
                   className="max-w-[200px] max-h-[180px] mx-auto"
                   onError={(e) => {
