@@ -54,11 +54,9 @@ const [members, setMembers] = useState([
         });
       }
     } else if (newMembers.length > count) {
-      // Remove excess members if needed
       newMembers = newMembers.slice(0, count);
     }
     
-    // Ensure the first member is the team lead with the email set
     newMembers[0] = {
       ...newMembers[0],
       email: email || newMembers[0].email,
@@ -142,12 +140,9 @@ const [members, setMembers] = useState([
       return;
     }
     
-    // If moving from step 2 to step 3, ensure members array is correctly initialized
     if (currentStep === 2) {
-      // Make sure we have the correct number of members based on memberCount
       let updatedMembers = [...members];
       
-      // Adjust the members array to match memberCount
       if (updatedMembers.length < memberCount) {
         while (updatedMembers.length < memberCount) {
           updatedMembers.push({
@@ -161,7 +156,6 @@ const [members, setMembers] = useState([
         updatedMembers = updatedMembers.slice(0, memberCount);
       }
       
-      // Ensure the first member is the team lead with email filled
       updatedMembers[0] = {
         ...updatedMembers[0],
         email: email || updatedMembers[0].email,
@@ -172,7 +166,6 @@ const [members, setMembers] = useState([
     }
     
     if (currentStep === 3) {
-      // Validate that all member fields are filled
       const isValid = members.every(member => 
         member.name && member.email && member.phoneNumber
       );
@@ -183,10 +176,8 @@ const [members, setMembers] = useState([
       }
     }
     
-    // Clear any previous errors
     setError("");
     
-    // Proceed to next step
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     }
@@ -214,7 +205,6 @@ const [members, setMembers] = useState([
     }
   };
 
-  // Render stepper header
   const renderStepper = () => {
     return (
       <div className="flex flex-wrap justify-center md:justify-between w-full mb-8 max-w-3xl mx-auto px-2 sm:px-4">

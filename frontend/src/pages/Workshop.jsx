@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Workshop = () => {
+  const navigate = useNavigate();
   const backend_url = "https://techtank-backend.vercel.app";
 
   const colors = {
@@ -118,6 +120,7 @@ const Workshop = () => {
           setPhoneNumber("");
           setTransactionId("");
           setScreenshot(null);
+          navigate('/');
         }, 2000);
       }
     } catch (error) {
@@ -142,13 +145,15 @@ const Workshop = () => {
 
   const goToStep = (step) => {
     if (step >= 1 && step <= totalSteps) {
-      // Only allow going to step 2 if step 1 is valid
-      if (step === 2 && !validateStep1()) return;
-      setCurrentStep(step);
+      if (step > currentStep) {
+        if (step === 2 && !validateStep1()) return;
+      }
+      if (step <= currentStep) {
+        setCurrentStep(step);
+      }
     }
   };
 
-  // Render stepper header
   const renderStepper = () => {
     return (
       <div className="flex flex-wrap justify-center md:justify-between w-full mb-8 max-w-2xl mx-auto px-2 sm:px-4">
@@ -156,8 +161,11 @@ const Workshop = () => {
           <React.Fragment key={index}>
             <div className="flex flex-col pr-1 items-center mb-4 sm:mb-0">
               <button
-              
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-base sm:text-lg font-bold transition-all duration-300 border-2 focus:outline-none"
+                onClick={() => goToStep(index + 1)}
+                disabled={index + 1 > currentStep}
+                className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-base sm:text-lg font-bold transition-all duration-300 border-2 focus:outline-none ${
+                  index + 1 > currentStep ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 style={{
                   backgroundColor:
                     index + 1 === currentStep ? colors.yellow : colors.blue,
@@ -186,7 +194,7 @@ const Workshop = () => {
                   index + 1
                 )}
               </button>
-              <span className="text-md sm:text-white text-[#1a1a1a] mt-2  text-center">
+              <span className="text-md sm:text-white text-[#1a1a1a] mt-2 text-center">
                 {index === 0 && "Personal Info"}
                 {index === 1 && "Payment"}
               </span>
