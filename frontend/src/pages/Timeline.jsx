@@ -27,13 +27,23 @@ const Timeline = () => {
     {
       title: "Pre-Hack Workshop",
       date: "April 7, 2025 (9:00 AM - 2 PM)",
-      description: "Learn how to 'Build Scalable Tech Products/Services for B2B & B2C' in our workshop led by industry experts from E-Dock. Venue: IEM Auditorium, RVCE.",
+      description: () => (
+        <>
+          Learn how to 'Build Scalable Tech Products/Services for B2B & B2C' in our workshop led by industry experts from EDock.
+          <br />
+          Venue: IEM Auditorium, RVCE.
+        </>
+      ),
       highlight: true
     },
     {
       title: "Online Ideation Round 1 Submission",
       date: "April 7 (5 PM) - April 9 (5 PM), 2025",
-      description: "Submit your #TechTank idea online in 6 slides on the website: techtankrvce.com"
+      description: () => (
+        <>
+          Submit your Tech Tank idea online in 6 slides on the website: <a href='https://www.techtankrvce.com'>techtankrvce.com</a>
+        </>
+      ),
     },
     {
       title: "Round 1 Results Announcement",
@@ -43,7 +53,13 @@ const Timeline = () => {
     {
       title: "12-Hour Hackathon (Round 2)",
       date: "April 11 (8 PM) - April 12 (8 AM), 2025",
-      description: "#TechTankers build their projects overnight. Venue: Design Thinking Huddle (DTH), RVCE."
+      description: () => (
+        <>
+          Tech Tankers build their projects overnight. 
+          <br/>
+          Venue: Design Thinking Huddle (DTH), RVCE.      
+        </>
+      ),
     },
     {
       title: "Final Pitch to Investors & Mentors",
@@ -91,7 +107,9 @@ const Timeline = () => {
                 <div className={`p-6 ${event.highlight ? 'bg-[#E4CD15]/10 border-[#E4CD15]' : 'bg-[#38AAC9]/10 border-[#38AAC9]'} rounded-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg ${event.highlight ? 'hover:shadow-[#E4CD15]/30' : 'hover:shadow-[#38AAC9]/30'} border-l-4`}>
                   <div className={`${event.highlight ? 'text-[#38AAC9]' : 'text-[#E4CD15]'} font-bold mb-2`}>{event.date}</div>
                   <h3 className={`text-xl font-bold mb-2 ${event.highlight ? 'text-[#E4CD15]' : 'text-[#38AAC9]'}`}>{event.title}</h3>
-                  <p className="text-white">{event.description}</p>
+                  <p className="text-white">
+                    {typeof event.description === 'function' ? event.description() : event.description}
+                  </p>
                 </div>
               </div>
             ))}
