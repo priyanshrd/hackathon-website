@@ -25,24 +25,35 @@ const Timeline = () => {
 
   const timelineEvents = [
     {
-      title: "Register for the Hackathon",
-      date: "March 24 - April 6, 2025",
-      description: "Register for the Hackathon (includes the workshop) or just the Workshop and gear up to build your own scalable, entrepreneurial success story."
+      title: "Pre-Hack Workshop",
+      date: "April 7, 2025 (9:00 AM - 2 PM)",
+      description: "Learn how to 'Build Scalable Tech Products/Services for B2B & B2C' in our workshop led by industry experts from E-Dock. Venue: IEM Auditorium, RVCE.",
+      highlight: true
     },
     {
-      title: "Online Prototype Submission (Round 1)",
-      date: "April 7 - April 9, 2025",
-      description: "Submit your problem statement aligned with the provided tracks. Teams will be evaluated based on innovation, feasibility, and scalability. Shortlisted teams move to Round 2."
+      title: "Online Ideation Round 1 Submission",
+      date: "April 7 (5 PM) - April 9 (5 PM), 2025",
+      description: "Submit your #TechTank idea online in 6 slides on the website: techtankrvce.com"
     },
     {
-      title: "Build & Refine Your Solution (Round 2)",
-      date: "April 11 - April 12, 2025",
-      description: "Work overnight in a high-energy innovation space. Dinner will be provided for all participants."
+      title: "Round 1 Results Announcement",
+      date: "April 11, 2025 (5 PM)",
+      description: "Shortlisted teams will move to Round 2 (Hackathon)"
     },
     {
-      title: "The Pitch (Final Round)",
-      date: "April 12, 2025",
-      description: "Present to a panel of judges & investors. Evaluations based on technical execution, business viability & innovation. Results announced via email & website the same day!"
+      title: "12-Hour Hackathon (Round 2)",
+      date: "April 11 (8 PM) - April 12 (8 AM), 2025",
+      description: "#TechTankers build their projects overnight. Venue: Design Thinking Huddle (DTH), RVCE."
+    },
+    {
+      title: "Final Pitch to Investors & Mentors",
+      date: "April 12, 2025 (10 AM - 2 PM)",
+      description: "Present your project to investors and mentors from industry."
+    },
+    {
+      title: "Final Results Announcement",
+      date: "April 12, 2025 (2 PM)",
+      description: "Winners will be declared!"
     }
   ];
 
@@ -54,7 +65,7 @@ const Timeline = () => {
     >
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
-          Hackathon Timeline
+          Event Timeline
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
         </h2>
         
@@ -74,12 +85,12 @@ const Timeline = () => {
                 }}
               >
                 {/* Timeline Dot */}
-                <div className="absolute left-4 top-0 w-8 h-8 bg-[#E4CD15] rounded-full transform -translate-x-1/2 z-10"></div>
+                <div className={`absolute left-4 top-0 w-8 h-8 ${event.highlight ? 'bg-[#E4CD15]' : 'bg-[#38AAC9]'} rounded-full transform -translate-x-1/2 z-10`}></div>
                 
                 {/* Timeline Content */}
-                <div className="p-6 bg-[#38AAC9]/10 rounded-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#38AAC9]/30 border-l-4 border-[#38AAC9]">
-                  <div className="text-[#E4CD15] font-bold mb-2">{event.date}</div>
-                  <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">{event.title}</h3>
+                <div className={`p-6 ${event.highlight ? 'bg-[#E4CD15]/10 border-[#E4CD15]' : 'bg-[#38AAC9]/10 border-[#38AAC9]'} rounded-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg ${event.highlight ? 'hover:shadow-[#E4CD15]/30' : 'hover:shadow-[#38AAC9]/30'} border-l-4`}>
+                  <div className={`${event.highlight ? 'text-[#38AAC9]' : 'text-[#E4CD15]'} font-bold mb-2`}>{event.date}</div>
+                  <h3 className={`text-xl font-bold mb-2 ${event.highlight ? 'text-[#E4CD15]' : 'text-[#38AAC9]'}`}>{event.title}</h3>
                   <p className="text-white">{event.description}</p>
                 </div>
               </div>
