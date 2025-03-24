@@ -160,7 +160,7 @@ const About = () => {
                 <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
                   Teams
                 </h3>
-                <p>Teams of 2-3 members with complementary skills</p>
+                <p>Teams of 2-4 members with complementary skills</p>
               </div>
 
               <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
@@ -450,7 +450,7 @@ const About = () => {
                 <h3 className="text-2xl font-bold mb-2 text-[#38AAC9]">
                   Hackathon Team
                 </h3>
-                <p className="mb-4">Team of 2-3 members</p>
+                <p className="mb-4">Team of 2-4 members</p>
                 <div className="text-3xl font-bold mb-6 text-[#E4CD15]">
                   ₹399 per team
                 </div>
