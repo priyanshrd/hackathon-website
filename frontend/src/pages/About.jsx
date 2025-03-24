@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import logo from "../../public/tech_TANK.jpeg";
 import { useNavigate } from "react-router-dom";
 
 const About = () => {
@@ -48,7 +47,7 @@ const About = () => {
           <div className="w-48 h-48 md:w-64 md:h-64 rounded-full flex items-center justify-center bg-[#1a1a1a] border-4 border-[#38AAC9] shadow-xl hover:shadow-[#38AAC9]/100 hover:shadow-xl shadow-[#E4CD15]/60 transition-all duration-500 ease-in-out">
             <span>
               <img
-                src={logo}
+                src="/tech_TANK.jpeg"
                 alt="Logo"
                 className="w-48 h-48 sm:h-8 md:h-16 object-cover object-center"
               />

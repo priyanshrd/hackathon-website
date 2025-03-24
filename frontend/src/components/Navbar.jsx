@@ -1,8 +1,6 @@
 // src/components/AnimatedNavbar.jsx
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import logo from "../../public/logo.png";
 
 // CSS variables - you can adjust these as needed
 const colors = {
@@ -114,7 +112,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <img src={logo} alt="Logo" className="h-8 w-8 mr-2" />
+            <img src="/logo.png" alt="Logo" className="h-8 w-8 mr-2" />
           </div>
 
           <div className="flex items-center space-x-4">
