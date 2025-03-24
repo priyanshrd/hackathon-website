@@ -62,7 +62,7 @@ const Timeline = () => {
       ),
     },
     {
-      title: "Final Pitch to Investors & Mentors",
+      title: "Final Pitch to Investors & Judges",
       date: "April 12, 2025 (10 AM - 2 PM)",
       description: "Present your project to investors and mentors from industry."
     },
