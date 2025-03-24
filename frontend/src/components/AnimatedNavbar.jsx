@@ -188,7 +188,7 @@ const AnimatedNavbar = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <button
-                onClick={() => navigate("/hackathon")} // Updated to use navigate
+                onClick={() => navigate("/")} // Updated to use navigate
                 className="px-6 py-2 bg-gradient-to-r from-[#fcf300] to-[#ffc600] text-[#072ac8] font-bold rounded-lg hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300 transform hover:translate-y-[-2px]"
               >
                 Register Now
@@ -310,7 +310,7 @@ const AnimatedNavbar = () => {
                 >
                   <button
                     onClick={() => {
-                      navigate("/hackathon"); // Updated to use navigate
+                      navigate("/"); // Updated to use navigate
                       setIsOpen(false);
                     }}
                     className="block w-full py-3 bg-[#fcf300] text-[#072ac8] font-bold rounded-xl text-center hover:bg-[#ffc600] hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300"
