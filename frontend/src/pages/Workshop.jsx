@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 
 const Workshop = () => {
-  const backend_url = import.meta.env.VITE_BACKEND_URL;
+  const backend_url = "https://techtank-backend.vercel.app";
 
   const colors = {
     blue: "#38AAC9",

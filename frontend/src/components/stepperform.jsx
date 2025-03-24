@@ -3,7 +3,7 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Stepper = () => {
-  const backend_url = import.meta.env.VITE_BACKEND_URL;
+  const backend_url = "https://techtank-backend.vercel.app";
 
   // Color palette
   const colors = {
