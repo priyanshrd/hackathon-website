@@ -76,7 +76,7 @@ const About = () => {
     },
     {
       name: "Kartik Sirigeri",
-      title: "Opentext",
+      title: "OpenText",
       image: "/12.png",
     },
 ];
