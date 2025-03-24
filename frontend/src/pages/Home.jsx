@@ -105,7 +105,7 @@ const Home = () => {
             className="registration-button py-3 px-6 rounded-full bg-yellow-400 text-black font-bold hover:bg-cyan-500 focus:outline-none w-full sm:w-auto relative overflow-hidden transform transition-all duration-300 hover:scale-105 pulse-effect"
           >
             <span className="relative z-10">
-              Hackathon <br /> (Workshop Included)
+              HACKATHON <br /> (WORKSHOP INCLUDED)
             </span>
             <span
               className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-cyan-500 opacity-0 hover:opacity-30 transition-opacity duration-300"
@@ -118,12 +118,12 @@ const Home = () => {
             onClick={() => navigate("/workshop")}
             className="registration-button py-3 px-6 rounded-full bg-transparent text-white border-2 border-white hover:border-yellow-400 hover:text-yellow-400 focus:outline-none w-full sm:w-auto transition-all duration-300"
           >
-            Workshop Only
+            WORKSHOP ONLY
           </button>
         </div>
 
         {/* Call to Action */}
-        <p className="mt-6 text-sm sm:text-base text-gray-400">
+        <p className="mt-6 text-base sm:text-lg text-[#cccccc]">
           Register now to secure your spot!
         </p>
       </div>
