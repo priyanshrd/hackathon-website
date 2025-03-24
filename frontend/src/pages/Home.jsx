@@ -55,7 +55,7 @@ const Home = () => {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: gridStyles }} />
-      {/* Adjusted height to account for the navbar */}
+
       <div className="flex flex-col items-center justify-center bg-black text-white text-center px-4 relative"
            style={{ height: "calc(100vh - 4rem)" }}> {/* Adjust 4rem to match your navbar height */}
         {/* LOGOS - Larger and More Responsive */}
