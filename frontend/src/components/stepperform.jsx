@@ -239,7 +239,7 @@ const Stepper = () => {
             <input
               type="email"
               id="email"
-              placeholder="johndoe@gmail.com"
+              placeholder="example@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-4 text-lg bg-[#2a2a2a] border border-[#3a3a3a] text-white rounded-lg focus:ring-2 focus:ring-[#38AAC9] focus:border-[#38AAC9]"
@@ -296,7 +296,7 @@ const Stepper = () => {
                 className="w-full p-3 bg-[#2a2a2a] border border-[#3a3a3a] text-white rounded-md focus:ring-2 focus:ring-[#38AAC9] focus:border-[#38AAC9]"
                 required
               >
-                {[1, 2, 3, 4, 5].map((num) => (
+                {[ 2, 3, 4].map((num) => (
                   <option key={num} value={num}>
                     {num} Member{num > 1 ? "s" : ""}
                   </option>
