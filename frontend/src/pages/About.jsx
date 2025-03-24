@@ -1,11 +1,88 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const About = () => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState({});
   const sectionRefs = useRef({});
+  const registrationRef = useRef(null);
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    threshold: 0.2,
+    triggerOnce: false,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  const scrollToRegistration = () => {
+    registrationRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const variants = {
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { 
+        type: "spring",
+        damping: 10,
+        stiffness: 50,
+        duration: 0.8
+      } 
+    },
+    hiddenLeft: { opacity: 0, x: -100 },
+    hiddenRight: { opacity: 0, x: 100 }
+  };
+
+  const gridStyles = `
+    .title-container {
+      position: relative;
+      z-index: 10;
+    }
+    .grid-behind-title {
+      position: absolute;
+      width: 180%;
+      height: 450%;
+      top: -170%;
+      left: -38%;
+      background-size: 40px 40px;
+      background-image:
+        linear-gradient(to right, rgba(171, 180, 185, 0.4) 2px, transparent 2px),
+        linear-gradient(to bottom, rgba(160, 180, 180, 0.4) 2px, transparent 2px);
+      transform: perspective(500px) rotateX(60deg);
+      z-index: 1;
+    }
+    .registration-button {
+      transition: all 0.3s ease;
+    }
+    .registration-button:hover {
+      transform: translateY(-3px);
+    }
+    .premium-button {
+      background: linear-gradient(135deg, #00b4db, #0083b0);
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .premium-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: all 0.5s ease;
+    }
+    .premium-button:hover::before {
+      left: 100%;
+    }
+  `;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -38,7 +115,6 @@ const About = () => {
   };
 
   const downloadBrochure = () => {
-    // Replace with actual brochure PDF URL
     const pdfUrl = "/TechTankRVCE_Brochure.pdf";
     const link = document.createElement("a");
     link.href = pdfUrl;
@@ -79,458 +155,298 @@ const About = () => {
       title: "OpenText",
       image: "/12.png",
     },
-];
+  ];
+
   return (
     <div className="bg-black text-white min-h-screen font-sans">
-      {/* Header / Hero Section */}
-      <header className="h-screen flex flex-col justify-center items-center text-center px-4">
-        <div
-          className="mb-12 animate-fadeIn"
-          style={{ animation: "scale-in 1s forwards" }}
-        >
-          <div className="w-48 h-48 md:w-64 md:h-64 rounded-full flex items-center justify-center bg-[#1a1a1a] border-4 border-[#38AAC9] shadow-xl hover:shadow-[#38AAC9]/100 hover:shadow-xl shadow-[#E4CD15]/60 transition-all duration-500 ease-in-out">
-            <span>
-              <img
-                src="/tech_TANK.jpeg"
-                alt="Logo"
-                className="w-48 h-48 sm:h-8 md:h-16 object-cover object-center"
-              />
+      <style dangerouslySetInnerHTML={{ __html: gridStyles }} />
+      
+      {/* Hero Section */}
+      <div className="flex flex-col items-center justify-center bg-black text-white text-center px-4 relative"
+           style={{ height: "calc(100vh - 4rem)" }}>
+        {/* LOGOS */}
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-14">
+          <img
+            src="/rvce.png"
+            alt="RVCE"
+            className="h-16 w-auto sm:h-20 md:h-28 lg:h-32 object-contain"
+          />
+          <img
+            src="/acm.png"
+            alt="ACM RVCE"
+            className="h-16 w-auto sm:h-20 md:h-28 lg:h-32 object-contain"
+          />
+          <img
+            src="/gdg.png"
+            alt="Google Developer Group"
+            className="h-16 w-auto sm:h-20 md:h-28 lg:h-32 object-contain"
+          />
+        </div>
+
+        {/* Title Section */}
+        <div className="title-container relative">
+          <div className="grid-behind-title"></div>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-wide drop-shadow-lg relative z-10">
+            <span className="text-cyan-400">tech</span>
+            <span className="text-yellow-400 relative">
+              TAN
+              <span className="bite-effect">K</span>
             </span>
-          </div>
-        </div>
-
-        <div className="max-w-3xl mx-auto">
-          <h1
-            className="text-4xl md:text-6xl font-bold mb-6 text-[#E4CD15]"
-            style={{ animation: "fade-in-up 1s 0.3s both" }}
-          >
-            Build. Pitch. Win.
           </h1>
-          <p
-            className="text-xl md:text-2xl mb-6 text-[#38AAC9]"
-            style={{ animation: "fade-in-up 1s 0.6s both" }}
-          >
-            Where Innovation Meets Entrepreneurship
-          </p>
-          <p
-            className="mb-10 text-lg"
-            style={{ animation: "fade-in-up 1s 0.9s both" }}
-          >
-            Tech Tank is a Shark Tank-inspired hackathon organized by ACM RVCE 
-            Student Chapter and GDG RVCE. It's a unique platform where technology 
-            meets business, challenging participants to develop scalable, 
-            investor-ready solutions.
-          </p>
-          <button
-            onClick={downloadBrochure}
-            className="inline-block px-8 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300 transform hover:-translate-y-1"
-            style={{ animation: "fade-in-up 1s 1.2s both" }}
-          >
-            Download Brochure
-          </button>
         </div>
-      </header>
 
-      <main>
+        {/* Subtitle */}
+        <p className="mt-3 text-base sm:text-lg md:text-xl text-gray-300 italic">
+          A Shark Tank Inspired
+        </p>
+        <p className="text-lg sm:text-xl md:text-2xl font-semibold mt-1 mb-8">
+          12-Hour Hackathon
+        </p>
+
+        {/* Scroll Down Arrow */}
+        <motion.div 
+          className="absolute bottom-12 flex flex-col items-center cursor-pointer"
+          onClick={scrollToRegistration}
+        >
+          {/* Animated Color Bars */}
+          <div className="flex items-center justify-center gap-4 w-full mb-2">
+            <motion.div
+              className="h-1 w-16 rounded-full"
+              style={{ backgroundColor: "#38AAC9" }}
+              initial={{ scaleX: 0.5, originX: 1 }}
+              animate={{
+                scaleX: [0.5, 1.5, 0.5],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <motion.div
+              className="h-1 w-16 rounded-full"
+              style={{ backgroundColor: "#E4CD15" }}
+              initial={{ scaleX: 0.5, originX: 0 }}
+              animate={{
+                scaleX: [0.5, 1.5, 0.5],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5
+              }}
+            />
+          </div>
+        
+          {/* Simple White Arrow */}
+          <motion.div
+            animate={{
+              y: [0, 8, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-8 w-8 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+          </motion.div>
+        </motion.div>
+      </div>
+
         {/* Who Can Participate Section */}
         <section
           id="who-can-participate"
           ref={addSectionRef("who-can-participate")}
-          className={`py-20 px-4 ${
+          className={`py-10 px-4 ${
             isVisible["who-can-participate"]
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
           } transition-all duration-1000 ease-out`}
         >
-          <div className="max-w-6xl mx-auto">
+          
+        <div className="max-w-6xl mx-auto">
+       
             <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
-              Who Can Participate?
+              About 
               <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1  gap-8">
               <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Students
-                </h3>
-                <p>Undergraduate and postgraduate students from any discipline</p>
+                
+                <p>TechTank is a Shark Tank-inspired 12-hour hackathon hosted by the  RVCE ACM Student Chapter and Google Developer Groups (GDG) RVCE. Designed to bridge the gap between technical expertise and business acumen, TechTank empowers students to build solutions that are not only technically sound but also market-ready.
+                </p>
               </div>
 
-              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Teams
-                </h3>
-                <p>Teams of 2-4 members with complementary skills</p>
-              </div>
-
-              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Individuals
-                </h3>
-                <p>Solo participants can join for the workshop</p>
-              </div>
+              
             </div>
 
-            <div className="mt-12 p-6 bg-[#38AAC9]/10 border-l-4 border-[#38AAC9] rounded-r-lg">
-              <p className="text-lg">
-                Whether you're a coder, designer, or business enthusiast, Tech Tank 
-                provides the perfect platform to showcase your skills and turn ideas 
-                into reality!
-              </p>
-            </div>
+            
           </div>
         </section>
 
-        {/* About Section */}
+        {/* Judges Section */}
         <section
-          id="about"
-          ref={addSectionRef("about")}
-          className={`py-20 px-4 ${
-            isVisible["about"]
+          id="judges"
+          ref={addSectionRef("judges")}
+          className={`py-10 px-4 ${
+            isVisible["judges"]
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-10"
           } transition-all duration-1000 ease-out`}
         >
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-[#E4CD15] inline-block relative">
-              About Tech Tank
-              <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
-            </h2>
-
-            <p className="text-lg mb-6">
-              Tech Tank is a unique hackathon that combines technology development 
-              with business pitching. Unlike traditional hackathons, we emphasize 
-              creating solutions that are not just technically sound but also 
-              commercially viable and investor-ready.
-            </p>
-
-            <p className="text-lg">
-              Organized by ACM RVCE Student Chapter in collaboration with GDG RVCE, 
-              this event bridges the gap between technical skills and entrepreneurial 
-              thinking, preparing participants for real-world challenges in the 
-              tech industry.
-            </p>
-          </div>
-        </section>
-
-        {/* Timeline Section
-        <section 
-          id="timeline" 
-          ref={addSectionRef('timeline')}
-          className={`py-20 px-4 ${isVisible['timeline'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-out`}
-        >
-          <div className="max-w-6xl mx-auto">
+<div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
-              Event Timeline
+              Meet Your Judges
               <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
             </h2>
-            
-            <div className="relative">
-              {/* Timeline Line
-              <div className="absolute left-0 md:left-1/2 w-1 h-full bg-[#38AAC9] -ml-0.5 md:-ml-0.5"></div>
 
-              {/* Timeline Items 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Workshop 
-                <div className="md:col-start-2 relative mb-16 md:pl-12">
-                  <div className="absolute top-0 -left-4 md:-left-4 w-8 h-8 bg-[#E4CD15] rounded-full"></div>
-                  <div className="p-6 bg-[#38AAC9]/10 rounded-lg">
-                    <div className="text-[#E4CD15] font-bold mb-2">April 7, 2024 | 2 PM - 5 PM</div>
-                    <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">Workshop</h3>
-                    <p>IEM Auditorium, RVCE</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {judges.map((judge, index) => (
+                <motion.div
+                  key={judge.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isVisible["judges"] ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                  className="bg-[#1a1a1a] p-6 rounded-lg border border-[#38AAC9]/30 hover:border-[#E4CD15] transition-all duration-300 flex flex-col items-center"
+                >
+                  <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-[#38AAC9] relative group">
+                    <img
+                      src={judge.image}
+                      alt={judge.name}
+                      className="w-full h-full object-cover"
+                    />
+                    <a 
+                      href={`https://www.linkedin.com/in/${judge.linkedin || ''}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    >
+                      <svg className="w-8 h-8 text-[#38AAC9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                    </a>
                   </div>
-                </div>
-
-                {/* Round 1 
-                <div className="md:col-start-1 md:text-right relative mb-16 md:pr-12">
-                  <div className="absolute top-0 -right-4 md:-right-4 w-8 h-8 bg-[#E4CD15] rounded-full"></div>
-                  <div className="p-6 bg-[#38AAC9]/10 rounded-lg">
-                    <div className="text-[#E4CD15] font-bold mb-2">April 7, 5 PM - April 9, 5 PM</div>
-                    <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">Round 1 (Online)</h3>
-                    <p>Initial proposal submission</p>
-                  </div>
-                </div>
-
-                {/* Round 
-                <div className="md:col-start-2 relative mb-16 md:pl-12">
-                  <div className="absolute top-0 -left-4 md:-left-4 w-8 h-8 bg-[#E4CD15] rounded-full"></div>
-                  <div className="p-6 bg-[#38AAC9]/10 rounded-lg">
-                    <div className="text-[#E4CD15] font-bold mb-2">April 11, 8 PM - April 12, 8 AM</div>
-                    <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">Round 2 (Offline)</h3>
-                    <p>Design Thinking Huddle</p>
-                  </div>
-                </div>
-                <div className="md:col-start-1 md:text-right relative mb-16 md:pr-12">
-                  <div className="absolute top-0 -right-4 md:-right-4 w-8 h-8 bg-[#E4CD15] rounded-full"></div>
-                  <div className="p-6 bg-[#38AAC9]/10 rounded-lg">
-                    <div className="text-[#E4CD15] font-bold mb-2">April 12, 11 AM onwards</div>
-                    <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">Final Pitches</h3>
-                    <p>Presentation to judges</p>
-                  </div>
-                </div>
-              </div>
+                  <h3 className="text-xl font-bold text-center text-[#E4CD15]">
+                    {judge.name}
+                  </h3>
+                  <p className="text-center text-[#38AAC9] mb-2">{judge.title}</p>
+                  <p className="text-center text-white">{judge.company}</p>
+                </motion.div>
+              ))}
             </div>
-          </div>
-        </section> 
-*/}
+          </div>        </section>
 
-        {/* Judges Section */}
+
+{/* Workshop Section */}
 <section
-  id="judges"
-  ref={addSectionRef("judges")}
-  className={`py-20 px-4 ${
-    isVisible["judges"]
+  id="workshop"
+  ref={addSectionRef("workshop")}
+  className={`py-10 px-4 ${
+    isVisible["workshop"]
       ? "opacity-100 translate-y-0"
       : "opacity-0 translate-y-10"
   } transition-all duration-1000 ease-out`}
 >
   <div className="max-w-6xl mx-auto">
+    {/* Section Title with Underline */}
     <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
-      Meet Your Judges
+      Pre-Hackathon Workshop
       <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
     </h2>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {/* Judge 1 */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isVisible["judges"] ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="bg-[#1a1a1a] p-6 rounded-lg border border-[#38AAC9]/30 hover:border-[#E4CD15] transition-all duration-300 flex flex-col items-center"
-      >
-        <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-[#38AAC9] relative group">
-          <img
-            src="/7.png"
-            alt="Siddhant Goswami"
-            className="w-full h-full object-cover"
-          />
-          <a 
-            href="https://www.linkedin.com/in/siddhant-goswami-6444b0146/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <svg className="w-8 h-8 text-[#38AAC9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-          </a>
+    {/* Workshop Card */}
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={isVisible["workshop"] ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="bg-gradient-to-r from-[#38AAC9]/10 to-[#E4CD15]/10 p-8 rounded-xl border-l-4 border-[#38AAC9] shadow-lg hover:shadow-xl transition-all duration-300"
+    >
+      <div className="flex flex-col md:flex-row gap-8 items-start">
+        {/* Speaker Profile */}
+        <div className="w-full md:w-1/3 flex flex-col items-center">
+          <div className="relative group mb-4">
+            <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-[#38AAC9] relative group">
+              <img 
+                src="/21.jpg" 
+                alt="Utsav Singhal" 
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.onerror = null; 
+                  e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'%3E%3C/path%3E%3C/svg%3E";
+                }}
+              />
+              <a 
+                href="https://www.linkedin.com/in/utsav-singhal-986812179/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <svg className="w-8 h-8 text-[#38AAC9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div className="text-center">
+            <h3 className="text-xl font-bold text-[#E4CD15]">Utsav Singhal</h3>
+            <p className="text-[#38AAC9]">Co-Founder, Stealth AI Startup</p>
+            <p className="text-white">IIT Delhi Alumnus</p>
+          </div>
         </div>
-        <h3 className="text-xl font-bold text-center text-[#E4CD15]">
-          Siddhant Goswami
-        </h3>
-        <p className="text-center text-[#38AAC9] mb-2">Founder & CEO</p>
-        <p className="text-center text-white">100xEngineers+</p>
-      </motion.div>
 
-      {/* Judge 2 */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isVisible["judges"] ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="bg-[#1a1a1a] p-6 rounded-lg border border-[#38AAC9]/30 hover:border-[#E4CD15] transition-all duration-300 flex flex-col items-center"
-      >
-        <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-[#38AAC9] relative group">
-          <img
-            src="/8.png"
-            alt="Arshdeep Singh"
-            className="w-full h-full object-cover"
-          />
-          <a 
-            href="https://www.linkedin.com/in/065rsh/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <svg className="w-8 h-8 text-[#38AAC9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-          </a>
+        {/* Workshop Content */}
+        <div className="w-full md:w-2/3">
+          <div className="mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">
+              "Building Scalable Tech Products & Services for B2B & B2C"
+            </h2>
+            <p className="text-lg text-gray-300">
+              Join our exclusive workshop with <span className="font-semibold text-[#E4CD15]">Utsav Singhal</span> to gain 
+              practical insights from real-world startup experiences and learn how to build robust, 
+              high-impact technology solutions that scale.
+            </p>
+          </div>
+          
+          {/* Practical Info */}
+          <div className="bg-[#1a1a1a]/80 p-4 rounded-lg border border-[#38AAC9]/30">
+            <div className="flex flex-col sm:flex-row justify-between gap-4">
+              <div>
+                <h4 className="text-lg font-semibold text-[#E4CD15]">Date & Time</h4>
+                <p className="text-white">April 7, 2025</p>
+                <p className="text-gray-300">9:00 AM - 2:00 PM</p>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-[#E4CD15]">Venue</h4>
+                <p className="text-white">IEM Auditorium</p>
+                <p className="text-gray-300">RVCE Campus</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <h3 className="text-xl font-bold text-center text-[#E4CD15]">
-          Arshdeep Singh
-        </h3>
-        <p className="text-center text-[#38AAC9] mb-2">Founder</p>
-        <p className="text-center text-white">EDock</p>
-      </motion.div>
-
-      {/* Judge 3 */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isVisible["judges"] ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="bg-[#1a1a1a] p-6 rounded-lg border border-[#38AAC9]/30 hover:border-[#E4CD15] transition-all duration-300 flex flex-col items-center"
-      >
-        <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-[#38AAC9] relative group">
-          <img
-            src="/9.png"
-            alt="Shivaram K R"
-            className="w-full h-full object-cover"
-          />
-          <a 
-            href="https://www.linkedin.com/in/shivaramkrs/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <svg className="w-8 h-8 text-[#38AAC9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-          </a>
-        </div>
-        <h3 className="text-xl font-bold text-center text-[#E4CD15]">
-          Shivaram K R
-        </h3>
-        <p className="text-center text-[#38AAC9] mb-2">Founder</p>
-        <p className="text-center text-white">Hue Learn</p>
-      </motion.div>
-
-      {/* Judge 4 */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isVisible["judges"] ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="bg-[#1a1a1a] p-6 rounded-lg border border-[#38AAC9]/30 hover:border-[#E4CD15] transition-all duration-300 flex flex-col items-center"
-      >
-        <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-[#38AAC9] relative group">
-          <img
-            src="/10.png"
-            alt="Sriharsha Donthi"
-            className="w-full h-full object-cover"
-          />
-          <a 
-            href="https://www.linkedin.com/in/sriharshadonthi/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <svg className="w-8 h-8 text-[#38AAC9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-          </a>
-        </div>
-        <h3 className="text-xl font-bold text-center text-[#E4CD15]">
-          Sriharsha Donthi
-        </h3>
-        <p className="text-center text-[#38AAC9] mb-2">Senior Engineer</p>
-        <p className="text-center text-white">Oracle</p>
-      </motion.div>
-
-      {/* Judge 5 */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isVisible["judges"] ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        className="bg-[#1a1a1a] p-6 rounded-lg border border-[#38AAC9]/30 hover:border-[#E4CD15] transition-all duration-300 flex flex-col items-center"
-      >
-        <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-[#38AAC9] relative group">
-          <img
-            src="/11.png"
-            alt="Raghu Sarangarajan"
-            className="w-full h-full object-cover"
-          />
-          <a 
-            href="https://www.linkedin.com/in/raghusarangarajan/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <svg className="w-8 h-8 text-[#38AAC9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-          </a>
-        </div>
-        <h3 className="text-xl font-bold text-center text-[#E4CD15]">
-          Raghu Sarangarajan
-        </h3>
-        <p className="text-center text-[#38AAC9] mb-2">Founder & CEO</p>
-        <p className="text-center text-white">Cubyts</p>
-      </motion.div>
-
-      {/* Judge 6 */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isVisible["judges"] ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.6 }}
-        className="bg-[#1a1a1a] p-6 rounded-lg border border-[#38AAC9]/30 hover:border-[#E4CD15] transition-all duration-300 flex flex-col items-center"
-      >
-        <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-[#38AAC9] relative group">
-          <img
-            src="/12.png"
-            alt="Kartik Sirigeri"
-            className="w-full h-full object-cover"
-          />
-          <a 
-            href="https://www.linkedin.com/in/kartik-sirigeri-5b433816/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <svg className="w-8 h-8 text-[#38AAC9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-          </a>
-        </div>
-        <h3 className="text-xl font-bold text-center text-[#E4CD15]">
-          Kartik Sirigeri
-        </h3>
-        <p className="text-center text-[#38AAC9] mb-2">Senior Consultant</p>
-        <p className="text-center text-white">OpenText</p>
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   </div>
 </section>
 
-        {/* Workshop Section */}
-        <section
-          id="workshop"
-          ref={addSectionRef("workshop")}
-          className={`py-20 px-4 ${
-            isVisible["workshop"]
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
-          } transition-all duration-1000 ease-out`}
-        >
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-[#E4CD15] inline-block relative">
-              Pre-Hackathon Workshop
-              <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
-            </h2>
 
-            <div className="p-8 bg-[#38AAC9]/10 border-l-4 border-[#38AAC9] rounded-r-lg">
-              <h3 className="text-2xl font-bold mb-6 text-[#E4CD15]">
-                "Building Scalable Tech" by E-Dock
-              </h3>
 
-              <p className="mb-6">
-                This exclusive workshop will prepare you for the hackathon by covering:
-              </p>
-
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <span className="text-[#E4CD15] text-2xl mr-2">•</span>
-                  <p>Principles of scalable technology solutions</p>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#E4CD15] text-2xl mr-2">•</span>
-                  <p>Business models for tech products</p>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#E4CD15] text-2xl mr-2">•</span>
-                  <p>Effective pitching techniques</p>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#E4CD15] text-2xl mr-2">•</span>
-                  <p>Design thinking for problem-solving</p>
-                </li>
-              </ul>
-
-              <p className="mt-6 font-bold text-[#E4CD15]">
-                Date: April 7, 2024 | Time: 2 PM - 5 PM | Venue: IEM Auditorium, RVCE
-              </p>
-            </div>
-          </div>
-        </section>
-
+        
         {/* Why Join Section */}
         <section
           id="why-join"
@@ -541,7 +457,7 @@ const About = () => {
               : "opacity-0 translate-y-10"
           } transition-all duration-1000 ease-out`}
         >
-          <div className="max-w-6xl mx-auto">
+<div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-[#E4CD15] inline-block relative">
               Why Participate?
               <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
@@ -587,96 +503,179 @@ const About = () => {
                 <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
                   Startup Potential
                 </h3>
-                <p>Opportunity to turn your idea into a real business</p>
+                <p>Get funded to turn your idea into a real business</p>
               </div>
             </div>
-          </div>
-        </section>
+          </div>        </section>
 
         {/* Registration Section */}
-        <section
-          id="register"
-          ref={addSectionRef("register")}
-          className={`py-20 px-4 ${
-            isVisible["register"]
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
-          } transition-all duration-1000 ease-out`}
-        >
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
-              Registration Details
-              <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
-            </h2>
+<section
+  id="register"
+  ref={(el) => {
+    addSectionRef("register")(el);
+    registrationRef.current = el;
+  }}
+  className={`py-20 px-4 relative flex items-center ${
+    isVisible["register"]
+      ? "opacity-100 translate-y-0"
+      : "opacity-0 translate-y-10"
+  } transition-all duration-1000 ease-out`}
+>
+  <motion.div
+    ref={ref}
+    initial="hidden"
+    animate={controls}
+    className="max-w-6xl mx-auto w-full"
+  >
+    <motion.h2 
+      className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ 
+        opacity: 1, 
+        y: 0,
+        transition: { delay: 0.2 }
+      }}
+    >
+      REGISTER NOW
+      <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
+    </motion.h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-[#38AAC9]/10 p-8 rounded-lg text-center transform transition-all duration-300 hover:scale-105">
-                <h3 className="text-2xl font-bold mb-2 text-[#38AAC9]">
-                  Hackathon Team
-                </h3>
-                <p className="mb-4">Team of 2-4 members</p>
-                <div className="text-3xl font-bold mb-6 text-[#E4CD15]">
-                  ₹399 per team
-                </div>
-                <p className="mb-6">Includes workshop access for all team members</p>
-                <a
-                  onClick={() => {
-                    navigate("/hackathon");
-                  }}
-                  className="inline-block px-6 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300"
-                >
-                  Register Team
-                </a>
-              </div>
-
-              <div className="bg-[#38AAC9]/10 p-8 rounded-lg text-center transform transition-all duration-300 hover:scale-105">
-                <h3 className="text-2xl font-bold mb-2 text-[#38AAC9]">
-                  Workshop Only
-                </h3>
-                <p className="mb-4">Individual participation</p>
-                <div className="text-3xl font-bold mb-6 text-[#E4CD15]">
-                  ₹99 per student
-                </div>
-                <p className="mb-6">For those who want to attend only the workshop</p>
-                <a
-                  onClick={() => {
-                    navigate("/workshop");
-                  }}
-                  className="inline-block px-6 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300"
-                >
-                  Register for Workshop
-                </a>
-              </div>
-            </div>
-
-            <div className="mt-12 p-6 bg-[#E4CD15]/10 border-l-4 border-[#E4CD15] rounded-r-lg">
-              <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                Important Notes:
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-[#38AAC9] text-xl mr-2">•</span>
-                  <p>Participants must bring their own laptops</p>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#38AAC9] text-xl mr-2">•</span>
-                  <p>Teams must stay on campus during the offline rounds</p>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#38AAC9] text-xl mr-2">•</span>
-                  <p>Registration closes on April 5, 2024</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="py-8 border-t border-[#38AAC9]/30 text-center mt-12">
-        <div className="max-w-6xl mx-auto px-4">
-          <p>© 2025 Tech Tank | ACM RVCE Student Chapter & GDG RVCE</p>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      {/* Enhanced Hackathon Card */}
+      <motion.div 
+        className="bg-[#38AAC9]/10 p-8 rounded-lg text-center transform transition-all duration-300 hover:scale-105 border-2 border-[#38AAC9] shadow-lg shadow-[#38AAC9]/20 relative"
+        initial="hiddenLeft"
+        animate="visible"
+        variants={variants}
+        transition={{ delay: 0.3 }}
+      >
+        <div className="absolute -top-3 -right-3 bg-[#E4CD15] text-black px-3 py-1 rounded-full text-sm font-bold transform rotate-6">
+          EARLY BIRD OFFER
         </div>
-      </footer>
+        <h3 className="text-2xl md:text-3xl font-bold mb-2 text-[#38AAC9]">Overnight Hackathon</h3>
+        <p className="mb-4 text-lg">Team of 2-4 members</p>
+        <div className="text-4xl font-bold mb-6 text-[#E4CD15]">₹399</div>
+        <p className="mb-6 text-lg">Includes free workshop for all team members</p>
+        <button
+          onClick={() => navigate("/hackathon")}
+          className="inline-block px-8 py-4 bg-gradient-to-r from-[#38AAC9] to-[#2e8db0] hover:from-[#E4CD15] hover:to-[#d4be14] hover:text-black font-bold rounded-full transition-all duration-300 text-lg"
+        >
+          Register Team
+        </button>
+      </motion.div>
+
+      {/* Workshop Card */}
+      <motion.div 
+        className="bg-[#38AAC9]/10 p-6 rounded-lg text-center transform transition-all duration-300 hover:scale-103 border border-[#38AAC9]/30"
+        initial="hiddenRight"
+        animate="visible"
+        variants={variants}
+        transition={{ delay: 0.5 }}
+      >
+        <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">Workshop</h3>
+        <p className="mb-4">Individual participation</p>
+        <div className="text-3xl font-bold mb-6 text-[#E4CD15]">₹99</div>
+        <p className="mb-6">Single Entry for the workshop</p>
+        <button
+          onClick={() => navigate("/workshop")}
+          className="inline-block px-6 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300"
+        >
+          Register for Workshop
+        </button>
+      </motion.div>
+    </div>
+
+    <div className="mt-12 p-6 bg-[#E4CD15]/10 border-l-4 border-[#E4CD15] rounded-r-lg">
+      <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
+        Important Notes:
+      </h3>
+      <ul className="space-y-2">
+        <li className="flex items-start">
+          <span className="text-[#38AAC9] text-xl mr-2">•</span>
+          <p>Open to all UG & PG students across all courses in India.
+          </p>
+        </li>
+        <li className="flex items-start">
+          <span className="text-[#38AAC9] text-xl mr-2">•</span>
+          <p>The team leaders will recieve a confirmation mail with a link to a whatsapp group. Only Team Leaders must join that group.
+          </p>
+        </li>
+        <li className="flex items-start">
+          <span className="text-[#38AAC9] text-xl mr-2">•</span>
+          <p>The 6 slide template for Round 1 will be shared in that group.</p>
+        </li>
+        <li className="flex items-start">
+          <span className="text-[#38AAC9] text-xl mr-2">•</span>
+          <p>Registrations will close on 8th April, 11:59 PM.</p>
+        </li>
+      </ul>
+    </div>
+
+    {/* Contact Section */}
+<div className="mt-16">
+  <h3 className="text-2xl font-bold mb-6 text-[#E4CD15] inline-block relative">
+    CONTACT US
+    <span className="absolute bottom-0 left-0 w-12 h-1 bg-[#38AAC9] -mb-1"></span>
+  </h3>
+  
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+    <div className="bg-[#38AAC9]/10 p-6 rounded-lg border border-[#38AAC9]/30 flex justify-between items-center">
+      <div className="flex items-center">
+        <img 
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+          alt="WhatsApp" 
+          className="w-8 h-8 mr-3"
+        />
+        <div>
+          <h4 className="font-bold text-lg text-[#38AAC9]">Priyansh Rajiv Dhotar</h4>
+          <a href="https://wa.me/917676433089" className="text-white hover:text-[#E4CD15] transition-colors">
+            +91 76764 33089
+          </a>
+        </div>
+      </div>
+      <a href="mailto:priyanshrajivd.cs22@rvce.edu.in" className="text-sm text-white hover:text-[#E4CD15] transition-colors hidden md:block">
+        priyanshrajivd.cs22@rvce.edu.in
+      </a>
+    </div>
+    
+    <div className="bg-[#38AAC9]/10 p-6 rounded-lg border border-[#38AAC9]/30 flex justify-between items-center">
+      <div className="flex items-center">
+        <img 
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+          alt="WhatsApp" 
+          className="w-8 h-8 mr-3"
+        />
+        <div>
+          <h4 className="font-bold text-lg text-[#38AAC9]">Aryan Rai</h4>
+          <a href="https://wa.me/918217040275" className="text-white hover:text-[#E4CD15] transition-colors">
+            +91 82170 40275
+          </a>
+        </div>
+      </div>
+      <a href="mailto:aryanrai.cs23@rvce.edu.in" className="text-sm text-white hover:text-[#E4CD15] transition-colors hidden md:block">
+        aryanrai.cs23@rvce.edu.in
+      </a>
+    </div>
+  </div>
+
+  {/* Mobile email links (shown only on small screens) */}
+  <div className="grid grid-cols-1 gap-4 mt-4 md:hidden">
+    <a href="mailto:priyanshrajivd.cs22@rvce.edu.in" className="text-sm text-white hover:text-[#E4CD15] transition-colors text-center">
+      priyanshrajivd.cs22@rvce.edu.in
+    </a>
+    <a href="mailto:aryanrai.cs23@rvce.edu.in" className="text-sm text-white hover:text-[#E4CD15] transition-colors text-center">
+      aryanrai.cs23@rvce.edu.in
+    </a>
+  </div>
+</div>
+  </motion.div>
+</section>
+
+<footer className="py-8 border-t border-[#38AAC9]/30 text-center mt-12">
+  <div className="max-w-6xl mx-auto px-4">
+    <p>© 2025 Tech Tank | RVCE ACM Student Chapter & GDG RVCE</p>
+  </div>
+</footer>
 
       <style jsx>{`
         @keyframes scale-in {

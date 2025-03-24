@@ -110,7 +110,10 @@ const AnimatedNavbar = () => {
   ];
 
   const handleRegisterClick = () => {
-    navigate('/register');
+    const registerSection = document.getElementById('register');
+    if (registerSection) {
+      registerSection.scrollIntoView({ behavior: 'smooth' });
+    }
     setIsOpen(false);
   };
 
