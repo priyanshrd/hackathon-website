@@ -50,7 +50,7 @@ const gridStyles = `
   }
 `;
 
-const Home = () => {
+const Register = () => {
   const navigate = useNavigate();
   const registrationRef = useRef(null);
   const controls = useAnimation();
@@ -262,4 +262,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Register;

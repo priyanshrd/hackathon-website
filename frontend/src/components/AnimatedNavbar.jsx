@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-// CSS variables - you can adjust these as needed
 const colors = {
   primary: "#37abc8", // cyan 400
   secondary: "#37abc8", // same
@@ -65,38 +64,22 @@ const IdeaIcon = () => (
   </svg>
 );
 
-const AboutIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-    />
-  </svg>
-);
+
 
 const AnimatedNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate(); // Added useNavigate hook
+  const navigate = useNavigate();
+
+  // Check if current page is home
+  const isHomePage = location.pathname === '/register';
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 50) {
-        setScrolled(false);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(offset > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -124,8 +107,12 @@ const AnimatedNavbar = () => {
     { name: "Home", path: "/", icon: <HomeIcon /> },
     { name: "Timeline", path: "/timeline", icon: <TimelineIcon /> },
     { name: "Submit Idea", path: "/idea", icon: <IdeaIcon /> },
-    { name: "About", path: "/about", icon: <AboutIcon /> },
   ];
+
+  const handleRegisterClick = () => {
+    navigate('/register');
+    setIsOpen(false);
+  };
 
   return (
     <nav className="navbar-container">
@@ -133,7 +120,7 @@ const AnimatedNavbar = () => {
       <div
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
           scrolled
-            ? "py-2 bg-[#072ac8]/90 shadow-lg shadow-[#072ac8]/20"
+            ? "py-2 bg-[#000000]/90 shadow-lg shadow-[#000000]/20"
             : "py-2 bg-[#000000]/30 backdrop-blur-md shadow-lg"
         }`}
       >
@@ -150,12 +137,11 @@ const AnimatedNavbar = () => {
               className="flex items-center"
             >
               <span>
-                {" "}
                 <img
                   src="/tech_TANK.jpeg"
                   alt="Logo"
                   className="w-36 h-8 sm:h-8 md:h-8 object-cover object-center"
-                />{" "}
+                />
               </span>
             </motion.div>
           </Link>
@@ -182,18 +168,22 @@ const AnimatedNavbar = () => {
                 </Link>
               </motion.div>
             ))}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <button
-                onClick={() => navigate("/hackathon")} // Updated to use navigate
-                className="px-6 py-2 bg-gradient-to-r from-[#fcf300] to-[#ffc600] text-[#072ac8] font-bold rounded-lg hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300 transform hover:translate-y-[-2px]"
+            
+            {/* Only show Register Now button when not on home page */}
+            {!isHomePage && (
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
               >
-                Register Now
-              </button>
-            </motion.div>
+                <button
+                  onClick={handleRegisterClick}
+                  className="px-6 py-2 bg-gradient-to-r from-[#fcf300] to-[#ffc600] text-[#072ac8] font-bold rounded-lg hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300 transform hover:translate-y-[-2px]"
+                >
+                  Register Now
+                </button>
+              </motion.div>
+            )}
           </div>
 
           {/* Hamburger Menu */}
@@ -302,22 +292,22 @@ const AnimatedNavbar = () => {
                   ))}
                 </div>
 
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="mt-auto"
-                >
-                  <button
-                    onClick={() => {
-                      navigate("/"); // Updated to use navigate
-                      setIsOpen(false);
-                    }}
-                    className="block w-full py-3 bg-[#fcf300] text-[#072ac8] font-bold rounded-xl text-center hover:bg-[#ffc600] hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300"
+                {/* Only show Register Now button in mobile menu when not on home page */}
+                {!isHomePage && (
+                  <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="mt-auto"
                   >
-                    Register Now
-                  </button>
-                </motion.div>
+                    <button
+                      onClick={handleRegisterClick}
+                      className="block w-full py-3 bg-[#fcf300] text-[#072ac8] font-bold rounded-xl text-center hover:bg-[#ffc600] hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300"
+                    >
+                      Register Now
+                    </button>
+                  </motion.div>
+                )}
               </div>
             </motion.div>
           </>
