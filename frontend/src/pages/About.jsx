@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const About = () => {
   const navigate = useNavigate();
@@ -36,6 +37,49 @@ const About = () => {
     if (el) sectionRefs.current[id] = el;
   };
 
+  const downloadBrochure = () => {
+    // Replace with actual brochure PDF URL
+    const pdfUrl = "/TechTankRVCE_Brochure.pdf";
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "TechTankRVCE_Brochure.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const judges = [
+    {
+      name: "Siddhant Goswami",
+      title: "100xEngineers+",
+      image: "/7.png",
+    },
+    {
+      name: "Arshdeep Singh",
+      title: "EDock",
+      image: "/8.png",
+    },
+    {
+      name: "Shivaram K R",
+      title: "Hue Learn",
+      image: "/9.png",
+    },
+    {
+      name: "Sriharsha Donthi",
+      title: "Oracle",
+      image: "/10.png",
+    },
+    {
+      name: "Raghu Sarangajan",
+      title: "Cubyts",
+      image: "/11.png",
+    },
+    {
+      name: "Kartik Sirigeri",
+      title: "Opentext",
+      image: "/12.png",
+    },
+];
   return (
     <div className="bg-black text-white min-h-screen font-sans">
       {/* Header / Hero Section */}
@@ -66,27 +110,24 @@ const About = () => {
             className="text-xl md:text-2xl mb-6 text-[#38AAC9]"
             style={{ animation: "fade-in-up 1s 0.6s both" }}
           >
-            This is your chance to turn your tech ideas into real-world
-            businesses!
+            Where Innovation Meets Entrepreneurship
           </p>
           <p
             className="mb-10 text-lg"
             style={{ animation: "fade-in-up 1s 0.9s both" }}
           >
-            Welcome to Tech Tank, the ultimate fusion of technology, business,
-            and entrepreneurship! This is not just another hackathon—it's a
-            startup battlefield where coders, innovators, and business minds
-            come together to build scalable, investor-ready solutions.
+            Tech Tank is a Shark Tank-inspired hackathon organized by ACM RVCE 
+            Student Chapter and GDG RVCE. It's a unique platform where technology 
+            meets business, challenging participants to develop scalable, 
+            investor-ready solutions.
           </p>
-          <a
-            onClick={() => {
-              navigate("/hackathon");
-            }}
+          <button
+            onClick={downloadBrochure}
             className="inline-block px-8 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300 transform hover:-translate-y-1"
             style={{ animation: "fade-in-up 1s 1.2s both" }}
           >
-            Register Now
-          </a>
+            Download Brochure
+          </button>
         </div>
       </header>
 
@@ -103,37 +144,38 @@ const About = () => {
         >
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
-              Who Can Survive the Tank?
+              Who Can Participate?
               <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
                 <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  The Innovators
+                  Students
                 </h3>
-                <p>Developers who dream big and build bigger.</p>
+                <p>Undergraduate and postgraduate students from any discipline</p>
               </div>
 
               <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
                 <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  The Strategists
+                  Teams
                 </h3>
-                <p>Business minds who can turn tech into profit.</p>
+                <p>Teams of 2-3 members with complementary skills</p>
               </div>
 
               <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
                 <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  The Pitch Masters
+                  Individuals
                 </h3>
-                <p>Storytellers who can sell an idea in 30 seconds.</p>
+                <p>Solo participants can join for the workshop</p>
               </div>
             </div>
 
             <div className="mt-12 p-6 bg-[#38AAC9]/10 border-l-4 border-[#38AAC9] rounded-r-lg">
               <p className="text-lg">
-                Tech Tank is where tech meets entrepreneurship. This is your
-                chance to create, compete, and captivate investors!
+                Whether you're a coder, designer, or business enthusiast, Tech Tank 
+                provides the perfect platform to showcase your skills and turn ideas 
+                into reality!
               </p>
             </div>
           </div>
@@ -156,82 +198,123 @@ const About = () => {
             </h2>
 
             <p className="text-lg mb-6">
-              Tech Tank is a Shark Tank-inspired hackathon conducted by ACM RVCE
-              Student Chapter and GDG (Google Developer Groups) RVCE. In today's
-              tech-driven world, it's not just about building great
-              products—it's about making them market-ready.
+              Tech Tank is a unique hackathon that combines technology development 
+              with business pitching. Unlike traditional hackathons, we emphasize 
+              creating solutions that are not just technically sound but also 
+              commercially viable and investor-ready.
             </p>
 
             <p className="text-lg">
-              This event bridges the gap between technology and business by
-              encouraging participants to develop scalable, investor-ready B2B
-              and B2C solutions. Compete, innovate, and pitch your way to
-              success!
+              Organized by ACM RVCE Student Chapter in collaboration with GDG RVCE, 
+              this event bridges the gap between technical skills and entrepreneurial 
+              thinking, preparing participants for real-world challenges in the 
+              tech industry.
             </p>
           </div>
         </section>
 
-        {/* Timeline Section */}
-        {/* <section 
+        {/* Timeline Section
+        <section 
           id="timeline" 
           ref={addSectionRef('timeline')}
           className={`py-20 px-4 ${isVisible['timeline'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-out`}
         >
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
-              Hackathon Timeline
+              Event Timeline
               <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
             </h2>
             
-            <div className="relative"> */}
-        {/* Timeline Line */}
-        {/* <div className="absolute left-0 md:left-1/2 w-1 h-full bg-[#38AAC9] -ml-0.5 md:-ml-0.5"></div> */}
+            <div className="relative">
+              {/* Timeline Line
+              <div className="absolute left-0 md:left-1/2 w-1 h-full bg-[#38AAC9] -ml-0.5 md:-ml-0.5"></div>
 
-        {/* Timeline Items */}
-        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8"> */}
-        {/* Workshop */}
-        {/* <div className="md:col-start-2 relative mb-16 md:pl-12">
+              {/* Timeline Items 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Workshop 
+                <div className="md:col-start-2 relative mb-16 md:pl-12">
                   <div className="absolute top-0 -left-4 md:-left-4 w-8 h-8 bg-[#E4CD15] rounded-full"></div>
                   <div className="p-6 bg-[#38AAC9]/10 rounded-lg">
-                    <div className="text-[#E4CD15] font-bold mb-2">7th April, 2 PM - 5 PM</div>
+                    <div className="text-[#E4CD15] font-bold mb-2">April 7, 2024 | 2 PM - 5 PM</div>
                     <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">Workshop</h3>
-                    <p>IEM Auditorium</p>
+                    <p>IEM Auditorium, RVCE</p>
                   </div>
-                </div> */}
+                </div>
 
-        {/* Round 1 */}
-        {/* <div className="md:col-start-1 md:text-right relative mb-16 md:pr-12">
+                {/* Round 1 
+                <div className="md:col-start-1 md:text-right relative mb-16 md:pr-12">
                   <div className="absolute top-0 -right-4 md:-right-4 w-8 h-8 bg-[#E4CD15] rounded-full"></div>
                   <div className="p-6 bg-[#38AAC9]/10 rounded-lg">
-                    <div className="text-[#E4CD15] font-bold mb-2">7th April, 5 PM - 9th April, 5 PM</div>
+                    <div className="text-[#E4CD15] font-bold mb-2">April 7, 5 PM - April 9, 5 PM</div>
                     <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">Round 1 (Online)</h3>
-                    <p>Submit your initial proposal online</p>
+                    <p>Initial proposal submission</p>
                   </div>
-                </div> */}
+                </div>
 
-        {/* Round 2 */}
-        {/* <div className="md:col-start-2 relative mb-16 md:pl-12">
+                {/* Round 
+                <div className="md:col-start-2 relative mb-16 md:pl-12">
                   <div className="absolute top-0 -left-4 md:-left-4 w-8 h-8 bg-[#E4CD15] rounded-full"></div>
                   <div className="p-6 bg-[#38AAC9]/10 rounded-lg">
-                    <div className="text-[#E4CD15] font-bold mb-2">11th April, 8 PM - 12th April, 8 AM</div>
+                    <div className="text-[#E4CD15] font-bold mb-2">April 11, 8 PM - April 12, 8 AM</div>
                     <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">Round 2 (Offline)</h3>
                     <p>Design Thinking Huddle</p>
                   </div>
-                </div> */}
-
-        {/* Final Pitches */}
-        {/* <div className="md:col-start-1 md:text-right relative mb-16 md:pr-12">
+                </div>
+                <div className="md:col-start-1 md:text-right relative mb-16 md:pr-12">
                   <div className="absolute top-0 -right-4 md:-right-4 w-8 h-8 bg-[#E4CD15] rounded-full"></div>
                   <div className="p-6 bg-[#38AAC9]/10 rounded-lg">
-                    <div className="text-[#E4CD15] font-bold mb-2">12th April, 11 AM onwards</div>
-                    <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">Final Pitches & Evaluation</h3>
-                    <p>Present your solution to the judges</p>
+                    <div className="text-[#E4CD15] font-bold mb-2">April 12, 11 AM onwards</div>
+                    <h3 className="text-xl font-bold mb-2 text-[#38AAC9]">Final Pitches</h3>
+                    <p>Presentation to judges</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section> */}
+        </section> 
+*/}
+
+        {/* Judges Section */}
+        <section
+          id="judges"
+          ref={addSectionRef("judges")}
+          className={`py-20 px-4 ${
+            isVisible["judges"]
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-10"
+          } transition-all duration-1000 ease-out`}
+        >
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
+              Meet Your Judges
+              <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {judges.map((judge, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isVisible["judges"] ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-[#1a1a1a] p-6 rounded-lg border border-[#38AAC9]/30 hover:border-[#E4CD15] transition-all duration-300"
+                >
+                  <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-[#38AAC9]">
+                    <img
+                      src={judge.image}
+                      alt={judge.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-center text-[#E4CD15]">
+                    {judge.name}
+                  </h3>
+                  <p className="text-center text-[#38AAC9]">{judge.title}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Workshop Section */}
         <section
@@ -251,78 +334,35 @@ const About = () => {
 
             <div className="p-8 bg-[#38AAC9]/10 border-l-4 border-[#38AAC9] rounded-r-lg">
               <h3 className="text-2xl font-bold mb-6 text-[#E4CD15]">
-                Great ideas are just the beginning. Scalability is what makes
-                them legendary.
+                "Building Scalable Tech" by E-Dock
               </h3>
 
               <p className="mb-6">
-                To prepare you for the hackathon, we're hosting an exclusive
-                workshop on Building Scalable Tech by E-Dock. This session will
-                help you:
+                This exclusive workshop will prepare you for the hackathon by covering:
               </p>
 
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <span className="text-[#E4CD15] text-2xl mr-2">•</span>
-                  <p>
-                    Understand how to scale your solutions for real-world
-                    applications.
-                  </p>
+                  <p>Principles of scalable technology solutions</p>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#E4CD15] text-2xl mr-2">•</span>
-                  <p>
-                    Learn key business strategies that make a product
-                    investor-ready.
-                  </p>
+                  <p>Business models for tech products</p>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#E4CD15] text-2xl mr-2">•</span>
-                  <p>
-                    Master the fundamentals of tech-driven entrepreneurship.
-                  </p>
+                  <p>Effective pitching techniques</p>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#E4CD15] text-2xl mr-2">•</span>
+                  <p>Design thinking for problem-solving</p>
                 </li>
               </ul>
 
-              <p className="mt-6">
-                Whether you're a solo innovator or part of a team, this workshop
-                will give you a competitive edge before the hackathon even
-                begins!
+              <p className="mt-6 font-bold text-[#E4CD15]">
+                Date: April 7, 2024 | Time: 2 PM - 5 PM | Venue: IEM Auditorium, RVCE
               </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Guidelines Section */}
-        <section
-          id="guidelines"
-          ref={addSectionRef("guidelines")}
-          className={`py-20 px-4 ${
-            isVisible["guidelines"]
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
-          } transition-all duration-1000 ease-out`}
-        >
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-[#E4CD15] inline-block relative">
-              Guidelines
-              <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
-            </h2>
-
-            <div className="p-6 bg-[#38AAC9]/10 border-l-4 border-[#38AAC9] rounded-r-lg">
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <span className="text-[#E4CD15] text-2xl mr-2">•</span>
-                  <p>Each participant is required to bring their own laptop.</p>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#E4CD15] text-2xl mr-2">•</span>
-                  <p>
-                    Participants are required to stay on campus for the entire
-                    duration of the hackathon.
-                  </p>
-                </li>
-              </ul>
             </div>
           </div>
         </section>
@@ -339,44 +379,51 @@ const About = () => {
         >
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-[#E4CD15] inline-block relative">
-              Why You Can't Miss Tech Tank
+              Why Participate?
               <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
                 <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Gain 5 Activity Points
+                  Cash Prizes
                 </h3>
-                <p>Add valuable activity points to your academic record.</p>
+                <p>Win exciting cash prizes for top teams</p>
               </div>
 
               <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
                 <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Learn from the Best
+                  Certificates
                 </h3>
-                <p>Gain hands-on experience from industry experts.</p>
+                <p>Earn participation certificates with ACM and GDG logos</p>
               </div>
 
               <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
                 <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Think Beyond Coding
+                  Activity Points
                 </h3>
-                <p>Develop business models & pitch ideas.</p>
-              </div>
-
-              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Win Prizes & Recognition
-                </h3>
-                <p>Compete for cash prizes and awards.</p>
+                <p>Eligible for 5 activity points (RVCE students)</p>
               </div>
 
               <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
                 <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
                   Networking
                 </h3>
-                <p>Meet like-minded innovators.</p>
+                <p>Connect with industry experts and like-minded peers</p>
+              </div>
+
+              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
+                  Skill Development
+                </h3>
+                <p>Enhance technical, business, and presentation skills</p>
+              </div>
+
+              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
+                  Startup Potential
+                </h3>
+                <p>Opportunity to turn your idea into a real business</p>
               </div>
             </div>
           </div>
@@ -394,7 +441,7 @@ const About = () => {
         >
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
-              Registration & Fees
+              Registration Details
               <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
             </h2>
 
@@ -403,10 +450,11 @@ const About = () => {
                 <h3 className="text-2xl font-bold mb-2 text-[#38AAC9]">
                   Hackathon Team
                 </h3>
-                <p className="mb-6">Team of 2-3</p>
-                <div className="text-3xl font-bold mb-8 text-[#E4CD15]">
-                  ₹500/team
+                <p className="mb-4">Team of 2-3 members</p>
+                <div className="text-3xl font-bold mb-6 text-[#E4CD15]">
+                  ₹399 per team
                 </div>
+                <p className="mb-6">Includes workshop access for all team members</p>
                 <a
                   onClick={() => {
                     navigate("/hackathon");
@@ -419,21 +467,42 @@ const About = () => {
 
               <div className="bg-[#38AAC9]/10 p-8 rounded-lg text-center transform transition-all duration-300 hover:scale-105">
                 <h3 className="text-2xl font-bold mb-2 text-[#38AAC9]">
-                  Solo Workshop
+                  Workshop Only
                 </h3>
-                <p className="mb-6">Individual participants</p>
-                <div className="text-3xl font-bold mb-8 text-[#E4CD15]">
-                  ₹200/student
+                <p className="mb-4">Individual participation</p>
+                <div className="text-3xl font-bold mb-6 text-[#E4CD15]">
+                  ₹99 per student
                 </div>
+                <p className="mb-6">For those who want to attend only the workshop</p>
                 <a
                   onClick={() => {
                     navigate("/workshop");
                   }}
                   className="inline-block px-6 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300"
                 >
-                  Register Solo
+                  Register for Workshop
                 </a>
               </div>
+            </div>
+
+            <div className="mt-12 p-6 bg-[#E4CD15]/10 border-l-4 border-[#E4CD15] rounded-r-lg">
+              <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
+                Important Notes:
+              </h3>
+              <ul className="space-y-2">
+                <li className="flex items-start">
+                  <span className="text-[#38AAC9] text-xl mr-2">•</span>
+                  <p>Participants must bring their own laptops</p>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#38AAC9] text-xl mr-2">•</span>
+                  <p>Teams must stay on campus during the offline rounds</p>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#38AAC9] text-xl mr-2">•</span>
+                  <p>Registration closes on April 5, 2024</p>
+                </li>
+              </ul>
             </div>
           </div>
         </section>
