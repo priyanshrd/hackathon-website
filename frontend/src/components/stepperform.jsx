@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Stepper = () => {
+  const navigate = useNavigate();
   const backend_url = "https://techtank-backend.vercel.app";
 
   // Color palette
@@ -21,10 +23,11 @@ const Stepper = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [email, setEmail] = useState("");
   const [teamName, setTeamName] = useState("");
-  const [memberCount, setMemberCount] = useState(1);
-  const [members, setMembers] = useState([
-    { name: "", email: "", phoneNumber: "", isTeamLead: true },
-  ]);
+  const [memberCount, setMemberCount] = useState(2); 
+const [members, setMembers] = useState([
+  { name: "", email: "", phoneNumber: "", isTeamLead: true },
+  { name: "", email: "", phoneNumber: "", isTeamLead: false },
+]);
   const [transactionId, setTransactionId] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,20 +38,33 @@ const Stepper = () => {
   const handleMemberCountChange = (e) => {
     const count = parseInt(e.target.value);
     setMemberCount(count);
-    const newMembers = Array(count)
-      .fill(null)
-      .map((_, index) => {
-        if (index === 0)
-          return { ...members[0], email: email || members[0].email };
-        return (
-          members[index] || {
-            name: "",
-            email: "",
-            phoneNumber: "",
-            isTeamLead: false,
-          }
-        );
-      });
+    
+    // Create new members array with the selected count
+    let newMembers = [...members];
+    
+    // Make sure we have exactly 'count' members
+    if (newMembers.length < count) {
+      // Add more members if needed
+      while (newMembers.length < count) {
+        newMembers.push({
+          name: "",
+          email: "",
+          phoneNumber: "",
+          isTeamLead: false,
+        });
+      }
+    } else if (newMembers.length > count) {
+      // Remove excess members if needed
+      newMembers = newMembers.slice(0, count);
+    }
+    
+    // Ensure the first member is the team lead with the email set
+    newMembers[0] = {
+      ...newMembers[0],
+      email: email || newMembers[0].email,
+      isTeamLead: true
+    };
+    
     setMembers(newMembers);
   };
 
@@ -103,6 +119,7 @@ const Stepper = () => {
           ]);
           setTransactionId("");
           setScreenshot(null);
+          navigate('/');
         }, 2000);
       }
     } catch (error) {
@@ -114,6 +131,62 @@ const Stepper = () => {
   };
 
   const nextStep = () => {
+    // Validate current step before proceeding
+    if (currentStep === 1 && !email) {
+      setError("Please enter your email address");
+      return;
+    }
+    
+    if (currentStep === 2 && !teamName) {
+      setError("Please enter your team name");
+      return;
+    }
+    
+    // If moving from step 2 to step 3, ensure members array is correctly initialized
+    if (currentStep === 2) {
+      // Make sure we have the correct number of members based on memberCount
+      let updatedMembers = [...members];
+      
+      // Adjust the members array to match memberCount
+      if (updatedMembers.length < memberCount) {
+        while (updatedMembers.length < memberCount) {
+          updatedMembers.push({
+            name: "",
+            email: "",
+            phoneNumber: "",
+            isTeamLead: false,
+          });
+        }
+      } else if (updatedMembers.length > memberCount) {
+        updatedMembers = updatedMembers.slice(0, memberCount);
+      }
+      
+      // Ensure the first member is the team lead with email filled
+      updatedMembers[0] = {
+        ...updatedMembers[0],
+        email: email || updatedMembers[0].email,
+        isTeamLead: true
+      };
+      
+      setMembers(updatedMembers);
+    }
+    
+    if (currentStep === 3) {
+      // Validate that all member fields are filled
+      const isValid = members.every(member => 
+        member.name && member.email && member.phoneNumber
+      );
+      
+      if (!isValid) {
+        setError("Please fill in all team member details");
+        return;
+      }
+    }
+    
+    // Clear any previous errors
+    setError("");
+    
+    // Proceed to next step
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     }
@@ -126,7 +199,7 @@ const Stepper = () => {
   };
 
   const goToStep = (step) => {
-    if (step >= 1 && step <= totalSteps) {
+    if (step >= 1 && step <= currentStep) {
       setCurrentStep(step);
     }
   };
@@ -150,7 +223,9 @@ const Stepper = () => {
             <div className="flex flex-col items-center mb-4 sm:mb-0">
               <button
                 onClick={() => goToStep(index + 1)}
+                disabled={index + 1 > currentStep}
                 className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-base sm:text-lg font-bold transition-all duration-300 border-2 focus:outline-none
+                  ${index + 1 > currentStep ? 'opacity-50 cursor-not-allowed' : ''}
                   ${
                     index + 1 < currentStep
                       ? `bg-${colors.blue} text-${colors.yellow} border-${colors.blue}`
@@ -186,7 +261,7 @@ const Stepper = () => {
                   index + 1
                 )}
               </button>
-              <span className="text-md sm:text-white text-[#1a1a1a] mt-2  text-center">
+              <span className="text-md sm:text-white text-[#1a1a1a] mt-2 text-center">
                 {index === 0 && "Email"}
                 {index === 1 && "Team Info"}
                 {index === 2 && "Members"}
@@ -296,14 +371,19 @@ const Stepper = () => {
                 className="w-full p-3 bg-[#2a2a2a] border border-[#3a3a3a] text-white rounded-md focus:ring-2 focus:ring-[#38AAC9] focus:border-[#38AAC9]"
                 required
               >
-                {[ 2, 3, 4].map((num) => (
+                {[2, 3, 4].map((num) => (
                   <option key={num} value={num}>
-                    {num} Member{num > 1 ? "s" : ""}
+                    {num} Members
                   </option>
                 ))}
               </select>
             </div>
           </div>
+          {error && (
+            <div className="bg-red-900 border border-red-700 text-white px-4 py-3 rounded my-4">
+              {error}
+            </div>
+          )}
           <div className="flex justify-between mt-8 flex-wrap gap-4">
             <button
               onClick={prevStep}
@@ -314,7 +394,11 @@ const Stepper = () => {
             </button>
             <button
               onClick={nextStep}
-              style={{ backgroundColor: colors.yellow }}
+              disabled={!teamName}
+              style={{ 
+                backgroundColor: colors.yellow,
+                opacity: !teamName ? "0.5" : "1" 
+              }}
               className="px-3 sm:px-4 py-2 sm:py-3 rounded-full font-medium text-black hover:bg-opacity-90 transform hover:scale-105 transition duration-300 shadow-lg text-sm sm:text-base min-w-20"
             >
               Next
@@ -335,9 +419,12 @@ const Stepper = () => {
         className="w-full max-w-3xl mx-auto px-4"
       >
         <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg border border-[#3a3a3a] space-y-6">
-          <h3 className="text-xl font-semibold text-white">Team Members</h3>
-
-          {members.map((member, index) => (
+          <h3 className="text-xl font-semibold text-white">
+            Team Members ({memberCount})
+          </h3>
+  
+          {/* Only show the first 'memberCount' members */}
+          {members.slice(0, memberCount).map((member, index) => (
             <div
               key={index}
               className="bg-[#2a2a2a] p-4 sm:p-5 rounded-lg border border-[#3a3a3a]"
@@ -349,7 +436,7 @@ const Stepper = () => {
                   </span>
                 ) : (
                   <span className="flex items-center">
-                    <span className="mr-2">👥</span> Team Member {index + 1}
+                    <span className="mr-2">👥</span> Team Member {index}
                   </span>
                 )}
               </h4>
@@ -402,7 +489,13 @@ const Stepper = () => {
               </div>
             </div>
           ))}
-
+  
+          {error && (
+            <div className="bg-red-900 border border-red-700 text-white px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+          )}
+  
           <div className="flex justify-between mt-8 flex-wrap gap-4">
             <button
               onClick={prevStep}
