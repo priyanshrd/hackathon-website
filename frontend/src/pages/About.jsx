@@ -482,7 +482,7 @@ const About = () => {
                 <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
                   Activity Points
                 </h3>
-                <p>Eligible for 5 activity points (RVCE students)</p>
+                <p>Eligible for 8 activity points (RVCE students)</p>
               </div>
 
               <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
