@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 
 const SubmitIdea = () => {
-  const backend_url = "https://techtank-backend.vercel.app";
+  const backend_url = "https://techtankbackend.vercel.app";
 
   // Color palette
   const colors = {
