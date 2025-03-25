@@ -152,17 +152,7 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
         });
       }
 
-      if (
-        isRVCEStudent &&
-        (!member.usn || !/^1RV\d{2}[A-Z]{2}\d{3}$/i.test(member.usn))
-      ) {
-        return res.status(400).json({
-          error: `Invalid USN format for member ${
-            index + 1
-          } (e.g., 1RV20CS001)`,
-          memberIndex: index,
-        });
-      }
+      
     }
 
     // Check for existing team or transaction ID
