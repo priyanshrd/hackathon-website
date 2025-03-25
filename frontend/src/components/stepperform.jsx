@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Stepper = () => {
   const navigate = useNavigate();
-  const backend_url = "https://techtankbackend.vercel.app";
+  const backend_url = "https://techtank-backend.vercel.app";
 
   // Color palette
   const colors = {

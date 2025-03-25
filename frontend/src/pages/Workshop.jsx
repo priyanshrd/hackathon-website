@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Workshop = () => {
   const navigate = useNavigate();
-  const backend_url = "https://techtankbackend.vercel.app";
+  const backend_url = "https://techtank-backend.vercel.app";
 
   const colors = {
     blue: "#38AAC9",
