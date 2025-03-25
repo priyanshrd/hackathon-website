@@ -323,42 +323,42 @@ const About = () => {
           title: "Co-Founder & CTO",
           company: "100xEngineers+",
           image: "/7.png",
-          linkedin: "siddhant-goswami"
+          linkedin: "siddhant-goswami-6444b0146/"
         },
         {
           name: "Arshdeep Singh",
           title: "Founder & CEO",
           company: "EDock",
           image: "/8.png",
-          linkedin: "arshdeep-singh"
+          linkedin: "065rsh"
         },
         {
           name: "Shivaram K R",
           title: "Co-Founder & CEO",
           company: "Hue Learn",
           image: "/9.png",
-          linkedin: "shivaram-k-r"
+          linkedin: "shivaramkrs"
         },
         {
           name: "Sriharsha Donthi",
           title: "Cloud Engineering Director",
           company: "Oracle",
           image: "/10.png",
-          linkedin: "sriharsha-donthi"
+          linkedin: "sriharshadonthi"
         },
         {
           name: "Raghu Sarangarajan",
           title: "Co-Founder & CTPO",
           company: "Cubyts",
           image: "/11.png",
-          linkedin: "raghu-sarangarajan"
+          linkedin: "raghusarangarajan"
         },
         {
           name: "Kartik Sirigeri",
           title: "Expert",
           company: "OpenText",
           image: "/12.png",
-          linkedin: "kartik-sirigeri"
+          linkedin: "kartik-sirigeri-5b433816/"
         }
       ].map((judge, index) => (
         <motion.div
