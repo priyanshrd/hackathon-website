@@ -162,46 +162,95 @@ const About = () => {
       <style dangerouslySetInnerHTML={{ __html: gridStyles }} />
       
       {/* Hero Section */}
-      <div className="flex flex-col items-center justify-center bg-black text-white text-center px-4 relative"
-           style={{ height: "calc(100vh - 4rem)" }}>
-        {/* LOGOS */}
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-14">
-          <img
-            src="/rvce.png"
-            alt="RVCE"
-            className="h-16 w-auto sm:h-20 md:h-28 lg:h-32 object-contain"
-          />
-          <img
-            src="/acm.png"
-            alt="ACM RVCE"
-            className="h-16 w-auto sm:h-20 md:h-28 lg:h-32 object-contain"
-          />
-          <img
-            src="/gdg.png"
-            alt="Google Developer Group"
-            className="h-16 w-auto sm:h-20 md:h-28 lg:h-32 object-contain"
-          />
-        </div>
+<div className="flex flex-col items-center justify-center bg-black text-white text-center px-4 relative"
+     style={{ height: "calc(100vh - 4rem)" }}>
+  {/* LOGOS */}
+  <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-14">
+    <img
+      src="/rvce.png"
+      alt="RVCE"
+      className="h-16 w-auto sm:h-20 md:h-28 lg:h-32 object-contain"
+    />
+    <img
+      src="/acm.png"
+      alt="ACM RVCE"
+      className="h-16 w-auto sm:h-20 md:h-28 lg:h-32 object-contain"
+    />
+    <img
+      src="/gdg.png"
+      alt="Google Developer Group"
+      className="h-16 w-auto sm:h-20 md:h-28 lg:h-32 object-contain"
+    />
+  </div>
 
-        {/* Title Section */}
-        <div className="title-container relative">
-          <div className="grid-behind-title"></div>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-wide drop-shadow-lg relative z-10">
-            <span className="text-cyan-400">tech</span>
-            <span className="text-yellow-400 relative">
-              TAN
-              <span className="bite-effect">K</span>
-            </span>
-          </h1>
-        </div>
+  {/* Title Section */}
+  <div className="title-container relative">
+    <div className="grid-behind-title"></div>
+    <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-wide drop-shadow-lg relative z-10">
+      <span className="text-cyan-400">tech</span>
+      <span className="text-yellow-400 relative">
+        TAN
+        <span className="bite-effect">K</span>
+      </span>
+    </h1>
+  </div>
 
-        {/* Subtitle */}
-        <p className="mt-3 text-base sm:text-lg md:text-xl text-gray-300 italic">
-          A Shark Tank Inspired
-        </p>
-        <p className="text-lg sm:text-xl md:text-2xl font-semibold mt-1 mb-8">
-          12-Hour Hackathon
-        </p>
+  {/* Subtitle */}
+  <p className="mt-3 text-base sm:text-lg md:text-xl text-gray-300 italic">
+    A Shark Tank Inspired
+  </p>
+  <p className="text-lg sm:text-xl md:text-2xl font-semibold mt-1 mb-8">
+    12-Hour Hackathon
+  </p>
+
+ {/* Download Brochure Button with Flowing Gradient */}
+<motion.button
+  onClick={downloadBrochure}
+  className="relative overflow-hidden px-6 py-3 rounded-full font-bold text-lg mb-8 group"
+  style={{
+    boxShadow: '0 4px 15px rgba(56, 170, 201, 0.4)'
+  }}
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+>
+  {/* Animated Gradient Background */}
+  <span className="absolute inset-0 bg-gradient-to-r from-[#38AAC9] via-[#E4CD15] to-[#38AAC9] bg-[length:200%_100%] animate-gradient-flow"></span>
+  
+  {/* Content */}
+  <span className="relative z-10 flex items-center">
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      className="h-5 w-5 mr-2" 
+      viewBox="0 0 20 20" 
+      fill="currentColor"
+    >
+      <path 
+        fillRule="evenodd" 
+        d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" 
+        clipRule="evenodd" 
+      />
+    </svg>
+    Download Brochure
+  </span>
+  
+  {/* Add this to your global CSS or CSS module */}
+  <style jsx>{`
+    @keyframes gradientFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    .animate-gradient-flow {
+      animation: gradientFlow 3s ease infinite;
+    }
+  `}</style>
+</motion.button>
 
         {/* Scroll Down Arrow */}
         <motion.div 
