@@ -1,4 +1,6 @@
-const sendEmail = async (uid, to, subject, message) => {
+const nodemailer = require("nodemailer");
+
+const sendEmail = async (to, subject, message, registrationId) => {
   try {
     const emailTemplate = `
     <!DOCTYPE html>
@@ -36,7 +38,7 @@ const sendEmail = async (uid, to, subject, message) => {
           
           <!-- Unique ID -->
           <p style="margin-top: 20px; font-size: 14px; font-weight: 500; color: #0a0a0a;">
-            <strong>Your Unique Team ID:</strong> ${uid}
+            <strong>Your Unique Team ID:</strong> ${registrationId}
           </p>
 
           <!-- CTA Button -->
@@ -62,11 +64,21 @@ const sendEmail = async (uid, to, subject, message) => {
     `;
 
     const mailOptions = {
-      from: `"Tech Tank" <${process.env.EMAIL_USER}>`,
+      from: "Tech Tank" <${process.env.EMAIL_USER}>,
       to,
       subject,
       html: emailTemplate,
     };
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      secure: true,
+      port: 465,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
     const info = await transporter.sendMail(mailOptions);
     console.log("Email sent:", info.response);
@@ -76,3 +88,5 @@ const sendEmail = async (uid, to, subject, message) => {
     return { success: false, message: "Email failed to send!" };
   }
 };
+
+module.exports = sendEmail;
