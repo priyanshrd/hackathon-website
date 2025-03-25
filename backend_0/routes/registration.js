@@ -47,17 +47,14 @@ router.post("/workshop", upload.single("screenshot"), async (req, res) => {
     });
   } catch (error) {
     console.error("Error registering user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Missing/Invalid Details" });
   }
 });
 
 // Route to get all transaction screenshots
 router.get("/screenshots", async (req, res) => {
   try {
-    const users = await WorkshopUser.find(
-      {},
-      "name email phoneNumber transactionId image"
-    ); // Only fetch relevant fields
+    const users = await WorkshopUser.find({}, "name email phoneNumber transactionId image"); // Only fetch relevant fields
 
     console.log(users);
 
@@ -70,7 +67,7 @@ router.get("/screenshots", async (req, res) => {
     res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching transaction screenshots:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Please Upload Transaction Screenshot" });
   }
 });
 
@@ -121,7 +118,7 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
     });
   } catch (error) {
     console.error("Registration error:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Missing/Invalid Details" });
   }
 });
 
@@ -135,7 +132,7 @@ router.get("/teams", async (req, res) => {
 });
 
 router.post("/send-email", async (req, res) => {
-  const { uid, email, subject, message } = req.body;
+  const { email, subject, message } = req.body;
 
   if (!email || !subject || !message) {
     return res
@@ -143,7 +140,7 @@ router.post("/send-email", async (req, res) => {
       .json({ success: false, message: "All fields are required" });
   }
 
-  const result = await sendEmail(uid, email, subject, message);
+  const result = await sendEmail(email, subject, message);
   res.json(result);
 });
 
