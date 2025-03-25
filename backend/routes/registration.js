@@ -215,9 +215,15 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
 // Get all teams endpoint
 router.get("/teams", async (req, res) => {
   try {
-    const teams = await Team.find({})
-      .select("-screenshot") // Exclude large screenshot data by default
-      .lean();
+    const includeScreenshots = req.query.includeScreenshots === 'true';
+    
+    let teamsQuery = Team.find({});
+    
+    if (!includeScreenshots) {
+      teamsQuery = teamsQuery.select("-screenshot");
+    }
+    
+    const teams = await teamsQuery.lean();
       
     res.json({
       count: teams.length,

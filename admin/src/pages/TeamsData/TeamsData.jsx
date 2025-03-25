@@ -13,37 +13,42 @@ const TeamsData = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Component mounted, fetching teams...");
     const fetchTeams = async () => {
       try {
         setIsLoading(true);
-        console.log(`Making request to: ${backend_url}/api/registration/teams`);
-        
-        const response = await axios.get(`${backend_url}/api/registration/teams`);
-        console.log("API Response:", response);
+        // Add includeScreenshots=true parameter
+        const response = await axios.get(`${backend_url}/api/registration/teams?includeScreenshots=true`);
         
         if (response.data && response.data.teams) {
-          console.log("Received teams data:", response.data.teams);
-          setTeams(response.data.teams);
+          const processedTeams = response.data.teams.map(team => {
+            // Ensure screenshot is properly formatted
+            const screenshot = team.screenshot 
+              ? team.screenshot.startsWith('data:image') 
+                ? team.screenshot 
+                : `data:image/png;base64,${team.screenshot}`
+              : null;
+              
+            return {
+              ...team,
+              screenshot
+            };
+          });
+          
+          setTeams(processedTeams);
           setError(null);
-        } else {
-          console.warn("No teams data received from API");
-          setTeams([]);
         }
       } catch (err) {
         console.error("Error fetching teams:", err);
-        console.error("Error details:", err.response?.data || err.message);
         setError(`Failed to load team data: ${err.message}`);
-        setTeams([]);
       } finally {
         setIsLoading(false);
-        console.log("Finished loading teams");
       }
     };
-
+  
     fetchTeams();
   }, [backend_url]);
 
+  // Define filteredTeams before using it in JSX
   const filteredTeams = teams.filter(team => {
     if (!team) return false;
     
@@ -58,11 +63,8 @@ const TeamsData = () => {
   });
 
   const handleStatusChange = async (team, status) => {
-    console.log(`Changing status for team ${team._id} to ${status}`);
-    
     const leader = team.members?.find((member) => member?.isTeamLead);
     if (!leader) {
-      console.error("No team leader found for team:", team);
       alert("No team leader found for this team.");
       return;
     }
@@ -75,15 +77,10 @@ const TeamsData = () => {
       reject: {
         subject: "Hackathon Registration Rejected",
         message: `Dear ${leader.name},<br><br>Unfortunately, your team "${team.teamName}" has been <b>rejected</b>. Please contact support for details.<br><br>Best regards,<br>Tech Tank Team`
-      },
-      pending: {
-        subject: "Hackathon Registration Update",
-        message: `Dear ${leader.name},<br><br>Your team "${team.teamName}" is currently under review. We'll notify you soon.<br><br>Best regards,<br>Tech Tank Team`
       }
     };
 
     try {
-      console.log("Sending status email to:", leader.email);
       const response = await axios.post(
         `${backend_url}/api/registration/send-email`,
         {
@@ -93,10 +90,8 @@ const TeamsData = () => {
           teamId: team._id
         }
       );
-      console.log("Email API response:", response.data);
 
       if (response.data?.success) {
-        console.log(`Status updated successfully to ${status}`);
         alert(`Status updated to ${status.toUpperCase()} and email sent successfully`);
         setTeams(prevTeams => 
           prevTeams.map(t => 
@@ -104,46 +99,22 @@ const TeamsData = () => {
           )
         );
       } else {
-        console.warn("Email API returned unsuccessful response");
         alert("Failed to update status.");
       }
     } catch (error) {
       console.error("Error updating status:", error);
-      console.error("Error details:", error.response?.data || error.message);
       alert("Error updating status. Please try again.");
     }
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) {
-      console.warn("No date string provided");
-      return "N/A";
-    }
-    try {
-      const date = new Date(dateString);
-      return date.toLocaleString();
-    } catch (err) {
-      console.error("Error formatting date:", err);
-      return "Invalid Date";
-    }
-  };
-
-  console.log("Current teams state:", teams);
-  console.log("Filtered teams:", filteredTeams);
-  console.log("Loading state:", isLoading);
-  console.log("Error state:", error);
-
   if (isLoading) {
-    console.log("Rendering loading state");
     return <div className="loading">Loading team data...</div>;
   }
 
   if (error) {
-    console.log("Rendering error state");
     return <div className="error">Error: {error}</div>;
   }
 
-  console.log("Rendering main component");
   return (
     <div className="admin-container">
       <div className="admin-header">
@@ -153,10 +124,7 @@ const TeamsData = () => {
             type="text"
             placeholder="Search teams..."
             value={searchTerm}
-            onChange={(e) => {
-              console.log("Search term changed:", e.target.value);
-              setSearchTerm(e.target.value);
-            }}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
           <button className="home-button" onClick={() => navigate("/")}>
@@ -170,9 +138,6 @@ const TeamsData = () => {
           <p className="no-results">
             {teams.length === 0 ? "No teams registered yet." : "No teams match your search."}
           </p>
-          <p className="debug-info">
-            Debug Info: Loaded {teams.length} teams from API
-          </p>
         </div>
       ) : (
         <div className="table-container">
@@ -184,7 +149,6 @@ const TeamsData = () => {
                 <th>Members</th>
                 <th>Transaction</th>
                 <th>Payment Proof</th>
-                <th>Registration Date</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -236,21 +200,18 @@ const TeamsData = () => {
                     <td className="screenshot-cell">
                       {team.screenshot ? (
                         <img
-                          src={`data:image/png;base64,${team.screenshot}`}
+                          src={team.screenshot}
                           alt="Payment Screenshot"
-                          className="screenshot-thumbnail"
-                          onClick={() => {
-                            console.log("Clicked on screenshot for team:", team.teamName);
-                            setSelectedImage(team.screenshot);
+                          className="screenshot"
+                          onClick={() => setSelectedImage(team.screenshot)}
+                          onError={(e) => {
+                            console.error("Image failed to load:", team.screenshot);
+                            e.target.style.display = 'none';
                           }}
-                          title="Click to enlarge"
                         />
                       ) : (
                         "No Screenshot"
                       )}
-                    </td>
-                    <td className="registration-date">
-                      {formatDate(team.registrationDate)}
                     </td>
                     <td className="status-cell">
                       <span className={`status-badge ${team.status || 'pending'}`}>
@@ -260,33 +221,15 @@ const TeamsData = () => {
                     <td className="action-buttons">
                       <button
                         className="accept-button"
-                        onClick={() => {
-                          console.log("Accept button clicked for team:", team.teamName);
-                          handleStatusChange(team, "accept");
-                        }}
-                        title="Approve this team"
+                        onClick={() => handleStatusChange(team, "accept")}
                       >
                         Approve
                       </button>
                       <button
                         className="reject-button"
-                        onClick={() => {
-                          console.log("Reject button clicked for team:", team.teamName);
-                          handleStatusChange(team, "reject");
-                        }}
-                        title="Reject this team"
+                        onClick={() => handleStatusChange(team, "reject")}
                       >
                         Reject
-                      </button>
-                      <button
-                        className="pending-button"
-                        onClick={() => {
-                          console.log("Pending button clicked for team:", team.teamName);
-                          handleStatusChange(team, "pending");
-                        }}
-                        title="Mark as pending"
-                      >
-                        Pending
                       </button>
                     </td>
                   </tr>
@@ -298,36 +241,20 @@ const TeamsData = () => {
       )}
 
       {selectedImage && (
-        <div className="modal" onClick={() => {
-          console.log("Closing image modal");
-          setSelectedImage(null);
-        }}>
+        <div className="modal" onClick={() => setSelectedImage(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <span className="close-button" onClick={() => setSelectedImage(null)}>
               &times;
             </span>
             <img
-              src={`data:image/png;base64,${selectedImage}`}
+              src={selectedImage}
               alt="Enlarged Payment Screenshot"
               className="enlarged-screenshot"
+              onError={(e) => {
+                console.error("Failed to load enlarged image");
+                e.target.style.display = 'none';
+              }}
             />
-            <div className="image-actions">
-              <button onClick={() => {
-                console.log("Printing screenshot");
-                window.print();
-              }}>
-                Print
-              </button>
-              <button onClick={() => {
-                console.log("Downloading screenshot");
-                const link = document.createElement('a');
-                link.href = `data:image/png;base64,${selectedImage}`;
-                link.download = 'payment-proof.png';
-                link.click();
-              }}>
-                Download
-              </button>
-            </div>
           </div>
         </div>
       )}
