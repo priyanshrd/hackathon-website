@@ -138,10 +138,7 @@ const Stepper = () => {
         setError(`Please enter USN for ${i === 0 ? "Team Lead" : `Member ${i}`}`);
         return false;
       }
-      if (isRVCEStudent && !validateUSN(member.usn)) {
-        setError(`Please enter a valid USN (e.g., 1RV20CS001) for ${i === 0 ? "Team Lead" : `Member ${i}`}`);
-        return false;
-      }
+      
     }
     return true;
   };

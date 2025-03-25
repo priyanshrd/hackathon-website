@@ -7,18 +7,18 @@ const multer = require("multer");
 
 // Configure multer for file uploads
 const storage = multer.memoryStorage();
-const upload = multer({ 
+const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB limit
+    fileSize: 5 * 1024 * 1024, // 5MB limit
   },
   fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
+    if (file.mimetype.startsWith("image/")) {
       cb(null, true);
     } else {
-      cb(new Error('Only image files are allowed!'), false);
+      cb(new Error("Only image files are allowed!"), false);
     }
-  }
+  },
 });
 
 // Helper function to validate email format
@@ -52,12 +52,15 @@ router.post("/workshop", upload.single("screenshot"), async (req, res) => {
     }
 
     // Check for existing user
-    const existingUser = await WorkshopUser.findOne({ $or: [{ email }, { transactionId }] });
+    const existingUser = await WorkshopUser.findOne({
+      $or: [{ email }, { transactionId }],
+    });
     if (existingUser) {
-      const conflictField = existingUser.email === email ? "email" : "transaction ID";
-      return res.status(409).json({ 
+      const conflictField =
+        existingUser.email === email ? "email" : "transaction ID";
+      return res.status(409).json({
         error: `User with this ${conflictField} already exists`,
-        field: conflictField
+        field: conflictField,
       });
     }
 
@@ -78,22 +81,22 @@ router.post("/workshop", upload.single("screenshot"), async (req, res) => {
 
     res.status(201).json({
       message: "Registration successful",
-      userId: newUser._id
+      userId: newUser._id,
     });
-
   } catch (error) {
     console.error("Workshop registration error:", error);
-    
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ 
+
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
         error: "Validation failed",
-        details: error.errors 
+        details: error.errors,
       });
     }
-    
-    res.status(500).json({ 
+
+    res.status(500).json({
       error: "Registration failed",
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      details:
+        process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 });
@@ -105,7 +108,9 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
 
     // Validate required fields
     if (!teamName || !members || !transactionId) {
-      return res.status(400).json({ error: "Team name, members, and transaction ID are required" });
+      return res
+        .status(400)
+        .json({ error: "Team name, members, and transaction ID are required" });
     }
 
     // Parse members if it's a string
@@ -114,7 +119,9 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
         members = JSON.parse(members);
       }
     } catch (err) {
-      return res.status(400).json({ error: "Invalid team member details format" });
+      return res
+        .status(400)
+        .json({ error: "Invalid team member details format" });
     }
 
     // Validate members array
@@ -125,39 +132,50 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
     // Validate each team member
     for (const [index, member] of members.entries()) {
       if (!member.name || !member.email || !member.phoneNumber) {
-        return res.status(400).json({ 
+        return res.status(400).json({
           error: `Member ${index + 1} is missing required fields`,
-          memberIndex: index
+          memberIndex: index,
         });
       }
 
       if (!validateEmail(member.email)) {
-        return res.status(400).json({ 
+        return res.status(400).json({
           error: `Invalid email format for member ${index + 1}`,
-          memberIndex: index
+          memberIndex: index,
         });
       }
 
       if (!validatePhone(member.phoneNumber)) {
-        return res.status(400).json({ 
+        return res.status(400).json({
           error: `Phone number must be 10 digits for member ${index + 1}`,
-          memberIndex: index
+          memberIndex: index,
         });
       }
 
-      
+      if (
+        isRVCEStudent &&
+        (!member.usn || !/^1RV\d{2}[A-Z]{2}\d{3}$/i.test(member.usn))
+      ) {
+        return res.status(400).json({
+          error: `Invalid USN format for member ${
+            index + 1
+          } (e.g., 1RV20CS001)`,
+          memberIndex: index,
+        });
+      }
     }
 
     // Check for existing team or transaction ID
-    const existingTeam = await Team.findOne({ 
-      $or: [{ teamName }, { transactionId }] 
+    const existingTeam = await Team.findOne({
+      $or: [{ teamName }, { transactionId }],
     });
-    
+
     if (existingTeam) {
-      const conflictField = existingTeam.teamName === teamName ? "team name" : "transaction ID";
-      return res.status(409).json({ 
+      const conflictField =
+        existingTeam.teamName === teamName ? "team name" : "transaction ID";
+      return res.status(409).json({
         error: `Team with this ${conflictField} already exists`,
-        field: conflictField
+        field: conflictField,
       });
     }
 
@@ -179,30 +197,30 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
     res.status(201).json({
       message: "Team registration successful",
       teamId: savedTeam._id,
-      memberCount: savedTeam.members.length
+      memberCount: savedTeam.members.length,
     });
-
   } catch (error) {
     console.error("Team registration error:", error);
-    
+
     if (error.code === 11000) {
       const duplicateField = Object.keys(error.keyPattern)[0];
-      return res.status(409).json({ 
+      return res.status(409).json({
         error: `${duplicateField} already exists`,
-        field: duplicateField
+        field: duplicateField,
       });
     }
-    
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ 
+
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
         error: "Validation failed",
-        details: error.errors 
+        details: error.errors,
       });
     }
-    
-    res.status(500).json({ 
+
+    res.status(500).json({
       error: "Team registration failed",
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      details:
+        process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 });
@@ -210,25 +228,26 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
 // Get all teams endpoint
 router.get("/teams", async (req, res) => {
   try {
-    const includeScreenshots = req.query.includeScreenshots === 'true';
-    
+    const includeScreenshots = req.query.includeScreenshots === "true";
+
     let teamsQuery = Team.find({});
-    
+
     if (!includeScreenshots) {
       teamsQuery = teamsQuery.select("-screenshot");
     }
-    
+
     const teams = await teamsQuery.lean();
-      
+
     res.json({
       count: teams.length,
-      teams
+      teams,
     });
   } catch (error) {
     console.error("Error fetching teams:", error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: "Failed to fetch teams",
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      details:
+        process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 });
@@ -242,20 +261,21 @@ router.get("/screenshots", async (req, res) => {
     );
 
     if (!users || users.length === 0) {
-      return res.status(404).json({ 
-        message: "No transaction screenshots found" 
+      return res.status(404).json({
+        message: "No transaction screenshots found",
       });
     }
 
     res.status(200).json({
       count: users.length,
-      users
+      users,
     });
   } catch (error) {
     console.error("Error fetching screenshots:", error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: "Failed to fetch transaction screenshots",
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      details:
+        process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 });
@@ -263,11 +283,13 @@ router.get("/screenshots", async (req, res) => {
 // Email sending endpoint
 router.post("/send-email", async (req, res) => {
   try {
-    const { uid, email, subject, message } = req.body;
+    const { email, subject, message, registrationId } = req.body;
+
+    console.log(email);
 
     if (!email || !subject || !message) {
-      return res.status(400).json({ 
-        error: "Email, subject, and message are required" 
+      return res.status(400).json({
+        error: "Email, subject, and message are required",
       });
     }
 
@@ -275,14 +297,14 @@ router.post("/send-email", async (req, res) => {
       return res.status(400).json({ error: "Invalid email format" });
     }
 
-    const result = await sendEmail(uid, email, subject, message);
+    const result = await sendEmail(email, subject, message, registrationId);
     res.json(result);
-
   } catch (error) {
     console.error("Email sending error:", error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: "Failed to send email",
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      details:
+        process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 });
