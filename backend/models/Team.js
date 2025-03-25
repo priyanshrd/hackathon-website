@@ -11,7 +11,13 @@ const TeamMemberSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: true,
-    match: [/^\d{10,15}$/, "Invalid phone number"],
+    match: [/^\d{10}$/, "Phone number must be 10 digits"],
+  },
+  usn: {
+    type: String,
+    trim: true,
+    uppercase: true,
+    match: [/^1RV\d{2}[A-Z]{2}\d{3}$/, "Invalid USN format"],
   },
   isTeamLead: { type: Boolean, default: false },
 });

@@ -31,11 +31,13 @@ const Workshop = () => {
     name: "",
     email: "",
     phoneNumber: "",
+    usn: "",
     transactionId: "",
   });
-
   const totalSteps = 2;
   const [screenshot, setScreenshot] = useState(null);
+  const [usn, setUsn] = useState("");
+const [isRVCEStudent, setIsRVCEStudent] = useState(false);
 
   const handleFileChange = (e) => {
     setScreenshot(e.target.files[0]);
@@ -44,12 +46,12 @@ const Workshop = () => {
   const validateStep1 = () => {
     const errors = {};
     let isValid = true;
-
+  
     if (!name.trim()) {
       errors.name = "Name is required";
       isValid = false;
     }
-
+  
     if (!email.trim()) {
       errors.email = "Email is required";
       isValid = false;
@@ -57,7 +59,7 @@ const Workshop = () => {
       errors.email = "Please enter a valid email";
       isValid = false;
     }
-
+  
     if (!phoneNumber.trim()) {
       errors.phoneNumber = "Phone number is required";
       isValid = false;
@@ -65,7 +67,15 @@ const Workshop = () => {
       errors.phoneNumber = "Please enter a valid 10-digit phone number";
       isValid = false;
     }
-
+  
+    if (isRVCEStudent && !usn.trim()) {
+      errors.usn = "USN is required for RVCE students";
+      isValid = false;
+    } else if (isRVCEStudent && !/^1RV\d{2}[A-Z]{2}\d{3}$/i.test(usn)) {
+      errors.usn = "Please enter a valid USN (e.g., 1RV20CS001)";
+      isValid = false;
+    }
+  
     setFieldErrors({ ...fieldErrors, ...errors });
     return isValid;
   };
@@ -95,14 +105,14 @@ const Workshop = () => {
     
     setIsSubmitting(true);
     setError("");
-
+  
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
     formData.append("phoneNumber", phoneNumber);
+    formData.append("usn", isRVCEStudent ? usn : "");
     formData.append("transactionId", transactionId);
     formData.append("screenshot", screenshot);
-
     try {
       console.log(screenshot);
       const response = await axios.post(
@@ -295,6 +305,49 @@ const Workshop = () => {
               )}
             </div>
           </div>
+          <div className="mt-4">
+  <div className="flex items-center mb-2">
+    <input
+      type="checkbox"
+      id="rvceStudent"
+      checked={isRVCEStudent}
+      onChange={(e) => {
+        setIsRVCEStudent(e.target.checked);
+        if (!e.target.checked) {
+          setUsn("");
+          setFieldErrors({ ...fieldErrors, usn: "" });
+        }
+      }}
+      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+    />
+    <label htmlFor="rvceStudent" className="ml-2 block text-sm text-white">
+      I am an RVCE student
+    </label>
+  </div>
+  
+  {isRVCEStudent && (
+    <div>
+      <label className="block text-sm font-medium text-white mb-2">
+        USN (RVCE Students)
+      </label>
+      <input
+        type="text"
+        value={usn}
+        onChange={(e) => {
+          setUsn(e.target.value.toUpperCase());
+          setFieldErrors({ ...fieldErrors, usn: "" });
+        }}
+        className={`w-full p-3 bg-[#2a2a2a] border ${
+          fieldErrors.usn ? "border-red-500" : "border-[#3a3a3a]"
+        } text-white rounded-md focus:ring-2 focus:ring-[#38AAC9] focus:border-[#38AAC9]`}
+        placeholder="e.g., 1RV20CS001"
+      />
+      {fieldErrors.usn && (
+        <p className="mt-1 text-sm text-red-500">{fieldErrors.usn}</p>
+      )}
+    </div>
+  )}
+</div>
           <div className="flex justify-end mt-6">
             <button
               onClick={nextStep}
