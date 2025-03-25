@@ -320,21 +320,21 @@ const About = () => {
       {[
         {
           name: "Siddhant Goswami",
-          title: "Founder",
+          title: "Co-Founder & CTO",
           company: "100xEngineers+",
           image: "/7.png",
           linkedin: "siddhant-goswami"
         },
         {
           name: "Arshdeep Singh",
-          title: "CEO",
+          title: "Founder & CEO",
           company: "EDock",
           image: "/8.png",
           linkedin: "arshdeep-singh"
         },
         {
           name: "Shivaram K R",
-          title: "CEO",
+          title: "Co-Founder & CEO",
           company: "Hue Learn",
           image: "/9.png",
           linkedin: "shivaram-k-r"
@@ -348,7 +348,7 @@ const About = () => {
         },
         {
           name: "Raghu Sarangarajan",
-          title: "Co-founder & CTPO",
+          title: "Co-Founder & CTPO",
           company: "Cubyts",
           image: "/11.png",
           linkedin: "raghu-sarangarajan"
