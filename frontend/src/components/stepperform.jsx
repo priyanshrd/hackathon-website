@@ -32,7 +32,7 @@ const [members, setMembers] = useState([
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
-
+  const [currentQR, setCurrentQR] = useState(1); // Start with qr1.jpg
   const totalSteps = 4;
 
   const handleMemberCountChange = (e) => {
@@ -519,24 +519,45 @@ const [members, setMembers] = useState([
         <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg border border-[#3a3a3a]">
           <div className="flex items-center space-x-2 text-white pb-2">
             <h3 className="text-xl font-semibold">Payment Details - </h3>
-            <span className="text-xl font-semibold text-[#E4CD15]">399</span>
+            <span className="text-xl font-semibold text-[#E4CD15]">₹399</span>
           </div>
 
           <div className="flex flex-col items-center mb-6">
-            <div className="bg-[#2a2a2a] p-6 rounded-lg shadow-lg border border-[#3a3a3a] mb-6 w-full max-w-md">
-              <div className="bg-[#1a1a1a] w-full h-48 flex items-center justify-center rounded-lg">
-                <img
-                  src="/testQrCode.jpg"
-                  alt="Payment QR Code"
-                  className="max-w-[200px] max-h-[180px] mx-auto"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src =
-                      "https://via.placeholder.com/200x180?text=QR+Code";
-                  }}
-                />
-              </div>
-            </div>
+  <div className="bg-[#2a2a2a] p-6 rounded-lg shadow-lg border border-[#3a3a3a] mb-6 w-full max-w-md">
+    <div className="bg-[#1a1a1a] w-full h-48 flex items-center justify-center rounded-lg">
+      <img
+        src={`/qr${currentQR}.jpg`}
+        alt="Payment QR Code"
+        className="max-w-[200px] max-h-[180px] mx-auto"
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = "https://via.placeholder.com/200x180?text=QR+Code";
+        }}
+      />
+    </div>
+  </div>
+  
+  {/* Swap QR button */}
+  <button 
+    onClick={() => setCurrentQR((prev) => (prev % 3) + 1)}
+    className="p-2 rounded-full bg-[#3a3a3a] hover:bg-[#4a4a4a] transition-colors"
+    title="Switch QR code"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+      />
+    </svg>
+  </button>
 
             <div className="w-full max-w-md">
               <label className="block text-sm font-medium text-white mb-2">
