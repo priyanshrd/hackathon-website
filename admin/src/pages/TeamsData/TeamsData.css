@@ -1,247 +1,227 @@
-/* General Styling */
-body {
-  background: #0a0a0a;
-  color: #ffffff;
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
+/* Add these styles to your existing CSS file */
 
-/* Container */
 .admin-container {
-  max-width: 95%;
-  margin: 20px auto;
   padding: 20px;
-  background: #0a0a0a;
-  border-radius: 8px;
-  overflow-x: auto; /* Allows horizontal scrolling on small screens */
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* Heading */
-h1 {
-  text-align: center;
-  color: #37abc8;
-  font-size: 24px;
-}
-
-/* Home Button */
-.home-button {
-  background: #37abc8;
-  color: #0a0a0a;
-  font-size: 16px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
-  transition: 0.3s;
-  display: block;
-  width: 100%;
-  max-width: 200px;
-  margin: 10px auto;
-  text-align: center;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-.home-button:hover {
-  background: #ffc600;
+.admin-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }
 
-/* Table */
+.search-input {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  min-width: 250px;
+}
+.debug-info {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
-th,
-td {
-  padding: 12px;
+th, td {
+  padding: 12px 15px;
   text-align: left;
-  border: 1px solid #37abc8;
+  border-bottom: 1px solid #ddd;
 }
 
 th {
-  background: #37abc8;
-  color: #0a0a0a;
+  background-color: #341f1f;
+  position: sticky;
+  top: 0;
 }
 
-td {
-  background: #0a0a0a;
-  color: #ffffff;
+
+.team-name {
+  font-weight: bold;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.rvce-tag {
+  background-color: #38AAC9;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  margin-left: 8px;
 }
 
-li {
-  margin-bottom: 5px;
-  color: #ffc600;
+.leader-info, .member-list {
+  white-space: nowrap;
 }
 
-/* Screenshot Styling */
-.screenshot {
-  width: 100px;
-  height: auto;
-  object-fit: contain;
-  border: 2px solid #ffc600;
+.member-list ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.member-list li {
+  margin-bottom: 8px;
+}
+
+.screenshot-thumbnail {
+  max-width: 100px;
+  max-height: 60px;
   cursor: pointer;
-  transition: transform 0.2s;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
-.screenshot:hover {
-  transform: scale(1.1);
+.screenshot-thumbnail:hover {
+  opacity: 0.8;
 }
 
-/* Modal Styles */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.status-badge.pending {
+  background-color: #FFC107;
+  color: #000;
+}
+
+.status-badge.accept {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.status-badge.reject {
+  background-color: #F44336;
+  color: white;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.accept-button, .reject-button, .pending-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.accept-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.reject-button {
+  background-color: #F44336;
+  color: white;
+}
+
+.pending-button {
+  background-color: #FFC107;
+  color: #000;
+}
+
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0,0,0,0.8);
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 20px;
+  align-items: center;
+  z-index: 1000;
 }
 
 .modal-content {
-  max-width: 80%;
-  max-height: 80%;
-}
-
-.modal-content img {
-  width: 100%;
-  height: auto;
-  border: 3px solid #ffc600;
-}
-
-/* Responsive Table */
-@media (max-width: 768px) {
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  th,
-  td {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  .screenshot {
-    width: 80px;
-    height: auto;
-  }
-
-  .modal {
-    width: 90%;
-    height: 90%;
-  }
-}
-
-/* Mobile-Friendly Layout */
-@media (max-width: 480px) {
-  table,
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
-    display: block;
-  }
-
-  thead {
-    display: none;
-  }
-
-  tr {
-    margin-bottom: 15px;
-    border: 1px solid #37abc8;
-    padding: 10px;
-    background: #0a0a0a;
-    border-radius: 5px;
-  }
-
-  td {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-  }
-
-  .screenshot {
-    width: 60px;
-  }
-
-  .modal {
-    width: 95%;
-    height: 95%;
-  }
-}
-
-/* General button styles */
-.accept-button,
-.reject-button {
-  padding: 10px 18px;
-  font-size: 16px;
-  font-weight: bold;
-  border: none;
+  background-color: white;
+  padding: 20px;
   border-radius: 8px;
+  max-width: 90%;
+  max-height: 90%;
+  position: relative;
+}
+
+.enlarged-screenshot {
+  max-width: 100%;
+  max-height: 80vh;
+  display: block;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Accept button */
-.accept-button {
-  background-color: #28a745;
-  color: white;
-}
-
-.accept-button:hover {
-  background-color: #218838;
-  transform: scale(1.05);
-}
-
-.accept-button:active {
-  background-color: #1e7e34;
-}
-
-/* Reject button */
-.reject-button {
-  background-color: #dc3545;
-  color: white;
-}
-
-.reject-button:hover {
-  background-color: #c82333;
-  transform: scale(1.05);
-}
-
-.reject-button:active {
-  background-color: #a71d2a;
-}
-
-/* Responsive layout */
-@media (max-width: 768px) {
-  .accept-button,
-  .reject-button {
-    width: 100%;
-    padding: 6px;
-    font-size: 12px;
-  }
-}
-
-/* Button container for better alignment */
-.button-container {
+.image-actions {
   display: flex;
-  justify-content: center;
   gap: 10px;
-  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.loading, .no-results, .error {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+}
+
+.error {
+  color: #F44336;
+}
+
+@media (max-width: 768px) {
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .admin-controls {
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .search-input {
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 8px 10px;
+    font-size: 0.9em;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
 }
