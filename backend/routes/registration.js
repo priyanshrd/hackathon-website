@@ -47,7 +47,7 @@ router.post("/workshop", upload.single("screenshot"), async (req, res) => {
     });
   } catch (error) {
     console.error("Error registering user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Missing/Invalid Details" });
   }
 });
 
@@ -67,7 +67,7 @@ router.get("/screenshots", async (req, res) => {
     res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching transaction screenshots:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Please Upload Transaction Screenshot" });
   }
 });
 
@@ -118,7 +118,7 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
     });
   } catch (error) {
     console.error("Registration error:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Missing/Invalid Details" });
   }
 });
 

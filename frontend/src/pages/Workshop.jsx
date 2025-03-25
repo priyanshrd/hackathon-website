@@ -321,7 +321,7 @@ const Workshop = () => {
         <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg border border-[#3a3a3a]">
           <div className="flex items-center space-x-2 text-white pb-2">
             <h3 className="text-xl font-semibold">Payment Details - </h3>
-            <span className="text-xl font-semibold text-[#E4CD15]">₹200</span>
+            <span className="text-xl font-semibold text-[#E4CD15]">₹99</span>
           </div>
           <div className="flex flex-col items-center mb-6">
             <div className="bg-[#2a2a2a] p-4 rounded-lg shadow-lg mb-6 w-full">
