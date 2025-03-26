@@ -678,31 +678,123 @@ const About = () => {
       </motion.div>
     </div>
 
-    <div className="mt-12 p-6 bg-[#E4CD15]/10 border-l-4 border-[#E4CD15] rounded-r-lg">
-      <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-        Important Notes:
-      </h3>
-      <ul className="space-y-2">
-        <li className="flex items-start">
-          <span className="text-[#38AAC9] text-xl mr-2">•</span>
-          <p>Open to all UG & PG students across all courses in India.
+    {/* Updated Important Notes Section */}
+<div className="mt-12 bg-[#1a1a1a] p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+  <h3 className="text-xl font-bold mb-4 text-[#38AAC9] flex items-center">
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      className="h-6 w-6 mr-2" 
+      fill="none" 
+      viewBox="0 0 24 24" 
+      stroke="currentColor"
+    >
+      <path 
+        strokeLinecap="round" 
+        strokeLinejoin="round" 
+        strokeWidth={2} 
+        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" 
+      />
+    </svg>
+    Important Notes
+  </h3>
+  <ul className="space-y-3">
+    <li className="flex items-start">
+      <span className="text-[#E4CD15] text-xl mr-2">•</span>
+      <p className="text-gray-300">
+        Open to all UG & PG students across all courses in India.
+      </p>
+    </li>
+    <li className="flex items-start">
+      <span className="text-[#E4CD15] text-xl mr-2">•</span>
+      <p className="text-gray-300">
+        Team leaders will receive a confirmation email with a link to a WhatsApp group. Only team leaders should join.
+      </p>
+    </li>
+    <li className="flex items-start">
+      <span className="text-[#E4CD15] text-xl mr-2">•</span>
+      <p className="text-gray-300">
+        The 6-slide template for Round 1 will be shared in that group.
+      </p>
+    </li>
+    <li className="flex items-start">
+      <span className="text-[#E4CD15] text-xl mr-2">•</span>
+      <p className="text-gray-300">
+        Registrations will close on April 8th at 11:59 PM.
+      </p>
+    </li>
+  </ul>
+</div>
+    
+ {/* Teammate Finder Section */}
+<section
+  id="teammates"
+  ref={addSectionRef("teammates")}
+  className={`py-10 px-4 ${
+    isVisible["teammates"]
+      ? "opacity-100 translate-y-0"
+      : "opacity-0 translate-y-10"
+  } transition-all duration-1000 ease-out`}
+>
+  <div className="max-w-6xl mx-auto">
+    <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
+      Can't Find Teammates?
+      <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
+    </h2>
+
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={isVisible["teammates"] ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="bg-gradient-to-r from-[#38AAC9]/10 to-[#E4CD15]/10 p-8 rounded-xl border-l-4 border-[#38AAC9] shadow-lg hover:shadow-xl transition-all duration-300"
+    >
+      <div className="flex flex-col md:flex-row gap-8 items-center">
+        {/* Content */}
+        <div className="w-full md:w-2/3">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">
+            Join Our Networking Group
+          </h2>
+          <p className="text-lg text-gray-300 mb-6">
+            Connect with other participants looking for teammates in our dedicated WhatsApp group. 
+            Find people with complementary skills to form your perfect team!
           </p>
-        </li>
-        <li className="flex items-start">
-          <span className="text-[#38AAC9] text-xl mr-2">•</span>
-          <p>The team leaders will recieve a confirmation mail with a link to a whatsapp group. Only Team Leaders must join that group.
-          </p>
-        </li>
-        <li className="flex items-start">
-          <span className="text-[#38AAC9] text-xl mr-2">•</span>
-          <p>The 6 slide template for Round 1 will be shared in that group.</p>
-        </li>
-        <li className="flex items-start">
-          <span className="text-[#38AAC9] text-xl mr-2">•</span>
-          <p>Registrations will close on 8th April, 11:59 PM.</p>
-        </li>
-      </ul>
-    </div>
+          
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <a
+              href="https://chat.whatsapp.com/IPD80qUhhvw1v4U1pYi53d"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center px-6 py-3 bg-[#25D366] hover:bg-[#128C7E] text-white font-bold rounded-full transition-all duration-300 text-lg w-full sm:w-auto"
+            >
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+                alt="WhatsApp" 
+                className="w-6 h-6 mr-2"
+              />
+              Join WhatsApp Group
+            </a>
+            
+          </div>
+        </div>
+
+        {/* Placeholder Image */}
+        <div className="w-full md:w-1/3 flex justify-center">
+          <div className="relative w-64 h-64">
+            <div className="absolute inset-0 bg-[#38AAC9]/20 rounded-full animate-pulse"></div>
+            <img 
+              src="/teamwork.png" // Replace with your actual image path
+              alt="Teamwork illustration"
+              className="relative z-10 w-full h-full object-contain"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'%3E%3C/path%3E%3C/svg%3E";
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  </div>
+</section>     
 
     {/* Contact Section */}
 <div className="mt-16">
@@ -762,7 +854,14 @@ const About = () => {
   </div>
 </div>
   </motion.div>
+
+
+
+  
 </section>
+
+
+
 
 <footer className="py-8 border-t border-[#38AAC9]/30 text-center mt-12">
   <div className="max-w-6xl mx-auto px-4">
@@ -794,5 +893,8 @@ const About = () => {
     </div>
   );
 };
+
+
+
 
 export default About;
