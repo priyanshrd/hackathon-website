@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Timeline = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -41,7 +42,7 @@ const Timeline = () => {
       date: "April 7 (5 PM) - April 9 (5 PM), 2025",
       description: () => (
         <>
-          Submit your Tech Tank idea online in 6 slides on the website: <a href='https://www.techtankrvce.com'>techtankrvce.com</a>
+          Submit your Tech Tank idea online in 6 slides on the website: <a href='https://www.techtankrvce.com' className="text-[#38AAC9] hover:underline">techtankrvce.com</a>
         </>
       ),
     },
@@ -64,12 +65,22 @@ const Timeline = () => {
     {
       title: "Final Pitch to Investors & Judges",
       date: "April 12, 2025 (10 AM - 2 PM)",
-      description: "Present your project to investors and mentors from industry."
+      description: () => (
+        <>
+          Present your project to investors and mentors from industry.
+          <br/>
+          <span className="text-[#E4CD15] font-medium">Leaderboard will be live during this event</span>
+        </>
+      )
     },
     {
       title: "Final Results Announcement",
       date: "April 12, 2025 (2 PM)",
-      description: "Winners will be declared!"
+      description: () => (
+        <>
+          Winners will be declared on the <a href="/leaderboard" className="text-[#38AAC9] hover:underline">Leaderboard</a>!
+        </>
+      )
     }
   ];
 
@@ -80,10 +91,15 @@ const Timeline = () => {
       className={`py-20 px-4 bg-black ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-out`}
     >
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
+        <motion.h2 
+          className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           Event Timeline
           <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
-        </h2>
+        </motion.h2>
         
         <div className="relative">
           {/* Timeline Line */}
@@ -92,44 +108,35 @@ const Timeline = () => {
           {/* Timeline Items */}
           <div className="space-y-12">
             {timelineEvents.map((event, index) => (
-              <div 
+              <motion.div 
                 key={index} 
                 className="relative pl-16"
-                style={{ 
-                  animation: `fade-in-up 0.8s ${0.2 + index * 0.2}s both`,
-                  opacity: 0
-                }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.2 + index * 0.2 }}
               >
                 {/* Timeline Dot */}
                 <div className={`absolute left-4 top-0 w-8 h-8 ${event.highlight ? 'bg-[#E4CD15]' : 'bg-[#38AAC9]'} rounded-full transform -translate-x-1/2 z-10`}></div>
                 
                 {/* Timeline Content */}
-                <div className={`p-6 ${event.highlight ? 'bg-[#E4CD15]/10 border-[#E4CD15]' : 'bg-[#38AAC9]/10 border-[#38AAC9]'} rounded-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg ${event.highlight ? 'hover:shadow-[#E4CD15]/30' : 'hover:shadow-[#38AAC9]/30'} border-l-4`}>
+                <motion.div
+                  className={`p-6 ${event.highlight ? 'bg-[#E4CD15]/10 border-[#E4CD15]' : 'bg-[#38AAC9]/10 border-[#38AAC9]'} rounded-lg border-l-4`}
+                  whileHover={{ 
+                    y: -5,
+                    boxShadow: event.highlight ? "0 10px 25px -5px rgba(228, 205, 21, 0.1)" : "0 10px 25px -5px rgba(56, 170, 201, 0.1)"
+                  }}
+                >
                   <div className={`${event.highlight ? 'text-[#38AAC9]' : 'text-[#E4CD15]'} font-bold mb-2`}>{event.date}</div>
                   <h3 className={`text-xl font-bold mb-2 ${event.highlight ? 'text-[#E4CD15]' : 'text-[#38AAC9]'}`}>{event.title}</h3>
                   <p className="text-white">
                     {typeof event.description === 'function' ? event.description() : event.description}
                   </p>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ))}
           </div>
         </div>
       </div>
-
-      {/* CSS Animations */}
-      <style jsx>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </section>
   );
 };

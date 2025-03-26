@@ -679,7 +679,8 @@ const About = () => {
     </div>
 
     {/* Updated Important Notes Section */}
-<div className="mt-12 bg-[#1a1a1a] p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+<div
+ className="mt-12 bg-[#1a1a1a] p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#E4CD15]/20">
   <h3 className="text-xl font-bold mb-4 text-[#38AAC9] flex items-center">
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
@@ -745,7 +746,7 @@ const About = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={isVisible["teammates"] ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 0.1 }}
-      className="bg-gradient-to-r from-[#38AAC9]/10 to-[#E4CD15]/10 p-8 rounded-xl border-l-4 border-[#38AAC9] shadow-lg hover:shadow-xl transition-all duration-300"
+      className="bg-gradient-to-r from-[#38AAC9]/10 to-[#E4CD15]/10 p-6 rounded-xl border-l-4 border-[#38AAC9] shadow-lg hover:shadow-xl transition-all duration-300"
     >
       <div className="flex flex-col md:flex-row gap-8 items-center">
         {/* Content */}

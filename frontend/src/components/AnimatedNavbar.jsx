@@ -64,7 +64,22 @@ const IdeaIcon = () => (
   </svg>
 );
 
-
+const LeaderboardIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+    />
+  </svg>
+);
 
 const AnimatedNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +88,7 @@ const AnimatedNavbar = () => {
   const navigate = useNavigate();
 
   // Check if current page is home
-  const isHomePage = location.pathname === '/register';
+  const isHomePage = location.pathname === '/';
 
   // Handle scroll effect
   useEffect(() => {
@@ -107,34 +122,45 @@ const AnimatedNavbar = () => {
     { name: "Home", path: "/", icon: <HomeIcon /> },
     { name: "Timeline", path: "/timeline", icon: <TimelineIcon /> },
     { name: "Submit Idea", path: "/idea", icon: <IdeaIcon /> },
+    { name: "Leaderboard", path: "/leaderboard", icon: <LeaderboardIcon /> },
   ];
 
   const handleRegisterClick = () => {
-    // Close mobile menu if open
     setIsOpen(false);
     
-    // Check if we're already on the home page
     if (window.location.pathname !== '/') {
-      // Navigate to home page first
       navigate('/');
       
-      // Add an event listener to scroll after the page loads
       const scrollToRegister = () => {
         const registerSection = document.getElementById('register');
         if (registerSection) {
           registerSection.scrollIntoView({ behavior: 'smooth' });
-          // Remove the event listener after we've used it
           window.removeEventListener('load', scrollToRegister);
         }
       };
       
       window.addEventListener('load', scrollToRegister);
     } else {
-      // If already on home page, just scroll to section
       const registerSection = document.getElementById('register');
       if (registerSection) {
         registerSection.scrollIntoView({ behavior: 'smooth' });
       }
+    }
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    setIsOpen(false);
+    
+    if (window.location.pathname === '/') {
+      // If already on home page, scroll to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      // Navigate to home page
+      navigate('/');
     }
   };
 
@@ -149,26 +175,28 @@ const AnimatedNavbar = () => {
         }`}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
-          {/* Logo */}
-          <Link
-            to="/"
-            className="text-2xl font-extrabold text-white flex items-center"
+          {/* Logo with improved click handling */}
+          <a
+            href="/"
+            onClick={handleLogoClick}
+            className="text-2xl font-extrabold text-white flex items-center cursor-pointer"
           >
             <motion.div
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
               className="flex items-center"
+              whileHover={{ scale: 1.05 }}
             >
               <span>
                 <img
                   src="/tech_TANK.jpeg"
-                  alt="Logo"
+                  alt="TechTank Logo"
                   className="w-36 h-8 sm:h-8 md:h-8 object-cover object-center"
                 />
               </span>
             </motion.div>
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6">

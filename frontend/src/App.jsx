@@ -7,6 +7,7 @@ import SubmitIdea from "./pages/SubmitIdea";
 import ComingSoon from "./pages/ComingSoon.jsx";
 import Stepper from "./components/stepperform.jsx";
 import About from "./pages/About";
+import Leaderboard from "./pages/Leaderboard.jsx"
 // import RegisterPage from "./pages/Registration";
 import Workshop from "./pages/Workshop.jsx";
 
@@ -22,6 +23,7 @@ const App = () => {
             {/* <Route path="/idea" element={<SubmitIdea />} /> */}
             <Route path="/idea" element={<ComingSoon />} />
 
+            <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/workshop" element={<Workshop />} />
             <Route path="/" element={<About />} />
           </Routes>
