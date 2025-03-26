@@ -17,23 +17,25 @@ const TeamsData = () => {
       try {
         setIsLoading(true);
         // Add includeScreenshots=true parameter
-        const response = await axios.get(`${backend_url}/api/registration/teams?includeScreenshots=true`);
-        
+        const response = await axios.get(
+          `${backend_url}/api/registration/teams?includeScreenshots=true`
+        );
+
         if (response.data && response.data.teams) {
-          const processedTeams = response.data.teams.map(team => {
+          const processedTeams = response.data.teams.map((team) => {
             // Ensure screenshot is properly formatted
-            const screenshot = team.screenshot 
-              ? team.screenshot.startsWith('data:image') 
-                ? team.screenshot 
+            const screenshot = team.screenshot
+              ? team.screenshot.startsWith("data:image")
+                ? team.screenshot
                 : `data:image/png;base64,${team.screenshot}`
               : null;
-              
+
             return {
               ...team,
-              screenshot
+              screenshot,
             };
           });
-          
+
           setTeams(processedTeams);
           setError(null);
         }
@@ -44,21 +46,28 @@ const TeamsData = () => {
         setIsLoading(false);
       }
     };
-  
+
     fetchTeams();
   }, [backend_url]);
 
   // Define filteredTeams before using it in JSX
-  const filteredTeams = teams.filter(team => {
+  const filteredTeams = teams.filter((team) => {
     if (!team) return false;
-    
+
     return (
-      (team.teamName?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-      (team.members?.some(member => 
-        (member?.name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-        (member?.email?.toLowerCase() || '').includes(searchTerm.toLowerCase())
-      )) ||
-      (team.transactionId?.toLowerCase() || '').includes(searchTerm.toLowerCase())
+      (team.teamName?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+      team.members?.some(
+        (member) =>
+          (member?.name?.toLowerCase() || "").includes(
+            searchTerm.toLowerCase()
+          ) ||
+          (member?.email?.toLowerCase() || "").includes(
+            searchTerm.toLowerCase()
+          )
+      ) ||
+      (team.transactionId?.toLowerCase() || "").includes(
+        searchTerm.toLowerCase()
+      )
     );
   });
 
@@ -72,12 +81,17 @@ const TeamsData = () => {
     const statusMessages = {
       accept: {
         subject: "Hackathon Registration Confirmed",
-        message: `Dear ${leader.name},<br><br>Your team "${team.teamName}" has been <b>approved</b> for the hackathon. See you at the event!<br><br>Best regards,<br>Tech Tank Team`
+        message: `Dear ${leader.name},<br><br>
+        Your team "<b>${team.teamName}</b>" has been <b>approved</b> for the hackathon. 🎉<br><br>
+        Join our official WhatsApp group for important updates and discussions:  
+        <a href="https://chat.whatsapp.com/Ihflgo60zO4GT0SJHVw05C" target="_blank">Join WhatsApp Group</a>.<br><br>
+        See you at the event!<br><br>
+        Best regards,<br>Tech Tank Team`,
       },
       reject: {
         subject: "Hackathon Registration Rejected",
-        message: `Dear ${leader.name},<br><br>Unfortunately, your team "${team.teamName}" has been <b>rejected</b>. Please contact support for details.<br><br>Best regards,<br>Tech Tank Team`
-      }
+        message: `Dear ${leader.name},<br><br>Unfortunately, your team "${team.teamName}" has been <b>rejected</b>. Please contact support for details.<br><br>Best regards,<br>Tech Tank Team`,
+      },
     };
 
     try {
@@ -87,16 +101,16 @@ const TeamsData = () => {
           email: leader.email,
           subject: statusMessages[status].subject,
           message: statusMessages[status].message,
-          registrationId: team._id
+          registrationId: team._id,
         }
       );
 
       if (response.data?.success) {
-        alert(`Status updated to ${status.toUpperCase()} and email sent successfully`);
-        setTeams(prevTeams => 
-          prevTeams.map(t => 
-            t._id === team._id ? { ...t, status } : t
-          )
+        alert(
+          `Status updated to ${status.toUpperCase()} and email sent successfully`
+        );
+        setTeams((prevTeams) =>
+          prevTeams.map((t) => (t._id === team._id ? { ...t, status } : t))
         );
       } else {
         alert("Failed to update status.");
@@ -136,7 +150,9 @@ const TeamsData = () => {
       {filteredTeams.length === 0 ? (
         <div>
           <p className="no-results">
-            {teams.length === 0 ? "No teams registered yet." : "No teams match your search."}
+            {teams.length === 0
+              ? "No teams registered yet."
+              : "No teams match your search."}
           </p>
         </div>
       ) : (
@@ -155,21 +171,26 @@ const TeamsData = () => {
             </thead>
             <tbody>
               {filteredTeams.map((team) => {
-                const leader = team.members?.find((member) => member?.isTeamLead);
-                const otherMembers = team.members?.filter(
-                  (member) => !member?.isTeamLead
-                ) || [];
+                const leader = team.members?.find(
+                  (member) => member?.isTeamLead
+                );
+                const otherMembers =
+                  team.members?.filter((member) => !member?.isTeamLead) || [];
 
                 return (
                   <tr key={team._id}>
                     <td className="team-name">
                       <strong>{team.teamName}</strong>
-                      {team.isRVCEStudent && <span className="rvce-tag">RVCE</span>}
+                      {team.isRVCEStudent && (
+                        <span className="rvce-tag">RVCE</span>
+                      )}
                     </td>
                     <td className="leader-info">
                       {leader ? (
                         <>
-                          <div><strong>{leader.name}</strong></div>
+                          <div>
+                            <strong>{leader.name}</strong>
+                          </div>
                           <div>{leader.email}</div>
                           <div>{leader.phoneNumber}</div>
                           {leader.usn && <div>USN: {leader.usn}</div>}
@@ -183,7 +204,9 @@ const TeamsData = () => {
                         <ul>
                           {otherMembers.map((member) => (
                             <li key={member.email}>
-                              <div><strong>{member.name}</strong></div>
+                              <div>
+                                <strong>{member.name}</strong>
+                              </div>
                               <div>{member.email}</div>
                               <div>{member.phoneNumber}</div>
                               {member.usn && <div>USN: {member.usn}</div>}
@@ -194,9 +217,7 @@ const TeamsData = () => {
                         "No Other Members"
                       )}
                     </td>
-                    <td className="transaction-id">
-                      {team.transactionId}
-                    </td>
+                    <td className="transaction-id">{team.transactionId}</td>
                     <td className="screenshot-cell">
                       {team.screenshot ? (
                         <img
@@ -205,8 +226,11 @@ const TeamsData = () => {
                           className="screenshot"
                           onClick={() => setSelectedImage(team.screenshot)}
                           onError={(e) => {
-                            console.error("Image failed to load:", team.screenshot);
-                            e.target.style.display = 'none';
+                            console.error(
+                              "Image failed to load:",
+                              team.screenshot
+                            );
+                            e.target.style.display = "none";
                           }}
                         />
                       ) : (
@@ -214,8 +238,10 @@ const TeamsData = () => {
                       )}
                     </td>
                     <td className="status-cell">
-                      <span className={`status-badge ${team.status || 'pending'}`}>
-                        {team.status?.toUpperCase() || 'PENDING'}
+                      <span
+                        className={`status-badge ${team.status || "pending"}`}
+                      >
+                        {team.status?.toUpperCase() || "PENDING"}
                       </span>
                     </td>
                     <td className="action-buttons">
@@ -242,8 +268,11 @@ const TeamsData = () => {
 
       {selectedImage && (
         <div className="modal" onClick={() => setSelectedImage(null)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <span className="close-button" onClick={() => setSelectedImage(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <span
+              className="close-button"
+              onClick={() => setSelectedImage(null)}
+            >
               &times;
             </span>
             <img
@@ -252,7 +281,7 @@ const TeamsData = () => {
               className="enlarged-screenshot"
               onError={(e) => {
                 console.error("Failed to load enlarged image");
-                e.target.style.display = 'none';
+                e.target.style.display = "none";
               }}
             />
           </div>
