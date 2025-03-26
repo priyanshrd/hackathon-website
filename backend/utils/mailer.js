@@ -64,7 +64,7 @@ const sendEmail = async (to, subject, message, registrationId) => {
     `;
 
     const mailOptions = {
-      from: "Tech Tank" <${process.env.EMAIL_USER}>,
+      from: "Tech Tank" <${process.env.}>,
       to,
       subject,
       html: emailTemplate,
