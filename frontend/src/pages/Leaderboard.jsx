@@ -125,7 +125,7 @@ const Leaderboard = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              Check back to see the top performing teams!
+              Stay tuned for Round 1 Results
             </motion.p>
           </motion.div>
         </motion.div>

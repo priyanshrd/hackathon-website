@@ -113,7 +113,7 @@ const ComingSoon = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              Stay tuned for the submission portal opening!
+              Stay tuned for the Canva Template!
             </motion.p>
           </motion.div>
         </motion.div>

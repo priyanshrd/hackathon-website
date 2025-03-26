@@ -42,14 +42,20 @@ const Timeline = () => {
       date: "April 7 (5 PM) - April 9 (5 PM), 2025",
       description: () => (
         <>
-          Submit your Tech Tank idea online in 6 slides on the website: <a href='https://www.techtankrvce.com' className="text-[#38AAC9] hover:underline">techtankrvce.com</a>
+          Submit your idea on the <a href='https://www.techtankrvce.com/idea' className="text-[#38AAC9] hover:underline">Submit Idea</a> page.
+          
+          A Canva template will be provided for your submission.
+          <br/>
+          <span className="text-[#E4CD15] font-medium">
+            Exceptional ideas will have the opportunity to connect with professional mentors!
+          </span>
         </>
       ),
     },
     {
       title: "Round 1 Results Announcement",
       date: "April 11, 2025 (5 PM)",
-      description: "Shortlisted teams will move to Round 2 (Hackathon)"
+      description: "Shortlisted teams will move to Round 2 (Offline Hackathon)"
     },
     {
       title: "12-Hour Hackathon (Round 2)",
@@ -69,7 +75,7 @@ const Timeline = () => {
         <>
           Present your project to investors and mentors from industry.
           <br/>
-          <span className="text-[#E4CD15] font-medium">Leaderboard will be live during this event</span>
+          <span >Leaderboard will be live during this event</span>
         </>
       )
     },
@@ -78,7 +84,7 @@ const Timeline = () => {
       date: "April 12, 2025 (2 PM)",
       description: () => (
         <>
-          Winners will be declared on the <a href="/leaderboard" className="text-[#38AAC9] hover:underline">Leaderboard</a>!
+          Winners will be declared on the <a href="/leaderboard" className="text-[#E4CD15] font-medium">Leaderboard!</a>
         </>
       )
     }

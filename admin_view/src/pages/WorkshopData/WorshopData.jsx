@@ -10,84 +10,132 @@ const WorkshopData = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportStatus, setExportStatus] = useState("");
   const navigate = useNavigate();
+
+  // Google Sheets configuration
+  const SPREADSHEET_ID = "1La5uLL9KruXV2i4owgiWKiI6VCtRH69pZpCAFEY2RmI";
+  const SHEET_NAME = "WorkshopRegistrations";
+  const API_KEY = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY;
 
   useEffect(() => {
     console.log("Component mounted, fetching workshop registrations...");
-    const fetchWorkshops = async () => {
-      try {
-        setIsLoading(true);
-        console.log(
-          `Making request to: ${backend_url}/api/registration/screenshots`
-        );
-
-        const response = await axios.get(
-          `${backend_url}/api/registration/screenshots`
-        );
-        console.log("API Response:", response);
-
-        if (response.data) {
-          console.log("Received workshop data:", response.data);
-          // Handle both array and object with users property
-          const workshopData = Array.isArray(response.data)
-            ? response.data
-            : response.data.users || [];
-          setWorkshops(workshopData);
-          setError(null);
-        } else {
-          console.warn("No workshop data received from API");
-          setWorkshops([]);
-        }
-      } catch (err) {
-        console.error("Error fetching workshops:", err);
-        console.error("Error details:", err.response?.data || err.message);
-        setError(`Failed to load workshop data: ${err.message}`);
-        setWorkshops([]);
-      } finally {
-        setIsLoading(false);
-        console.log("Finished loading workshops");
-      }
-    };
-
     fetchWorkshops();
   }, [backend_url]);
 
+  const fetchWorkshops = async () => {
+    try {
+      setIsLoading(true);
+      console.log(`Making request to: ${backend_url}/api/registration/screenshots`);
+
+      const response = await axios.get(
+        `${backend_url}/api/registration/screenshots`
+      );
+      console.log("API Response:", response);
+
+      if (response.data) {
+        console.log("Received workshop data:", response.data);
+        const workshopData = Array.isArray(response.data)
+          ? response.data
+          : response.data.users || [];
+        setWorkshops(workshopData);
+        setError(null);
+      } else {
+        console.warn("No workshop data received from API");
+        setWorkshops([]);
+      }
+    } catch (err) {
+      console.error("Error fetching workshops:", err);
+      console.error("Error details:", err.response?.data || err.message);
+      setError(`Failed to load workshop data: ${err.message}`);
+      setWorkshops([]);
+    } finally {
+      setIsLoading(false);
+      console.log("Finished loading workshops");
+    }
+  };
+
+  const exportToGoogleSheets = async () => {
+    try {
+      setIsExporting(true);
+      setExportStatus("Preparing data for export...");
+
+      // Prepare the data in the format expected by Google Sheets API
+      const headers = ["Name", "Email", "Phone", "Transaction ID", "Payment Proof"];
+      const values = workshops.map(workshop => [
+        workshop.name || "N/A",
+        workshop.email || "N/A",
+        workshop.phoneNumber || "N/A",
+        workshop.transactionId || "N/A",
+        workshop.image ? "Yes" : "No"
+      ]);
+
+      const dataToExport = [headers, ...values];
+
+      // First, clear the existing sheet data
+      setExportStatus("Clearing existing data...");
+      const clearResponse = await axios.post(
+        `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A1:Z1000:clear`,
+        {},
+        {
+          params: {
+            key: API_KEY
+          }
+        }
+      );
+
+      console.log("Clear response:", clearResponse);
+
+      // Then, write the new data
+      setExportStatus("Uploading new data...");
+      const updateResponse = await axios.post(
+        `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A1:append`,
+        {
+          values: dataToExport,
+          majorDimension: "ROWS"
+        },
+        {
+          params: {
+            valueInputOption: "RAW",
+            key: API_KEY
+          }
+        }
+      );
+
+      console.log("Update response:", updateResponse);
+      setExportStatus("Data successfully exported to Google Sheets!");
+      
+      // Refresh the data after export
+      await fetchWorkshops();
+    } catch (err) {
+      console.error("Error exporting to Google Sheets:", err);
+      setExportStatus(`Export failed: ${err.message}`);
+    } finally {
+      setIsExporting(false);
+      // Clear status after 5 seconds
+      setTimeout(() => setExportStatus(""), 5000);
+    }
+  };
+
   const filteredWorkshops = workshops.filter((workshop) => {
     if (!workshop) return false;
-
     return (
       (workshop.name?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-      (workshop.email?.toLowerCase() || "").includes(
-        searchTerm.toLowerCase()
-      ) ||
-      (workshop.phoneNumber?.toLowerCase() || "").includes(
-        searchTerm.toLowerCase()
-      ) ||
-      (workshop.transactionId?.toLowerCase() || "").includes(
-        searchTerm.toLowerCase()
-      )
+      (workshop.email?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+      (workshop.phoneNumber?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+      (workshop.transactionId?.toLowerCase() || "").includes(searchTerm.toLowerCase())
     );
   });
 
-  
-
-    
-  console.log("Current workshops state:", workshops);
-  console.log("Filtered workshops:", filteredWorkshops);
-  console.log("Loading state:", isLoading);
-  console.log("Error state:", error);
-
   if (isLoading) {
-    console.log("Rendering loading state");
     return <div className="loading">Loading workshop registrations...</div>;
   }
 
   if (error) {
-    console.log("Rendering error state");
     return <div className="error">Error: {error}</div>;
   }
 
-  console.log("Rendering main component");
   return (
     <div className="admin-container">
       <div className="admin-header">
@@ -97,16 +145,23 @@ const WorkshopData = () => {
             type="text"
             placeholder="Search registrations..."
             value={searchTerm}
-            onChange={(e) => {
-              console.log("Search term changed:", e.target.value);
-              setSearchTerm(e.target.value);
-            }}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
-          <button className="home-button" onClick={() => navigate("/")}>
-            Return to Home
-          </button>
+          <div className="button-group">
+            <button 
+              className="export-button" 
+              onClick={exportToGoogleSheets}
+              disabled={isExporting || workshops.length === 0}
+            >
+              {isExporting ? "Exporting..." : "Export to Google Sheets"}
+            </button>
+            <button className="home-button" onClick={() => navigate("/")}>
+              Return to Home
+            </button>
+          </div>
         </div>
+        {exportStatus && <div className="export-status">{exportStatus}</div>}
       </div>
 
       {filteredWorkshops.length === 0 ? (
@@ -117,8 +172,7 @@ const WorkshopData = () => {
               : "No registrations match your search."}
           </p>
           <p className="debug-info">
-            Debug Info: Loaded {workshops.length} workshop registrations from
-            API
+            Debug Info: Loaded {workshops.length} workshop registrations from API
           </p>
         </div>
       ) : (
@@ -148,21 +202,13 @@ const WorkshopData = () => {
                         src={`data:image/png;base64,${workshop.image}`}
                         alt="Payment Screenshot"
                         className="screenshot-thumbnail"
-                        onClick={() => {
-                          console.log(
-                            "Clicked on screenshot for:",
-                            workshop.name
-                          );
-                          setSelectedImage(workshop.image);
-                        }}
+                        onClick={() => setSelectedImage(workshop.image)}
                         title="Click to enlarge"
                       />
                     ) : (
                       "No Screenshot"
                     )}
                   </td>
-                  
-                  
                 </tr>
               ))}
             </tbody>
@@ -173,10 +219,7 @@ const WorkshopData = () => {
       {selectedImage && (
         <div
           className="modal"
-          onClick={() => {
-            console.log("Closing image modal");
-            setSelectedImage(null);
-          }}
+          onClick={() => setSelectedImage(null)}
         >
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <span
@@ -191,17 +234,11 @@ const WorkshopData = () => {
               className="enlarged-screenshot"
             />
             <div className="image-actions">
-              <button
-                onClick={() => {
-                  console.log("Printing screenshot");
-                  window.print();
-                }}
-              >
+              <button onClick={() => window.print()}>
                 Print
               </button>
               <button
                 onClick={() => {
-                  console.log("Downloading screenshot");
                   const link = document.createElement("a");
                   link.href = `data:image/png;base64,${selectedImage}`;
                   link.download = "workshop-payment-proof.png";

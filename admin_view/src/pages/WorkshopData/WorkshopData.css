@@ -279,3 +279,51 @@ tr:hover {
     height: 50px;
   }
 }
+/* Add to WorkshopData.css */
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.export-button {
+  background-color: #34a853;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.export-button:hover {
+  background-color: #2d8e47;
+}
+
+.export-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.export-status {
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  color: #333;
+  font-size: 14px;
+}
+
+.admin-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .admin-controls {
+    flex-direction: row;
+    align-items: center;
+  }
+}
