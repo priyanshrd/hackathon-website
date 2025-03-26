@@ -140,6 +140,10 @@ const WorkshopData = () => {
     <div className="admin-container">
       <div className="admin-header">
         <h1>Workshop Registrations</h1>
+        <div className="registration-count">
+          Total Registrations: {workshops.length} | 
+          Showing: {filteredWorkshops.length}
+        </div>
         <div className="admin-controls">
           <input
             type="text"

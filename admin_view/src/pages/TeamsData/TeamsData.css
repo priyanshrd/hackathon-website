@@ -126,6 +126,13 @@ th {
   color: #212529;
 }
 
+.registration-count {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  color: #555;
+  font-weight: bold;
+}
+
 .status-badge.accept {
   background-color: #28a745; /* Green for accept */
   color: #fff;

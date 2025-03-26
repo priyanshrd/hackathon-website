@@ -314,6 +314,12 @@ tr:hover {
   color: #333;
   font-size: 14px;
 }
+.registration-count {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  color: #555;
+  font-weight: bold;
+}
 
 .admin-controls {
   display: flex;

@@ -50,7 +50,11 @@ const TeamsData = () => {
     fetchTeams();
   }, [backend_url]);
 
-  // Define filteredTeams before using it in JSX
+  // Calculate total number of participants
+  const totalParticipants = teams.reduce((total, team) => {
+    return total + (team.members?.length || 0);
+  }, 0);
+
   const filteredTeams = teams.filter((team) => {
     if (!team) return false;
 
@@ -71,8 +75,6 @@ const TeamsData = () => {
     );
   });
 
-
-
   if (isLoading) {
     return <div className="loading">Loading team data...</div>;
   }
@@ -85,6 +87,11 @@ const TeamsData = () => {
     <div className="admin-container">
       <div className="admin-header">
         <h1>Hackathon Team Registrations</h1>
+        <div className="registration-count">
+          Total Teams: {teams.length} | 
+          Showing: {filteredTeams.length} | 
+          Total Participants: {totalParticipants}
+        </div>
         <div className="admin-controls">
           <input
             type="text"
@@ -187,8 +194,6 @@ const TeamsData = () => {
                         "No Screenshot"
                       )}
                     </td>
-                    
-                    
                   </tr>
                 );
               })}
