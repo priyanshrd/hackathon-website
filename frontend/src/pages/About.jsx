@@ -645,7 +645,7 @@ const About = () => {
         <div className="absolute -top-3 -right-3 bg-[#E4CD15] text-black px-3 py-1 rounded-full text-sm font-bold transform rotate-6">
           EARLY BIRD OFFER
         </div>
-        <h3 className="text-2xl md:text-3xl font-bold mb-2 text-[#38AAC9]">Overnight Hackathon</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-2 text-[#38AAC9]">Hackathon + Workshop</h3>
         <p className="mb-4 text-lg">Team of 2-4 members</p>
         <div className="text-4xl font-bold mb-6 text-[#E4CD15]">₹399</div>
         <p className="mb-6 text-lg">Includes free workshop for all team members</p>
