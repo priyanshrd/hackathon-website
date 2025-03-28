@@ -349,6 +349,294 @@ const About = () => {
           </div>
         </section>
 
+
+        
+        
+        {/* Why Join Section */}
+        <section
+          id="why-join"
+          ref={addSectionRef("why-join")}
+          className={`py-20 px-4 ${
+            isVisible["why-join"]
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-10"
+          } transition-all duration-1000 ease-out`}
+        >
+<div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-[#E4CD15] inline-block relative">
+              Why Participate?
+              <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
+                  Cash Prizes
+                </h3>
+                <p>Win exciting cash prizes for top teams</p>
+              </div>
+
+              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
+                  Certificates
+                </h3>
+                <p>Earn participation certificates with ACM and GDG logos</p>
+              </div>
+
+              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
+                  Activity Points
+                </h3>
+                <p>Eligible for 8 activity points (RVCE students)</p>
+              </div>
+
+              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
+                  Networking
+                </h3>
+                <p>Connect with industry experts and like-minded peers</p>
+              </div>
+
+              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
+                  Skill Development
+                </h3>
+                <p>Enhance technical, business, and presentation skills</p>
+              </div>
+
+              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
+                  Startup Potential
+                </h3>
+                <p>Get funded to turn your idea into a real business</p>
+              </div>
+            </div>
+          </div>        </section>
+
+
+{/* Workshop Section */}
+<section
+  id="workshop"
+  ref={addSectionRef("workshop")}
+  className={`py-10 px-4 ${
+    isVisible["workshop"]
+      ? "opacity-100 translate-y-0"
+      : "opacity-0 translate-y-10"
+  } transition-all duration-1000 ease-out`}
+>
+  <div className="max-w-6xl mx-auto">
+    {/* Section Title with Underline */}
+    <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
+      Pre-Hackathon Workshop
+      <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
+    </h2>
+
+    {/* Workshop Card */}
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={isVisible["workshop"] ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="bg-gradient-to-r from-[#38AAC9]/10 to-[#E4CD15]/10 p-8 rounded-xl border-l-4 border-[#38AAC9] shadow-lg hover:shadow-xl transition-all duration-300"
+    >
+      <div className="flex flex-col md:flex-row gap-8 items-start">
+        {/* Speaker Profile */}
+        <div className="w-full md:w-1/3 flex flex-col items-center">
+          <div className="relative group mb-4">
+            <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-[#38AAC9] relative group">
+              <img 
+                src="/21.jpg" 
+                alt="Utsav Singhal" 
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.onerror = null; 
+                  e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'%3E%3C/path%3E%3C/svg%3E";
+                }}
+              />
+              <a 
+                href="https://www.linkedin.com/in/utsav-singhal-986812179/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <svg className="w-8 h-8 text-[#38AAC9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div className="text-center">
+            <h3 className="text-xl font-bold text-[#E4CD15]">Utsav Singhal</h3>
+            <p className="text-[#38AAC9]">Co-Founder, Stealth AI Startup</p>
+            <p className="text-white">IIT Delhi Alumnus</p>
+          </div>
+        </div>
+
+        {/* Workshop Content */}
+        <div className="w-full md:w-2/3">
+          <div className="mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">
+              "Building Scalable Tech Products & Services for B2B & B2C"
+            </h2>
+            <p className="text-lg text-gray-300">
+              Join our exclusive workshop with <span className="font-semibold text-[#E4CD15]">Utsav Singhal</span> to gain 
+              practical insights from real-world startup experiences and learn how to build robust, 
+              high-impact technology solutions that scale.
+            </p>
+          </div>
+          
+          {/* Practical Info */}
+          <div className="bg-[#1a1a1a]/80 p-4 rounded-lg border border-[#38AAC9]/30">
+            <div className="flex flex-col sm:flex-row justify-between gap-4">
+              <div>
+                <h4 className="text-lg font-semibold text-[#E4CD15]">Date & Time</h4>
+                <p className="text-white">April 7, 2025</p>
+                <p className="text-gray-300">9:00 AM - 2:00 PM</p>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-[#E4CD15]">Venue</h4>
+                <p className="text-white">IEM Auditorium</p>
+                <p className="text-gray-300">RVCE Campus</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  </div>
+</section>
+
+
+
+{/* Mentors Section */}
+<section
+  id="mentors"
+  ref={addSectionRef("mentors")}
+  className={`py-10 px-4 ${
+    isVisible["mentors"]
+      ? "opacity-100 translate-y-0"
+      : "opacity-0 translate-y-10"
+  } transition-all duration-1000 ease-out`}
+>
+  
+    <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
+      Your Mentors
+      <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
+    </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              name: "Phalaksha C G",
+              title: "DevOps Engineer",
+              image: "/mentor1.jpeg",
+              description: "",
+              linkedin: "phalaksha-c-g-445a581b7"
+            },
+            {
+              name: "Vivek Galatage",
+              title: "Software Engineer",
+              image: "/mentor2.jpeg",
+              linkedin: "vivekgalatage",
+              description: "20+ years of hands-on experience in browser development, ADAS, computer vision. Reviewer-owner for V8 bindings on Chromium open-source project and a former Web Kit committer",
+            },
+            {
+              name: "Prajwal T S",
+              title: "SDE @Google",
+              image: "/mentor3.jpeg",
+              linkedin: "prajwal-t-s-95668a19a",
+              description: "Expert in IoT and Embedded Systems with 15+ years of academic and industry experience"
+            },
+            {
+              name: "Aswartha Reddy",
+              title: "Project Intern @Oracle",
+              image: "/mentor4.jpeg",
+              linkedin: "aswartha-reddy",
+              description: "Blockchain specialist and cybersecurity researcher"
+            },
+            {
+              name: "Abhay H Kashyap",
+              title: "SE @Qualcomm",
+              image: "/mentor5.jpeg",
+              linkedin: "abhay-h-kashyap",
+              description: "Big Data and Analytics expert with numerous published papers"
+            },
+            {
+              name: "Joshua Elias Alva",
+              title: "Intern @Lowe's India",
+              image: "/mentor6.jpeg",
+              linkedin: "joshua-elias-alva",
+              description: "Web technologies and UX specialist with industry consulting experience"
+            },
+            {
+              name: "Sharat Chandra",
+              title: "SDE-1 @ Cisco",
+              image: "/mentor7.jpeg",
+              linkedin: "sharath-chandra-bb00b2192",
+              description: "Web technologies and UX specialist with industry consulting experience"
+            },
+            {
+              name: "Prasanna Naik",
+              title: "Ass. SE-1A @Mareana",
+              image: "/mentor8.jpeg",
+              linkedin: "prasanna-naik-40124b1ba",
+              description: "Web technologies and UX specialist with industry consulting experience"
+            }
+          ].map((mentor, index) => (
+            <motion.div
+              key={`expanded-${mentor.name}-${index}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isVisible["mentors"] ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-[#1a1a1a] rounded-xl overflow-hidden border border-[#38AAC9]/30 hover:border-[#E4CD15] transition-all duration-300"
+            >
+              <div className="p-6">
+                <div className="flex items-center mb-5">
+                  <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#38AAC9] mr-5 relative">
+                    <img
+                      src={mentor.image}
+                      alt={mentor.name}
+                      className="w-full h-full object-cover absolute inset-0"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'%3E%3C/path%3E%3C/svg%3E";
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-[#E4CD15]">{mentor.name}</h3>
+                    <p className="text-md text-[#38AAC9]">{mentor.title}</p>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {/* {mentor.description && (
+                    <div>
+                      <p className="text-sm text-gray-300 leading-relaxed">{mentor.description}</p>
+                    </div>
+                  )} */}
+                  {mentor.linkedin && (
+                    <a
+                      href={`https://linkedin.com/in/${mentor.linkedin}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-[#38AAC9] hover:text-[#E4CD15] text-sm transition-colors"
+                    >
+                      <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                      Connect on LinkedIn
+                    </a>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      
+    
+</section>
+
+
+
         {/* Judges Section */}
 <section
   id="judges"
@@ -446,160 +734,6 @@ const About = () => {
 </section>
 
 
-{/* Workshop Section */}
-<section
-  id="workshop"
-  ref={addSectionRef("workshop")}
-  className={`py-10 px-4 ${
-    isVisible["workshop"]
-      ? "opacity-100 translate-y-0"
-      : "opacity-0 translate-y-10"
-  } transition-all duration-1000 ease-out`}
->
-  <div className="max-w-6xl mx-auto">
-    {/* Section Title with Underline */}
-    <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
-      Pre-Hackathon Workshop
-      <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
-    </h2>
-
-    {/* Workshop Card */}
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={isVisible["workshop"] ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.1 }}
-      className="bg-gradient-to-r from-[#38AAC9]/10 to-[#E4CD15]/10 p-8 rounded-xl border-l-4 border-[#38AAC9] shadow-lg hover:shadow-xl transition-all duration-300"
-    >
-      <div className="flex flex-col md:flex-row gap-8 items-start">
-        {/* Speaker Profile */}
-        <div className="w-full md:w-1/3 flex flex-col items-center">
-          <div className="relative group mb-4">
-            <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-[#38AAC9] relative group">
-              <img 
-                src="/21.jpg" 
-                alt="Utsav Singhal" 
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.onerror = null; 
-                  e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'%3E%3C/path%3E%3C/svg%3E";
-                }}
-              />
-              <a 
-                href="https://www.linkedin.com/in/utsav-singhal-986812179/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              >
-                <svg className="w-8 h-8 text-[#38AAC9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div className="text-center">
-            <h3 className="text-xl font-bold text-[#E4CD15]">Utsav Singhal</h3>
-            <p className="text-[#38AAC9]">Co-Founder, Stealth AI Startup</p>
-            <p className="text-white">IIT Delhi Alumnus</p>
-          </div>
-        </div>
-
-        {/* Workshop Content */}
-        <div className="w-full md:w-2/3">
-          <div className="mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">
-              "Building Scalable Tech Products & Services for B2B & B2C"
-            </h2>
-            <p className="text-lg text-gray-300">
-              Join our exclusive workshop with <span className="font-semibold text-[#E4CD15]">Utsav Singhal</span> to gain 
-              practical insights from real-world startup experiences and learn how to build robust, 
-              high-impact technology solutions that scale.
-            </p>
-          </div>
-          
-          {/* Practical Info */}
-          <div className="bg-[#1a1a1a]/80 p-4 rounded-lg border border-[#38AAC9]/30">
-            <div className="flex flex-col sm:flex-row justify-between gap-4">
-              <div>
-                <h4 className="text-lg font-semibold text-[#E4CD15]">Date & Time</h4>
-                <p className="text-white">April 7, 2025</p>
-                <p className="text-gray-300">9:00 AM - 2:00 PM</p>
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold text-[#E4CD15]">Venue</h4>
-                <p className="text-white">IEM Auditorium</p>
-                <p className="text-gray-300">RVCE Campus</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  </div>
-</section>
-
-
-
-        
-        {/* Why Join Section */}
-        <section
-          id="why-join"
-          ref={addSectionRef("why-join")}
-          className={`py-20 px-4 ${
-            isVisible["why-join"]
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
-          } transition-all duration-1000 ease-out`}
-        >
-<div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-[#E4CD15] inline-block relative">
-              Why Participate?
-              <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Cash Prizes
-                </h3>
-                <p>Win exciting cash prizes for top teams</p>
-              </div>
-
-              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Certificates
-                </h3>
-                <p>Earn participation certificates with ACM and GDG logos</p>
-              </div>
-
-              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Activity Points
-                </h3>
-                <p>Eligible for 8 activity points (RVCE students)</p>
-              </div>
-
-              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Networking
-                </h3>
-                <p>Connect with industry experts and like-minded peers</p>
-              </div>
-
-              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Skill Development
-                </h3>
-                <p>Enhance technical, business, and presentation skills</p>
-              </div>
-
-              <div className="bg-[#E4CD15]/10 p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-                <h3 className="text-xl font-bold mb-4 text-[#38AAC9]">
-                  Startup Potential
-                </h3>
-                <p>Get funded to turn your idea into a real business</p>
-              </div>
-            </div>
-          </div>        </section>
 
         {/* Registration Section */}
 <section

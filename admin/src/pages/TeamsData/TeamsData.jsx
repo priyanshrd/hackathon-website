@@ -16,14 +16,12 @@ const TeamsData = () => {
     const fetchTeams = async () => {
       try {
         setIsLoading(true);
-        // Add includeScreenshots=true parameter
         const response = await axios.get(
           `${backend_url}/api/registration/teams?includeScreenshots=true`
         );
 
         if (response.data && response.data.teams) {
           const processedTeams = response.data.teams.map((team) => {
-            // Ensure screenshot is properly formatted
             const screenshot = team.screenshot
               ? team.screenshot.startsWith("data:image")
                 ? team.screenshot
@@ -50,7 +48,6 @@ const TeamsData = () => {
     fetchTeams();
   }, [backend_url]);
 
-  // Define filteredTeams before using it in JSX
   const filteredTeams = teams.filter((team) => {
     if (!team) return false;
 
@@ -95,7 +92,8 @@ const TeamsData = () => {
     };
 
     try {
-      const response = await axios.post(
+      // First send the email
+      const emailResponse = await axios.post(
         `${backend_url}/api/registration/send-email`,
         {
           email: leader.email,
@@ -105,15 +103,28 @@ const TeamsData = () => {
         }
       );
 
-      if (response.data?.success) {
-        alert(
-          `Status updated to ${status.toUpperCase()} and email sent successfully`
-        );
-        setTeams((prevTeams) =>
-          prevTeams.map((t) => (t._id === team._id ? { ...t, status } : t))
-        );
+      if (emailResponse.data?.success) {
+        if (status === "reject") {
+          // If rejecting, delete the team record
+          const deleteResponse = await axios.delete(
+            `${backend_url}/api/registration/teams/${team._id}`
+          );
+          
+          if (deleteResponse.data?.success) {
+            alert("Team rejected and record deleted successfully");
+            setTeams(prevTeams => prevTeams.filter(t => t._id !== team._id));
+          } else {
+            alert("Email sent but failed to delete record.");
+          }
+        } else {
+          // For accept, just update status
+          alert("Status updated to ACCEPT and email sent successfully");
+          setTeams((prevTeams) =>
+            prevTeams.map((t) => (t._id === team._id ? { ...t, status } : t))
+          );
+        }
       } else {
-        alert("Failed to update status.");
+        alert("Failed to send email.");
       }
     } catch (error) {
       console.error("Error updating status:", error);
@@ -160,6 +171,7 @@ const TeamsData = () => {
           <table>
             <thead>
               <tr>
+                <th>#</th>
                 <th>Team Name</th>
                 <th>Team Leader</th>
                 <th>Members</th>
@@ -170,7 +182,7 @@ const TeamsData = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredTeams.map((team) => {
+              {filteredTeams.map((team, index) => {
                 const leader = team.members?.find(
                   (member) => member?.isTeamLead
                 );
@@ -179,6 +191,7 @@ const TeamsData = () => {
 
                 return (
                   <tr key={team._id}>
+                    <td className="serial-number">{index + 1}</td>
                     <td className="team-name">
                       <strong>{team.teamName}</strong>
                       {team.isRVCEStudent && (
@@ -255,7 +268,7 @@ const TeamsData = () => {
                         className="reject-button"
                         onClick={() => handleStatusChange(team, "reject")}
                       >
-                        Reject
+                        Reject & Delete
                       </button>
                     </td>
                   </tr>
