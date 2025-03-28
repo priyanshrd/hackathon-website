@@ -517,7 +517,7 @@ const About = () => {
       : "opacity-0 translate-y-10"
   } transition-all duration-1000 ease-out`}
 >
-  
+<div className="max-w-6xl mx-auto">
     <h2 className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative">
       Your Mentors
       <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
@@ -631,7 +631,7 @@ const About = () => {
             </motion.div>
           ))}
         </div>
-      
+      </div>
     
 </section>
 
