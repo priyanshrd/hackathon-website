@@ -611,7 +611,7 @@ const About = () => {
             },
             {
               name: "Prasanna Naik",
-              title: "Ass. SE-1A @Mareana",
+              title: "Asst. SE-1A @Mareana",
               image: "/mentor8.jpeg",
               linkedin: "prasanna-naik-40124b1ba",
               description: "Web technologies and UX specialist with industry consulting experience"
