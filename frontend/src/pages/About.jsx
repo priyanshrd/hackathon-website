@@ -580,6 +580,13 @@ const About = () => {
               image: "/mentor8.jpeg",
               linkedin: "prasanna-naik-40124b1ba",
               description: "Web technologies and UX specialist with industry consulting experience"
+            },
+            {
+              name: "Krishnatejaswi Shenthar",
+              title: "SDE intern @Ring Central",
+              image: "/mentor9.jpeg",
+              linkedin: "krishnatejaswi-shenthar",
+              description: "Web technologies and UX specialist with industry consulting experience"
             }
           ].map((mentor, index) => (
             <motion.div
