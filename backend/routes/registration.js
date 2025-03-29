@@ -151,8 +151,6 @@ router.post("/register", upload.single("screenshot"), async (req, res) => {
           memberIndex: index,
         });
       }
-
-      
     }
 
     // Check for existing team or transaction ID
