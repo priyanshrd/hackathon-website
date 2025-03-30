@@ -124,38 +124,6 @@ const About = () => {
     document.body.removeChild(link);
   };
 
-  const judges = [
-    {
-      name: "Siddhant Goswami",
-      title: "100xEngineers+",
-      image: "/7.png",
-    },
-    {
-      name: "Arshdeep Singh",
-      title: "EDock",
-      image: "/8.png",
-    },
-    {
-      name: "Shivaram K R",
-      title: "Hue Learn",
-      image: "/9.png",
-    },
-    {
-      name: "Sriharsha Donthi",
-      title: "Oracle",
-      image: "/10.png",
-    },
-    {
-      name: "Raghu Sarangajan",
-      title: "Cubyts",
-      image: "/11.png",
-    },
-    {
-      name: "Kartik Sirigeri",
-      title: "OpenText",
-      image: "/12.png",
-    },
-  ];
 
   return (
     <div className="bg-black text-white min-h-screen font-sans">
@@ -575,6 +543,13 @@ const About = () => {
               description: "20+ years of hands-on experience in browser development, ADAS, computer vision. Reviewer-owner for V8 bindings on Chromium open-source project and a former Web Kit committer",
             },
             {
+              name: "Sheikh Raashid",
+              title: "Corporate Trainer",
+              image: "/mentor14.jpeg",
+              linkedin: "imsrjcse",
+              description: ""
+            },
+            {
               name: "Prajwal T S",
               title: "SDE @Google",
               image: "/mentor3.jpeg",
@@ -622,7 +597,22 @@ const About = () => {
               image: "/mentor9.jpeg",
               linkedin: "krishnatejaswi-shenthar",
               description: "Web technologies and UX specialist with industry consulting experience"
+            },
+            {
+              name: "Pavan R",
+              title: "SDE @Walmart",
+              image: "/mentor15.jpeg",
+              linkedin: "pavan-r-21937a207",
+              description: "Web technologies and UX specialist with industry consulting experience"
+            },
+            {
+              name: "Prabhav Kashyap",
+              title: "Ex-GDSC Lead",
+              image: "/mentor16.jpeg",
+              linkedin: "prabhav-b-kashyap",
+              description: "Web technologies and UX specialist with industry consulting experience"
             }
+
           ].map((mentor, index) => (
             <motion.div
               key={`expanded-${mentor.name}-${index}`}
