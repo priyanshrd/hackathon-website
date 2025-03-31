@@ -669,8 +669,7 @@ const About = () => {
 
 
 
-
-        {/* Registration Section */}
+{/* Registration Section */}
 <section
   id="register"
   ref={(el) => {
@@ -703,7 +702,7 @@ const About = () => {
     </motion.h2>
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-      {/* Enhanced Hackathon Card */}
+      {/* Hackathon Card */}
       <motion.div 
         className="bg-[#38AAC9]/10 p-8 rounded-lg text-center transform transition-all duration-300 hover:scale-105 border-2 border-[#38AAC9] shadow-lg shadow-[#38AAC9]/20 relative"
         initial="hiddenLeft"
@@ -711,12 +710,12 @@ const About = () => {
         variants={variants}
         transition={{ delay: 0.3 }}
       >
-        <div className="absolute -top-3 -right-3 bg-[#E4CD15] text-black px-3 py-1 rounded-full text-sm font-bold transform rotate-6">
-          EARLY BIRD OFFER
-        </div>
+        
         <h3 className="text-2xl md:text-3xl font-bold mb-2 text-[#38AAC9]">Hackathon + Workshop</h3>
         <p className="mb-4 text-lg">Team of 2-4 members</p>
-        <div className="text-4xl font-bold mb-6 text-[#E4CD15]">₹399</div>
+        <div className="flex justify-center items-center mb-6">
+          <span className="text-4xl font-bold text-[#E4CD15]">₹499</span>
+        </div>
         <p className="mb-6 text-lg">Includes free workshop for all team members</p>
         <button
           onClick={() => navigate("/hackathon")}
@@ -747,54 +746,52 @@ const About = () => {
       </motion.div>
     </div>
 
-    {/* Updated Important Notes Section */}
-<div
- className="mt-12 bg-[#1a1a1a] p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#E4CD15]/20">
-  <h3 className="text-xl font-bold mb-4 text-[#38AAC9] flex items-center">
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      className="h-6 w-6 mr-2" 
-      fill="none" 
-      viewBox="0 0 24 24" 
-      stroke="currentColor"
-    >
-      <path 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        strokeWidth={2} 
-        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" 
-      />
-    </svg>
-    Important Notes
-  </h3>
-  <ul className="space-y-3">
-    <li className="flex items-start">
-      <span className="text-[#E4CD15] text-xl mr-2">•</span>
-      <p className="text-gray-300">
-        Open to all UG & PG students across all courses in India.
-      </p>
-    </li>
-    <li className="flex items-start">
-      <span className="text-[#E4CD15] text-xl mr-2">•</span>
-      <p className="text-gray-300">
-        Team leaders will receive a confirmation email with a link to a WhatsApp group. Only team leaders should join.
-      </p>
-    </li>
-    <li className="flex items-start">
-      <span className="text-[#E4CD15] text-xl mr-2">•</span>
-      <p className="text-gray-300">
-        The 6-slide template for Round 1 will be shared in that group.
-      </p>
-    </li>
-    <li className="flex items-start">
-      <span className="text-[#E4CD15] text-xl mr-2">•</span>
-      <p className="text-gray-300">
-        Registrations will close on April 8th at 11:59 PM.
-      </p>
-    </li>
-  </ul>
-</div>
-    
+    {/* Important Notes Section */}
+    <div className="mt-12 bg-[#1a1a1a] p-6 rounded-lg border-l-4 border-[#E4CD15] transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#E4CD15]/20">
+      <h3 className="text-xl font-bold mb-4 text-[#38AAC9] flex items-center">
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-6 w-6 mr-2" 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={2} 
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" 
+          />
+        </svg>
+        Important Notes
+      </h3>
+      <ul className="space-y-3">
+        <li className="flex items-start">
+          <span className="text-[#E4CD15] text-xl mr-2">•</span>
+          <p className="text-gray-300">
+            Open to all UG & PG students across all courses in India.
+          </p>
+        </li>
+        <li className="flex items-start">
+          <span className="text-[#E4CD15] text-xl mr-2">•</span>
+          <p className="text-gray-300">
+            Team leaders will receive a confirmation email with a link to a WhatsApp group. Only team leaders should join.
+          </p>
+        </li>
+        <li className="flex items-start">
+          <span className="text-[#E4CD15] text-xl mr-2">•</span>
+          <p className="text-gray-300">
+            The 6-slide template for Round 1 will be shared in that group.
+          </p>
+        </li>
+        <li className="flex items-start">
+          <span className="text-[#E4CD15] text-xl mr-2">•</span>
+          <p className="text-gray-300">
+            Registrations will close on April 8th at 11:59 PM.
+          </p>
+        </li>
+      </ul>
+    </div>
  {/* Teammate Finder Section */}
 <section
   id="teammates"
