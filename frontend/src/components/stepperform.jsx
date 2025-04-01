@@ -605,7 +605,7 @@ const Stepper = () => {
         <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg border border-[#3a3a3a]">
           <div className="flex items-center space-x-2 text-white pb-2">
             <h3 className="text-xl font-semibold">Payment Details - </h3>
-            <span className="text-xl font-semibold text-[#E4CD15]">₹399</span>
+            <span className="text-xl font-semibold text-[#E4CD15]">499</span>
           </div>
 
           <div className="flex flex-col items-center mb-6">
