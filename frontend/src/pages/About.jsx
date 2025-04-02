@@ -710,7 +710,9 @@ const About = () => {
         variants={variants}
         transition={{ delay: 0.3 }}
       >
-        
+        <div className="absolute -top-3 -right-3 bg-[#E4CD15] text-black px-3 py-1 rounded-full text-sm font-bold transform rotate-6">
+          FILLING FAST
+        </div>
         <h3 className="text-2xl md:text-3xl font-bold mb-2 text-[#38AAC9]">Hackathon + Workshop</h3>
         <p className="mb-4 text-lg">Team of 2-4 members</p>
         <div className="flex justify-center items-center mb-6">
