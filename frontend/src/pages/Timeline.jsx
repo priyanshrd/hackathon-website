@@ -54,7 +54,7 @@ const Timeline = () => {
     },
     {
       title: "Round 1 Results Announcement",
-      date: "April 11, 2025 (5 PM)",
+      date: "April 10, 2025 (5 PM)",
       description: "Shortlisted teams will move to Round 2 (Offline Hackathon)"
     },
     {
