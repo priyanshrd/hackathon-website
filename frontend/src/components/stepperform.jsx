@@ -627,7 +627,7 @@ const Stepper = () => {
             </div>
             
             <div className="text-white text-sm mb-4 text-center">
-              You can pay to any one of the available QR codes
+              No refunds are provided.
             </div>
             
             <button 
