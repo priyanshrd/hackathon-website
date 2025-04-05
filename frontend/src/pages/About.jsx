@@ -711,7 +711,7 @@ const About = () => {
         transition={{ delay: 0.3 }}
       >
         <div className="absolute -top-3 -right-3 bg-[#E4CD15] text-black px-3 py-1 rounded-full text-sm font-bold transform rotate-6">
-          FILLING FAST
+          10 Slots Left
         </div>
         <h3 className="text-2xl md:text-3xl font-bold mb-2 text-[#38AAC9]">Hackathon + Workshop</h3>
         <p className="mb-4 text-lg">Team of 2-4 members</p>
@@ -739,12 +739,12 @@ const About = () => {
         <p className="mb-4">Individual participation</p>
         <div className="text-3xl font-bold mb-6 text-[#E4CD15]">₹99</div>
         <p className="mb-6">Single Entry for the workshop</p>
-        <button
-          onClick={() => navigate("/workshop")}
-          className="inline-block px-6 py-3 bg-[#38AAC9] hover:bg-[#E4CD15] hover:text-black font-bold rounded-full transition-all duration-300"
+        <p
+          
+          className="inline-block px-6 py-3 bg-gray font-bold rounded-full transition-all duration-300"
         >
-          Register for Workshop
-        </button>
+          Registrations Full
+        </p>
       </motion.div>
     </div>
 
