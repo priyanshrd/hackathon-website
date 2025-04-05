@@ -10,14 +10,7 @@ const WorkshopData = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isExporting, setIsExporting] = useState(false);
-  const [exportStatus, setExportStatus] = useState("");
   const navigate = useNavigate();
-
-  // Google Sheets configuration
-  const SPREADSHEET_ID = "1La5uLL9KruXV2i4owgiWKiI6VCtRH69pZpCAFEY2RmI";
-  const SHEET_NAME = "WorkshopRegistrations";
-  const API_KEY = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY;
 
   useEffect(() => {
     console.log("Component mounted, fetching workshop registrations...");
@@ -56,65 +49,103 @@ const WorkshopData = () => {
     }
   };
 
-  const exportToGoogleSheets = async () => {
+  const exportToExcel = () => {
     try {
-      setIsExporting(true);
-      setExportStatus("Preparing data for export...");
+      // Sort workshops alphabetically by name
+      const sortedWorkshops = [...workshops].sort((a, b) => {
+        const nameA = a.name?.toLowerCase() || '';
+        const nameB = b.name?.toLowerCase() || '';
+        return nameA.localeCompare(nameB);
+      });
 
-      // Prepare the data in the format expected by Google Sheets API
-      const headers = ["Name", "Email", "Phone", "Transaction ID", "Payment Proof"];
-      const values = workshops.map(workshop => [
-        workshop.name || "N/A",
-        workshop.email || "N/A",
-        workshop.phoneNumber || "N/A",
-        workshop.transactionId || "N/A",
-        workshop.image ? "Yes" : "No"
-      ]);
+      // Prepare worksheet data
+      const worksheetData = sortedWorkshops.map(workshop => {
+        const isRV = isRVCEStudent(workshop);
+        const usn = isRV ? getUSN(workshop) : "N/A";
+        
+        return {
+          "Name": workshop.name || "N/A",
+          "Email": workshop.email || "N/A",
+          "USN": usn,
+          "RVCE Student": isRV ? "Yes" : "No",
+          "Phone": workshop.phoneNumber || "N/A",
+          "Transaction ID": workshop.transactionId || "N/A",
+          "Payment Proof": workshop.image ? "Yes" : "No",
+          "College": workshop.college || "N/A"
+        };
+      });
 
-      const dataToExport = [headers, ...values];
-
-      // First, clear the existing sheet data
-      setExportStatus("Clearing existing data...");
-      const clearResponse = await axios.post(
-        `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A1:Z1000:clear`,
-        {},
-        {
-          params: {
-            key: API_KEY
-          }
-        }
-      );
-
-      console.log("Clear response:", clearResponse);
-
-      // Then, write the new data
-      setExportStatus("Uploading new data...");
-      const updateResponse = await axios.post(
-        `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A1:append`,
-        {
-          values: dataToExport,
-          majorDimension: "ROWS"
-        },
-        {
-          params: {
-            valueInputOption: "RAW",
-            key: API_KEY
-          }
-        }
-      );
-
-      console.log("Update response:", updateResponse);
-      setExportStatus("Data successfully exported to Google Sheets!");
+      // Create workbook and worksheet
+      const workbook = XLSX.utils.book_new();
+      const worksheet = XLSX.utils.json_to_sheet(worksheetData);
       
-      // Refresh the data after export
-      await fetchWorkshops();
+      // Add worksheet to workbook
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Workshop Registrations");
+      
+      // Generate Excel file and download
+      XLSX.writeFile(workbook, "workshop_registrations.xlsx", {
+        compression: true
+      });
     } catch (err) {
-      console.error("Error exporting to Google Sheets:", err);
-      setExportStatus(`Export failed: ${err.message}`);
-    } finally {
-      setIsExporting(false);
-      // Clear status after 5 seconds
-      setTimeout(() => setExportStatus(""), 5000);
+      console.error("Error generating Excel file:", err);
+      alert("Failed to generate Excel file");
+    }
+  };
+
+  const isRVCEStudent = (workshop) => {
+    return (
+      workshop.email?.endsWith("@rvce.edu.in") ||
+      workshop.usn || // Check if USN field exists
+      workshop.college?.toLowerCase()?.includes("rv college of engineering") ||
+      workshop.college?.toLowerCase()?.includes("rvce")
+    );
+  };
+
+  const getUSN = (workshop) => {
+    // First try the USN field if it exists
+    if (workshop.usn) return workshop.usn.toUpperCase();
+    
+    // Otherwise extract from RVCE email
+    if (workshop.email?.endsWith("@rvce.edu.in")) {
+      return workshop.email.split("@")[0].toUpperCase();
+    }
+    
+    return "N/A";
+  };
+
+
+  const exportToCSV = () => {
+    try {
+      // Sort workshops alphabetically by name
+      const sortedWorkshops = [...workshops].sort((a, b) => {
+        const nameA = a.name?.toLowerCase() || '';
+        const nameB = b.name?.toLowerCase() || '';
+        return nameA.localeCompare(nameB);
+      });
+
+      // Prepare CSV content
+      let csvContent = "Name,USN,RVCE Student,Attendance\n";
+      
+      sortedWorkshops.forEach(workshop => {
+        const isRV = isRVCEStudent(workshop);
+        const usn = isRV ? getUSN(workshop) : "N/A";
+        
+        csvContent += `"${workshop.name || 'N/A'}","${usn}","${isRV ? 'Yes' : 'No'}",""\n`;
+      });
+
+      // Create download link
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "workshop_attendance.csv");
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error("Error generating CSV:", err);
+      alert("Failed to generate CSV file");
     }
   };
 
@@ -155,47 +186,53 @@ const WorkshopData = () => {
           <div className="button-group">
             <button 
               className="export-button" 
-              onClick={exportToGoogleSheets}
-              disabled={isExporting || workshops.length === 0}
+              onClick={exportToCSV}
+              disabled={workshops.length === 0}
             >
-              {isExporting ? "Exporting..." : "Export to Google Sheets"}
+              Export Attendance CSV
+            </button>
+            <button 
+              className="export-button excel" 
+              onClick={exportToExcel}
+              disabled={workshops.length === 0}
+            >
+              Export to Excel
             </button>
             <button className="home-button" onClick={() => navigate("/")}>
               Return to Home
             </button>
           </div>
         </div>
-        {exportStatus && <div className="export-status">{exportStatus}</div>}
       </div>
-
-      {filteredWorkshops.length === 0 ? (
-        <div>
-          <p className="no-results">
-            {workshops.length === 0
-              ? "No workshop registrations yet."
-              : "No registrations match your search."}
-          </p>
-          <p className="debug-info">
-            Debug Info: Loaded {workshops.length} workshop registrations from API
-          </p>
-        </div>
-      ) : (
-        <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Transaction ID</th>
-                <th>Payment Proof</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredWorkshops.map((workshop) => (
+      
+      <div className="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>RVCE</th> {/* New column for RVCE marker */}
+              <th>USN</th> {/* New column for USN */}
+              <th>Phone</th>
+              <th>Transaction ID</th>
+              <th>Payment Proof</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredWorkshops.map((workshop) => {
+              const isRV = isRVCEStudent(workshop);
+              const usn = isRV ? getUSN(workshop) : null;
+              
+              return (
                 <tr key={workshop._id || workshop.transactionId}>
                   <td className="name">{workshop.name || "N/A"}</td>
                   <td className="email">{workshop.email || "N/A"}</td>
+                  <td className="rvce-marker">
+                    {isRV ? "✅" : "❌"}
+                  </td>
+                  <td className="usn">
+                    {usn || "N/A"}
+                  </td>
                   <td className="phone">{workshop.phoneNumber || "N/A"}</td>
                   <td className="transaction-id">
                     {workshop.transactionId || "N/A"}
@@ -214,11 +251,12 @@ const WorkshopData = () => {
                     )}
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      
 
       {selectedImage && (
         <div
