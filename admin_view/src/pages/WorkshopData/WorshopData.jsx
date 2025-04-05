@@ -124,13 +124,13 @@ const WorkshopData = () => {
       });
 
       // Prepare CSV content
-      let csvContent = "Name,USN,RVCE Student,Attendance\n";
+      let csvContent = "Name,USN,RVCE Student,Attendance,Phone\n";
       
       sortedWorkshops.forEach(workshop => {
         const isRV = isRVCEStudent(workshop);
         const usn = isRV ? getUSN(workshop) : "N/A";
         
-        csvContent += `"${workshop.name || 'N/A'}","${usn}","${isRV ? 'Yes' : 'No'}",""\n`;
+        csvContent += `"${workshop.name || 'N/A'}","${usn}","${isRV ? 'Yes' : 'No'}","",workshop.phoneNumber}"`
       });
 
       // Create download link

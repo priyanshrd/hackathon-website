@@ -88,14 +88,14 @@ const TeamsData = () => {
 
   const exportToCSV = () => {
     try {
-      let csvContent = "Team Name,Participant Name,USN,RVCE Student,Attendance\n";
+      let csvContent = "Team Name,Participant Name,USN,RVCE Student,Attendance,Phone\n";
       
       teams.forEach(team => {
         team.members?.forEach(member => {
           const isRV = isRVCEStudent(member);
           const usn = isRV ? getUSN(member) : "N/A";
           
-          csvContent += `"${team.teamName || 'N/A'}","${member.name || 'N/A'}","${usn}","${isRV ? 'Yes' : 'No'}",""\n`;
+          csvContent += `"${team.teamName || 'N/A'}","${member.name || 'N/A'}","${usn}","${isRV ? 'Yes' : 'No'}","",member.phoneNumber\n`;
         });
       });
 
