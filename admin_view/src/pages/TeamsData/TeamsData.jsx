@@ -73,12 +73,6 @@ const TeamsData = () => {
           "Team Name": team.teamName || "N/A",
           "Participant Name": member.name || "N/A",
           "USN": isRVCEStudent(member) ? getUSN(member) : "N/A",
-          "RVCE Student": isRVCEStudent(member) ? "Yes" : "No",
-          "Email": member.email || "N/A",
-          "Phone": member.phoneNumber || "N/A",
-          "Team Lead": member.isTeamLead ? "Yes" : "No",
-          "Transaction ID": team.transactionId || "N/A",
-          "Payment Proof": team.screenshot ? "Yes" : "No"
         })) || [];
       });
 
