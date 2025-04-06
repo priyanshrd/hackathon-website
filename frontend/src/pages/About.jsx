@@ -757,27 +757,24 @@ const About = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
       {/* Hackathon Card */}
       <motion.div 
-        className="bg-[#38AAC9]/10 p-8 rounded-lg text-center transform transition-all duration-300 hover:scale-105 border-2 border-[#38AAC9] shadow-lg shadow-[#38AAC9]/20 relative"
+        className="bg-[#38AAC9]/10 p-6 rounded-lg text-center transform transition-all duration-300 hover:scale-103 border border-[#38AAC9]/30"
         initial="hiddenLeft"
         animate="visible"
         variants={variants}
         transition={{ delay: 0.3 }}
       >
-        <div className="absolute -top-3 -right-3 bg-[#E4CD15] text-black px-3 py-1 rounded-full text-sm font-bold transform rotate-6">
-          10 Slots Left
-        </div>
+        
         <h3 className="text-2xl md:text-3xl font-bold mb-2 text-[#38AAC9]">Hackathon + Workshop</h3>
         <p className="mb-4 text-lg">Team of 2-4 members</p>
         <div className="flex justify-center items-center mb-6">
           <span className="text-4xl font-bold text-[#E4CD15]">₹499</span>
         </div>
         <p className="mb-6 text-lg">Includes free workshop for all team members</p>
-        <button
-          onClick={() => navigate("/hackathon")}
-          className="inline-block px-8 py-4 bg-gradient-to-r from-[#38AAC9] to-[#2e8db0] hover:from-[#E4CD15] hover:to-[#d4be14] hover:text-black font-bold rounded-full transition-all duration-300 text-lg"
+        <p
+          className="inline-block px-8 py-4 bg-gray font-bold rounded-full transition-all duration-300 text-lg"
         >
-          Register Team
-        </button>
+          Registrations Full
+        </p>
       </motion.div>
 
       {/* Workshop Card */}
