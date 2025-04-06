@@ -39,7 +39,7 @@ const Timeline = () => {
     },
     {
       title: "Online Ideation Round 1 Submission",
-      date: "April 7 (5 PM) - April 9 (5 PM), 2025",
+      date: "April 7 (5 PM) - April 9 (10 AM), 2025",
       description: () => (
         <>
           Submit your idea on the <a href='https://www.techtankrvce.com/idea' className="text-[#38AAC9] hover:underline">Submit Idea</a> page.
@@ -54,7 +54,7 @@ const Timeline = () => {
     },
     {
       title: "Round 1 Results Announcement",
-      date: "April 10, 2025 (5 PM)",
+      date: "April 10, 2025 (10 AM)",
       description: "Shortlisted teams will move to Round 2 (Offline Hackathon)"
     },
     {
