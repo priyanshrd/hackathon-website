@@ -486,7 +486,7 @@ const About = () => {
         {
           name: "Siddhant Goswami",
           title: "Co-Founder & CTO",
-          company: "100xEngineers+",
+          company: "100xEngineers",
           image: "/7.png",
           linkedin: "siddhant-goswami-6444b0146/"
         },

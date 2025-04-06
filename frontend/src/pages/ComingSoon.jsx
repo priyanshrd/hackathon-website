@@ -84,16 +84,16 @@ const ComingSoon = () => {
               style={{ color: colors.yellow }}
               className="text-xl sm:text-2xl font-bold mb-4"
             >
-              Submissions Open Soon!
+              Submissions close on 9th April at 5PM!
             </motion.h2>
 
             <motion.p
-              className="text-white text-lg mb-6"
+              className="text-red-500 text-lg mb-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              Idea submissions will begin on
+              Avoid AI generated content.
             </motion.p>
 
             <motion.div
@@ -102,19 +102,11 @@ const ComingSoon = () => {
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <p className="text-2xl font-bold" style={{ color: colors.blue }}>
-                April 7th, 5 PM
-              </p>
+              <a href="https://forms.gle/tnnBgV8kk4y6sQG17" className="text-2xl font-bold" style={{ color: colors.blue }}>
+              Click Here to Submit
+              </a>
             </motion.div>
 
-            <motion.p
-              className="text-[#cccccc]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-            >
-              Stay tuned for the Canva Template!
-            </motion.p>
           </motion.div>
         </motion.div>
       </motion.div>
