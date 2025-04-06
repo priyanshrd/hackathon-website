@@ -171,54 +171,107 @@ const About = () => {
     12-Hour Hackathon
   </p>
 
- {/* Download Brochure Button with Flowing Gradient */}
-<motion.button
-  onClick={downloadBrochure}
-  className="relative overflow-hidden px-6 py-3 rounded-full font-bold text-lg mb-8 group"
-  style={{
-    boxShadow: '0 4px 15px rgba(56, 170, 201, 0.4)'
-  }}
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
->
-  {/* Animated Gradient Background */}
-  <span className="absolute inset-0 bg-gradient-to-r from-[#38AAC9] via-[#E4CD15] to-[#38AAC9] bg-[length:200%_100%] animate-gradient-flow"></span>
-  
-  {/* Content */}
-  <span className="relative z-10 flex items-center">
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      className="h-5 w-5 mr-2" 
-      viewBox="0 0 20 20" 
-      fill="currentColor"
-    >
-      <path 
-        fillRule="evenodd" 
-        d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" 
-        clipRule="evenodd" 
-      />
-    </svg>
-    Download Brochure
-  </span>
-  
-  {/* Add this to your global CSS or CSS module */}
-  <style jsx>{`
-    @keyframes gradientFlow {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-    .animate-gradient-flow {
-      animation: gradientFlow 3s ease infinite;
-    }
-  `}</style>
-</motion.button>
+ {/* Download Brochure Dropdown */}
+<div className="relative inline-block group">
+  <motion.button
+    className="relative overflow-hidden px-6 py-3 rounded-full font-bold text-lg mb-8"
+    style={{
+      boxShadow: '0 4px 15px rgba(56, 170, 201, 0.4)'
+    }}
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    {/* Animated Gradient Background */}
+    <span className="absolute inset-0 bg-gradient-to-r from-[#38AAC9] via-[#E4CD15] to-[#38AAC9] bg-[length:200%_100%] animate-gradient-flow"></span>
+    
+    {/* Content */}
+    <span className="relative z-10 flex items-center">
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="h-5 w-5 mr-2" 
+        viewBox="0 0 20 20" 
+        fill="currentColor"
+      >
+        <path 
+          fillRule="evenodd" 
+          d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" 
+          clipRule="evenodd" 
+        />
+      </svg>
+      Download Documents
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="h-4 w-4 ml-2 transition-transform duration-200 group-hover:rotate-180" 
+        viewBox="0 0 20 20" 
+        fill="currentColor"
+      >
+        <path 
+          fillRule="evenodd" 
+          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" 
+          clipRule="evenodd" 
+        />
+      </svg>
+    </span>
+  </motion.button>
+
+  {/* Dropdown Menu */}
+  <div className="absolute left-0 mt-2 w-56 origin-top-left rounded-md bg-[#1a1a1a] shadow-lg ring-1 ring-[#38AAC9] ring-opacity-50 focus:outline-none opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+    <div className="py-1">
+      <button
+        onClick={() => {
+          const pdfUrl = "/TechTankRVCE_Brochure.pdf";
+          const link = document.createElement("a");
+          link.href = pdfUrl;
+          link.download = "TechTankRVCE_Brochure.pdf";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }}
+        className="flex items-center px-4 py-3 text-sm text-white hover:bg-[#38AAC9]/20 w-full text-left"
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-4 w-4 mr-3 text-[#E4CD15]" 
+          viewBox="0 0 20 20" 
+          fill="currentColor"
+        >
+          <path 
+            fillRule="evenodd" 
+            d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" 
+            clipRule="evenodd" 
+          />
+        </svg>
+        Event Brochure (PDF)
+      </button>
+      <button
+        onClick={() => {
+          const imgUrl = "/workshop_guidlines.jpg";
+          const link = document.createElement("a");
+          link.href = imgUrl;
+          link.download = "Workshop_Guidelines.jpg";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }}
+        className="flex items-center px-4 py-3 text-sm text-white hover:bg-[#38AAC9]/20 w-full text-left"
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-4 w-4 mr-3 text-[#E4CD15]" 
+          viewBox="0 0 20 20" 
+          fill="currentColor"
+        >
+          <path 
+            fillRule="evenodd" 
+            d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" 
+            clipRule="evenodd" 
+          />
+        </svg>
+        Workshop Guidelines (JPG)
+      </button>
+    </div>
+  </div>
+</div>
 
         {/* Scroll Down Arrow */}
         <motion.div 
