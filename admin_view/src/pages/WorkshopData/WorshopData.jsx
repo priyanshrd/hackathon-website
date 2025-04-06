@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import * as XLSX from "xlsx"; // Import the xlsx library
 import "./WorkshopData.css";
 
 const WorkshopData = () => {
@@ -167,6 +168,50 @@ const WorkshopData = () => {
     return <div className="error">Error: {error}</div>;
   }
 
+  const exportToXLSX = () => {
+    try {
+      // Sort workshops alphabetically by name
+      const sortedWorkshops = [...workshops].sort((a, b) => {
+        const nameA = a.name?.toLowerCase() || '';
+        const nameB = b.name?.toLowerCase() || '';
+        return nameA.localeCompare(nameB);
+      });
+
+      // Prepare worksheet data
+      const worksheetData = sortedWorkshops.map(workshop => {
+        const isRV = isRVCEStudent(workshop);
+        const usn = isRV ? getUSN(workshop) : "N/A";
+        
+        return {
+          "Name": workshop.name || "N/A",
+          "Email": workshop.email || "N/A",
+          "USN": usn,
+          "RVCE Student": isRV ? "Yes" : "No",
+          "Phone": workshop.phoneNumber || "N/A",
+          "Transaction ID": workshop.transactionId || "N/A",
+          "Payment Proof": workshop.image ? "Yes" : "No",
+          "College": workshop.college || "N/A"
+        };
+      });
+
+      // Create workbook and worksheet
+      const workbook = XLSX.utils.book_new();
+      const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+      
+      // Add worksheet to workbook
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Workshop Registrations");
+      
+      // Generate XLSX file and download
+      XLSX.writeFile(workbook, "workshop_registrations.xlsx", {
+        compression: true
+      });
+    } catch (err) {
+      console.error("Error generating XLSX file:", err);
+      alert("Failed to generate XLSX file");
+    }
+  };
+
+  // Update your return statement to use the new exportToXLSX function
   return (
     <div className="admin-container">
       <div className="admin-header">
@@ -193,10 +238,10 @@ const WorkshopData = () => {
             </button>
             <button 
               className="export-button excel" 
-              onClick={exportToExcel}
+              onClick={exportToXLSX}
               disabled={workshops.length === 0}
             >
-              Export to Excel
+              Export to XLSX
             </button>
             <button className="home-button" onClick={() => navigate("/")}>
               Return to Home
