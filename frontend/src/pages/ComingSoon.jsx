@@ -84,7 +84,7 @@ const ComingSoon = () => {
               style={{ color: colors.yellow }}
               className="text-xl sm:text-2xl font-bold mb-4"
             >
-              Submissions close on 9th April at 5PM!
+              Make your submissions by 9th April, 10 AM!
             </motion.h2>
 
             <motion.p
