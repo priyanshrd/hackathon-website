@@ -88,17 +88,17 @@ const TeamsData = () => {
 
   const exportToCSV = () => {
     try {
-      let csvContent = "Team Name,Participant Name,USN,RVCE Student,Attendance,Phone\n";
+      let csvContent = "Team UID,Team Name,Participant Name,USN,RVCE Student,Email,Phone,College,Is Team Lead,Attendance\n";
       
       teams.forEach(team => {
         team.members?.forEach(member => {
           const isRV = isRVCEStudent(member);
           const usn = isRV ? getUSN(member) : "N/A";
           
-          csvContent += `"${team.teamName || 'N/A'}","${member.name || 'N/A'}","${usn}","${isRV ? 'Yes' : 'No'}","",member.phoneNumber\n`;
+          csvContent += `"${team._id || 'N/A'}","${team.teamName || 'N/A'}","${member.name || 'N/A'}","${usn}","${isRV ? 'Yes' : 'No'}","${member.email || 'N/A'}","${member.phoneNumber || 'N/A'}","${member.college || 'N/A'}","${member.isTeamLead ? 'Yes' : 'No'}",""\n`;
         });
       });
-
+  
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
