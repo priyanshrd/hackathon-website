@@ -84,7 +84,7 @@ const ComingSoon = () => {
               style={{ color: colors.yellow }}
               className="text-xl sm:text-2xl font-bold mb-4"
             >
-              Make your submissions by 9th April, 10 AM!
+              Thank you for participating in Tech Tank
             </motion.h2>
 
             <motion.p
@@ -93,20 +93,10 @@ const ComingSoon = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              Avoid AI generated content.
+              Submissions are closed.
             </motion.p>
 
-            <motion.div
-              className="inline-block bg-[#2a2a2a] px-6 py-3 rounded-lg mb-8"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <a href="https://forms.gle/tnnBgV8kk4y6sQG17" className="text-2xl font-bold" style={{ color: colors.blue }}>
-              Click Here to Submit
-              </a>
-            </motion.div>
-
+            
           </motion.div>
         </motion.div>
       </motion.div>
