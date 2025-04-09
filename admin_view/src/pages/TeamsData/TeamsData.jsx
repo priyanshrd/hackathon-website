@@ -70,12 +70,13 @@ const TeamsData = () => {
     try {
       const worksheetData = teams.flatMap(team => {
         return team.members?.map(member => ({
+          "Team UID": team._id || "N/A", // Include MongoDB Object ID
           "Team Name": team.teamName || "N/A",
           "Participant Name": member.name || "N/A",
           "USN": isRVCEStudent(member) ? getUSN(member) : "N/A",
         })) || [];
       });
-
+  
       const workbook = XLSX.utils.book_new();
       const worksheet = XLSX.utils.json_to_sheet(worksheetData);
       XLSX.utils.book_append_sheet(workbook, worksheet, "Team Registrations");
@@ -85,7 +86,6 @@ const TeamsData = () => {
       alert("Failed to generate Excel file");
     }
   };
-
   const exportToCSV = () => {
     try {
       let csvContent = "Team UID,Team Name,Participant Name,USN,RVCE Student,Email,Phone,College,Is Team Lead,Attendance\n";
