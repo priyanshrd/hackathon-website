@@ -18,7 +18,7 @@ const Leaderboard = () => {
     "AGENTS",
     "AI4TW",
     "Aris",
-    "BETEGEUSE",
+    "BETELGEUSE",
     "BigO(4)",
     "ByteForge",
     "But by bit",
