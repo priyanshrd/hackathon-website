@@ -33,7 +33,7 @@ const Leaderboard = () => {
     "Hactivators",
     "HalfByte Crew",
     "Idk",
-    "Imaginears",
+    "Imagineers",
     "Infinite Loopers",
     "Innovestars",
     "Koi Pond",
