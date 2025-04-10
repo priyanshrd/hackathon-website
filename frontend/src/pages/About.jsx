@@ -596,10 +596,10 @@ const About = () => {
               description: "20+ years of hands-on experience in browser development, ADAS, computer vision. Reviewer-owner for V8 bindings on Chromium open-source project and a former Web Kit committer",
             },
             {
-              name: "Sheikh Raashid",
-              title: "Corporate Trainer",
+              name: "Karrthik Hallad",
+              title: "Cohesity | Full Stack",
               image: "/mentor14.jpeg",
-              linkedin: "imsrjcse",
+              linkedin: "karthik-hallad",
               description: ""
             },
             {
