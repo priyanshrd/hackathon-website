@@ -222,20 +222,7 @@ const AnimatedNavbar = () => {
             ))}
             
             {/* Only show Register Now button when not on home page */}
-            {!isHomePage && (
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                <button
-                  onClick={handleRegisterClick}
-                  className="px-6 py-2 bg-gradient-to-r from-[#fcf300] to-[#ffc600] text-[#072ac8] font-bold rounded-lg hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300 transform hover:translate-y-[-2px]"
-                >
-                  Register Now
-                </button>
-              </motion.div>
-            )}
+            
           </div>
 
           {/* Hamburger Menu */}
@@ -344,22 +331,7 @@ const AnimatedNavbar = () => {
                   ))}
                 </div>
 
-                {/* Only show Register Now button in mobile menu when not on home page */}
-                {!isHomePage && (
-                  <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="mt-auto"
-                  >
-                    <button
-                      onClick={handleRegisterClick}
-                      className="block w-full py-3 bg-[#fcf300] text-[#072ac8] font-bold rounded-xl text-center hover:bg-[#ffc600] hover:shadow-lg hover:shadow-[#fcf300]/30 transition-all duration-300"
-                    >
-                      Register Now
-                    </button>
-                  </motion.div>
-                )}
+                
               </div>
             </motion.div>
           </>

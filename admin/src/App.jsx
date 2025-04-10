@@ -14,7 +14,7 @@ function App() {
         <button onClick={() => navigate("/team-admin")}>
           Hackathon + Workshop Entries
         </button>
-        <button onClick={() => navigate("/manual-reg")}>Manual Reg</button>
+        <button onClick={() => navigate("/judging-panel")}>Judging Panel</button>
       </div>
     </div>
   );

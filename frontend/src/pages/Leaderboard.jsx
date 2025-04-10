@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const Leaderboard = () => {
-  // Color palette (same as your original)
   const colors = {
     blue: "#38AAC9",
     yellow: "#E4CD15",
@@ -14,12 +13,91 @@ const Leaderboard = () => {
     textGray: "#cccccc",
   };
 
+  const teamNames = [
+    "404 Founders",
+    "AGENTS",
+    "AI4TW",
+    "Aris",
+    "BETEGEUSE",
+    "BigO(4)",
+    "ByteForge",
+    "But by bit",
+    "Dark Lumos",
+    "DarkClaws",
+    "DevPuff Squad",
+    "EcoAgriWave",
+    "FLYER DOPE",
+    "Fourmula1",
+    "HackFinity",
+    "HackNovas",
+    "Hactivators",
+    "HalfByte Crew",
+    "Idk",
+    "Imaginears",
+    "Infinite Loopers",
+    "Innovestars",
+    "Koi Pond",
+    "Musk's Melons",
+    "No idea",
+    "Parachute",
+    "Phoenix",
+    "RestOfUs",
+    "SAHA",
+    "SILICON AGE BARONS",
+    "Sasta Schrodingers",
+    "SYNTAX SYNDICATE",
+    "TARS",
+    "TECHIES",
+    "Team Mavericks",
+    "Team Overclocked",
+    "The Algorythmics",
+    "VectorX",
+    "Web_builder",
+    "YOLO",
+    "Zephyr",
+    "oNe-O-oNe"
+  ];
+
+  // Function to determine team styling based on rank
+  const getTeamStyle = (index) => {
+    switch(index) {
+      case 0: // 1st place
+        return {
+          bg: "bg-gradient-to-r from-[#E4CD15]/10 to-[#E4CD15]/5",
+          border: "border-[#E4CD15]/50",
+          text: "text-[#E4CD15]",
+          scoreBg: "bg-[#E4CD15]/20"
+        };
+      case 1: // 2nd place
+        return {
+          bg: "bg-gradient-to-r from-[#38AAC9]/10 to-[#38AAC9]/5", 
+          border: "border-[#38AAC9]/50",
+          text: "text-[#38AAC9]",
+          scoreBg: "bg-[#38AAC9]/20"
+        };
+      case 2: // 3rd place
+        return {
+          bg: "bg-gradient-to-r from-[#38AAC9]/10 to-[#38AAC9]/5",
+          border: "border-[#38AAC9]/50",
+          text: "text-[#38AAC9]",
+          scoreBg: "bg-[#38AAC9]/20"
+        };
+      default:
+        return {
+          bg: "bg-[#2a2a2a]",
+          border: "border-[#38AAC9]/10",
+          text: "text-white",
+          scoreBg: "bg-[#1a1a1a]"
+        };
+    }
+  };
+
   return (
     <div 
       className="fixed inset-0"
       style={{
-        top: '64px', // Adjust this value to match your navbar height
-        height: 'calc(100vh - 64px)', // Subtract navbar height
+        top: '64px',
+        height: 'calc(100vh - 64px)',
         overflow: 'hidden',
       }}
     >
@@ -27,106 +105,145 @@ const Leaderboard = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="h-full w-full flex items-center justify-center bg-[#0a0a0a]"
+        className="h-full w-full flex flex-col items-center bg-[#0a0a0a] pt-8 pb-4"
       >
         <motion.div
-          className="w-full max-w-2xl mx-4 bg-[#1a1a1a] rounded-xl shadow-lg p-6 sm:p-8 border border-[#3a3a3a]"
-          style={{ maxHeight: '90vh' }}
+          className="w-full max-w-3xl mx-4 bg-[#1a1a1a] rounded-xl shadow-lg p-6 sm:p-8 border border-[#3a3a3a] flex flex-col"
+          style={{ 
+            maxHeight: 'calc(100vh - 100px)',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
         >
-          {/* Animated header */}
+          {/* Header */}
           <motion.div
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center mb-8"
           >
-            <motion.h1
-              style={{ color: colors.blue }}
-              className="text-2xl sm:text-3xl font-bold mb-2"
-            >
-              Hackathon Leaderboard
+            <motion.h1 style={{ color: colors.blue }} className="text-3xl sm:text-4xl font-bold mb-2">
+              Selections for Round 2
             </motion.h1>
-            <div className="h-1 w-20 mx-auto bg-gradient-to-r from-[#38AAC9] to-[#E4CD15] rounded-full"></div>
-          </motion.div>
-
-          {/* Main content with animation */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center"
-          >
-            {/* Podium Animation */}
-            <div className="flex justify-center items-end mb-8 h-48">
-              {/* 2nd Place */}
-              <motion.div
-                className="w-24 bg-[#38AAC9]/30 border-t-2 border-[#38AAC9] flex flex-col items-center mx-2"
-                style={{ height: '60%' }}
-                initial={{ height: 0 }}
-                animate={{ height: '60%' }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-              >
-                <div className="text-4xl font-bold mt-2" style={{ color: colors.yellow }}>2</div>
-              </motion.div>
-              
-              {/* 1st Place */}
-              <motion.div
-                className="w-28 bg-[#E4CD15]/30 border-t-2 border-[#E4CD15] flex flex-col items-center mx-2"
-                style={{ height: '100%' }}
-                initial={{ height: 0 }}
-                animate={{ height: '100%' }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                <div className="text-4xl font-bold mt-2" style={{ color: colors.blue }}>1</div>
-              </motion.div>
-              
-              {/* 3rd Place */}
-              <motion.div
-                className="w-20 bg-[#38AAC9]/30 border-t-2 border-[#38AAC9] flex flex-col items-center mx-2"
-                style={{ height: '40%' }}
-                initial={{ height: 0 }}
-                animate={{ height: '40%' }}
-                transition={{ duration: 0.8, delay: 0.8 }}
-              >
-                <div className="text-4xl font-bold mt-2" style={{ color: colors.yellow }}>3</div>
-              </motion.div>
-            </div>
-
-            <motion.h2
-              style={{ color: colors.yellow }}
-              className="text-xl sm:text-2xl font-bold mb-4"
-            >
-              Leaderboard Goes Live Soon!
-            </motion.h2>
-
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="h-1 w-32 mx-auto bg-gradient-to-r from-[#38AAC9] to-[#E4CD15] rounded-full"
+            ></motion.div>
             <motion.p
-              className="text-white text-lg mb-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
+              className="text-xl mt-4 font-medium"
+              style={{ color: colors.yellow }}
             >
-              Live results will be available on
+              Congratulations to all the selected teams!
             </motion.p>
+          </motion.div>
 
-            <motion.div
-              className="inline-block bg-[#2a2a2a] px-6 py-3 rounded-lg mb-8"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 300 }}
+          {/* Top 3 Podium */}
+          <div className="flex justify-center mb-8 h-24">
+            {/* 2nd Place */}
+            <motion.div 
+              className="w-24 flex flex-col items-center mx-2 justify-end"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
             >
-              <p className="text-2xl font-bold" style={{ color: colors.blue }}>
-                April 12th, 10 AM
-              </p>
+              <div className={`w-full p-3 rounded-t-lg ${getTeamStyle(1).bg} ${getTeamStyle(1).border} border-b-0`}>
+                <div className="text-center font-bold" style={{ color: colors.blue }}>02</div>
+              </div>
+              <div className={`w-full p-2 text-center ${getTeamStyle(1).scoreBg} rounded-b-lg`}>
+                <span className="font-mono">0</span>
+              </div>
             </motion.div>
-
-            <motion.p
-              className="text-[#cccccc]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
+            
+            {/* 1st Place */}
+            <motion.div 
+              className="w-28 flex flex-col items-center mx-2 justify-end"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
             >
-              Stay tuned for Round 1 Results
-            </motion.p>
+              <div className={`w-full p-3 rounded-t-lg ${getTeamStyle(0).bg} ${getTeamStyle(0).border} border-b-0`}>
+                <div className="text-center font-bold" style={{ color: colors.yellow }}>01</div>
+              </div>
+              <div className={`w-full p-2 text-center ${getTeamStyle(0).scoreBg} rounded-b-lg`}>
+                <span className="font-mono">0</span>
+              </div>
+            </motion.div>
+            
+            {/* 3rd Place */}
+            <motion.div 
+              className="w-20 flex flex-col items-center mx-2 justify-end"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <div className={`w-full p-3 rounded-t-lg ${getTeamStyle(2).bg} ${getTeamStyle(2).border} border-b-0`}>
+                <div className="text-center font-bold" style={{ color: colors.blue }}>03</div>
+              </div>
+              <div className={`w-full p-2 text-center ${getTeamStyle(2).scoreBg} rounded-b-lg`}>
+                <span className="font-mono">0</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Scrollable Teams List */}
+          <div 
+            className="flex-1 overflow-y-auto pr-2" 
+            style={{ 
+              scrollbarWidth: 'thin',
+              scrollbarColor: `${colors.blue} transparent`
+            }}
+          >
+            <div className="space-y-2">
+              {teamNames.map((team, index) => {
+                const style = getTeamStyle(index);
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ x: -50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ 
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 10,
+                      delay: 0.8 + (index * 0.03)
+                    }}
+                    className={`p-3 rounded-lg ${style.bg} ${style.border} transition-all duration-300 group flex justify-between items-center`}
+                    whileHover={{ scale: index < 3 ? 1 : 1.02 }}
+                  >
+                    <div className="flex items-center">
+                      <span className={`text-lg font-mono mr-4 w-8 text-right ${index < 3 ? 'font-bold' : ''} ${style.text}`}>
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span className={`text-lg ${style.text} ${index < 3 ? 'font-bold' : 'font-medium'}`}>
+                        {team}
+                      </span>
+                    </div>
+                    <div className={`px-3 py-1 rounded-full ${style.scoreBg} font-mono`}>
+                      0
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Footer */}
+          <motion.div
+            className="text-center mt-4 pt-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 2 }}
+          >
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-[#38AAC9] to-transparent mb-4"></div>
+            <p className="text-sm text-[#38AAC9]">
+              Scores will be updated live during the event.
+            </p>
           </motion.div>
         </motion.div>
       </motion.div>

@@ -6,10 +6,10 @@ import "./TeamsData.css";
 const TeamsData = () => {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
   const [teams, setTeams] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [viewMode, setViewMode] = useState("registrations"); // 'registrations' or 'selection'
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,18 +21,16 @@ const TeamsData = () => {
         );
 
         if (response.data && response.data.teams) {
-          const processedTeams = response.data.teams.map((team) => {
-            const screenshot = team.screenshot
+          const processedTeams = response.data.teams.map((team) => ({
+            ...team,
+            screenshot: team.screenshot
               ? team.screenshot.startsWith("data:image")
                 ? team.screenshot
                 : `data:image/png;base64,${team.screenshot}`
-              : null;
-
-            return {
-              ...team,
-              screenshot,
-            };
-          });
+              : null,
+            score: team.score || 0,
+            isSelected: team.isSelected || false,
+          }));
 
           setTeams(processedTeams);
           setError(null);
@@ -50,85 +48,32 @@ const TeamsData = () => {
 
   const filteredTeams = teams.filter((team) => {
     if (!team) return false;
-
     return (
       (team.teamName?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-      team.members?.some(
-        (member) =>
-          (member?.name?.toLowerCase() || "").includes(
-            searchTerm.toLowerCase()
-          ) ||
-          (member?.email?.toLowerCase() || "").includes(
-            searchTerm.toLowerCase()
-          )
-      ) ||
-      (team.transactionId?.toLowerCase() || "").includes(
-        searchTerm.toLowerCase()
-      )
+      (team._id?.toLowerCase() || "").includes(searchTerm.toLowerCase())
     );
   });
 
-  const handleStatusChange = async (team, status) => {
-    const leader = team.members?.find((member) => member?.isTeamLead);
-    if (!leader) {
-      alert("No team leader found for this team.");
-      return;
-    }
-
-    const statusMessages = {
-      accept: {
-        subject: "Hackathon Registration Confirmed",
-        message: `Dear ${leader.name},<br><br>
-        Your team "<b>${team.teamName}</b>" has been <b>approved</b> for the hackathon. 🎉<br><br>
-        Join our official WhatsApp group for important updates and discussions:  
-        <a href="https://chat.whatsapp.com/Ihflgo60zO4GT0SJHVw05C" target="_blank">Join WhatsApp Group</a>.<br><br>
-        See you at the event!<br><br>
-        Best regards,<br>Tech Tank Team`,
-      },
-      reject: {
-        subject: "Hackathon Registration Rejected",
-        message: `Dear ${leader.name},<br><br>Unfortunately, your team "${team.teamName}" has been <b>rejected</b>. Please contact support for details.<br><br>Best regards,<br>Tech Tank Team`,
-      },
-    };
-
+  const toggleTeamSelection = async (teamId) => {
     try {
-      // First send the email
-      const emailResponse = await axios.post(
-        `${backend_url}/api/registration/send-email`,
-        {
-          email: leader.email,
-          subject: statusMessages[status].subject,
-          message: statusMessages[status].message,
-          registrationId: team._id,
-        }
+      const teamToUpdate = teams.find(team => team._id === teamId);
+      const newSelectionStatus = !teamToUpdate.isSelected;
+      
+      const response = await axios.patch(
+        `${backend_url}/api/registration/teams/${teamId}`,
+        { isSelected: newSelectionStatus }
       );
 
-      if (emailResponse.data?.success) {
-        if (status === "reject") {
-          // If rejecting, delete the team record
-          const deleteResponse = await axios.delete(
-            `${backend_url}/api/registration/teams/${team._id}`
-          );
-          
-          if (deleteResponse.data?.success) {
-            alert("Team rejected and record deleted successfully");
-            setTeams(prevTeams => prevTeams.filter(t => t._id !== team._id));
-          } else {
-            alert("Email sent but failed to delete record.");
-          }
-        } else {
-          // For accept, just update status
-          alert("Status updated to ACCEPT and email sent successfully");
-          setTeams((prevTeams) =>
-            prevTeams.map((t) => (t._id === team._id ? { ...t, status } : t))
-          );
-        }
-      } else {
-        alert("Failed to send email.");
+      if (response.data.success) {
+        setTeams(prevTeams =>
+          prevTeams.map(team =>
+            team._id === teamId ? { ...team, isSelected: newSelectionStatus } : team
+          )
+        );
       }
     } catch (error) {
-      console.error("Error updating status:", error);
-      alert("Error updating status. Please try again.");
+      console.error("Error updating selection status:", error);
+      alert("Failed to update selection status");
     }
   };
 
@@ -143,7 +88,11 @@ const TeamsData = () => {
   return (
     <div className="admin-container">
       <div className="admin-header">
-        <h1>Hackathon Team Registrations</h1>
+        <h1>
+          {viewMode === "registrations" 
+            ? "Hackathon Team Registrations" 
+            : "Select Teams for Judging"}
+        </h1>
         <div className="admin-controls">
           <input
             type="text"
@@ -152,8 +101,20 @@ const TeamsData = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
+          <button 
+            className="toggle-view-button"
+            onClick={() => setViewMode(viewMode === "registrations" ? "selection" : "registrations")}
+          >
+            {viewMode === "registrations" ? "Switch to Selection View" : "Switch to Full View"}
+          </button>
           <button className="home-button" onClick={() => navigate("/")}>
             Return to Home
+          </button>
+          <button 
+            className="judging-button"
+            onClick={() => navigate("/judging")}
+          >
+            Go to Judging Panel
           </button>
         </div>
       </div>
@@ -166,7 +127,7 @@ const TeamsData = () => {
               : "No teams match your search."}
           </p>
         </div>
-      ) : (
+      ) : viewMode === "registrations" ? (
         <div className="table-container">
           <table>
             <thead>
@@ -178,32 +139,26 @@ const TeamsData = () => {
                 <th>Transaction</th>
                 <th>Payment Proof</th>
                 <th>Status</th>
+                <th>Selected</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredTeams.map((team, index) => {
-                const leader = team.members?.find(
-                  (member) => member?.isTeamLead
-                );
-                const otherMembers =
-                  team.members?.filter((member) => !member?.isTeamLead) || [];
+                const leader = team.members?.find(member => member?.isTeamLead);
+                const otherMembers = team.members?.filter(member => !member?.isTeamLead) || [];
 
                 return (
                   <tr key={team._id}>
                     <td className="serial-number">{index + 1}</td>
                     <td className="team-name">
                       <strong>{team.teamName}</strong>
-                      {team.isRVCEStudent && (
-                        <span className="rvce-tag">RVCE</span>
-                      )}
+                      {team.isRVCEStudent && <span className="rvce-tag">RVCE</span>}
                     </td>
                     <td className="leader-info">
                       {leader ? (
                         <>
-                          <div>
-                            <strong>{leader.name}</strong>
-                          </div>
+                          <div><strong>{leader.name}</strong></div>
                           <div>{leader.email}</div>
                           <div>{leader.phoneNumber}</div>
                           {leader.usn && <div>USN: {leader.usn}</div>}
@@ -217,9 +172,7 @@ const TeamsData = () => {
                         <ul>
                           {otherMembers.map((member) => (
                             <li key={member.email}>
-                              <div>
-                                <strong>{member.name}</strong>
-                              </div>
+                              <div><strong>{member.name}</strong></div>
                               <div>{member.email}</div>
                               <div>{member.phoneNumber}</div>
                               {member.usn && <div>USN: {member.usn}</div>}
@@ -237,12 +190,7 @@ const TeamsData = () => {
                           src={team.screenshot}
                           alt="Payment Screenshot"
                           className="screenshot"
-                          onClick={() => setSelectedImage(team.screenshot)}
                           onError={(e) => {
-                            console.error(
-                              "Image failed to load:",
-                              team.screenshot
-                            );
                             e.target.style.display = "none";
                           }}
                         />
@@ -251,11 +199,16 @@ const TeamsData = () => {
                       )}
                     </td>
                     <td className="status-cell">
-                      <span
-                        className={`status-badge ${team.status || "pending"}`}
-                      >
+                      <span className={`status-badge ${team.status || "pending"}`}>
                         {team.status?.toUpperCase() || "PENDING"}
                       </span>
+                    </td>
+                    <td className="selection-cell">
+                      <input
+                        type="checkbox"
+                        checked={team.isSelected || false}
+                        onChange={() => toggleTeamSelection(team._id)}
+                      />
                     </td>
                     <td className="action-buttons">
                       <button
@@ -277,26 +230,25 @@ const TeamsData = () => {
             </tbody>
           </table>
         </div>
-      )}
-
-      {selectedImage && (
-        <div className="modal" onClick={() => setSelectedImage(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span
-              className="close-button"
-              onClick={() => setSelectedImage(null)}
-            >
-              &times;
-            </span>
-            <img
-              src={selectedImage}
-              alt="Enlarged Payment Screenshot"
-              className="enlarged-screenshot"
-              onError={(e) => {
-                console.error("Failed to load enlarged image");
-                e.target.style.display = "none";
-              }}
-            />
+      ) : (
+        <div className="selection-view">
+          <h2>Select Teams for Judging</h2>
+          <div className="team-cards">
+            {filteredTeams.map((team) => (
+              <div key={team._id} className={`team-card ${team.isSelected ? "selected" : ""}`}>
+                <h3>{team.teamName}</h3>
+                <p>Team ID: {team._id}</p>
+                <div className="selection-status">
+                  <span>Selected: {team.isSelected ? "Yes" : "No"}</span>
+                  <button
+                    onClick={() => toggleTeamSelection(team._id)}
+                    className={team.isSelected ? "deselect-button" : "select-button"}
+                  >
+                    {team.isSelected ? "Deselect" : "Select"}
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}

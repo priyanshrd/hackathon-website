@@ -741,18 +741,7 @@ const About = () => {
     animate={controls}
     className="max-w-6xl mx-auto w-full"
   >
-    <motion.h2 
-      className="text-3xl md:text-4xl font-bold mb-16 text-[#E4CD15] inline-block relative"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ 
-        opacity: 1, 
-        y: 0,
-        transition: { delay: 0.2 }
-      }}
-    >
-      REGISTER NOW
-      <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
-    </motion.h2>
+    
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
       {/* Hackathon Card */}
