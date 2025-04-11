@@ -2,22 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./App.css";
 
-// Generate complex route paths
-const ROUTES = {
-  WORKSHOP_ADMIN: `workshop-${crypto.randomUUID().split('-')[0]}-admin-${Date.now().toString(36)}`,
-  TEAM_ADMIN: `team-${crypto.randomUUID().split('-')[1]}-portal-${Math.random().toString(36).substring(2, 8)}`,
-  JUDGING_PANEL: `judging-${crypto.randomUUID().split('-')[2]}-console-${Math.random().toString(36).substring(2, 10)}`
-};
-
-// Store them in localStorage so they persist
-localStorage.setItem('adminRoutes', JSON.stringify(ROUTES));
-
 function App() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState("");
 
+  // Check if already authenticated on component mount
   useEffect(() => {
     const storedAuth = localStorage.getItem("adminAuthenticated");
     if (storedAuth === "true") {
@@ -27,8 +18,8 @@ function App() {
 
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
-    // In a real app, this would be hashed and compared with a stored hash
-    if (password === "yourSecurePassword") {
+    // Replace 'yourSecurePassword' with your actual password
+    if (password === "acmGDGxtechtank2o25") {
       setIsAuthenticated(true);
       localStorage.setItem("adminAuthenticated", "true");
       setError("");
@@ -40,7 +31,7 @@ function App() {
 
   const handleNavigation = (path) => {
     if (isAuthenticated) {
-      navigate(`/${path}`);
+      navigate(path);
     }
   };
 
@@ -62,7 +53,6 @@ function App() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter admin password"
               required
-              autoComplete="off"
             />
             <button type="submit">Submit</button>
             {error && <p className="error-message">{error}</p>}
@@ -79,13 +69,13 @@ function App() {
         Logout
       </button>
       <div className="button-container">
-        <button onClick={() => handleNavigation(ROUTES.WORKSHOP_ADMIN)}>
+        <button onClick={() => handleNavigation("/workshop-admin")}>
           Workshop Entries
         </button>
-        <button onClick={() => handleNavigation(ROUTES.TEAM_ADMIN)}>
+        <button onClick={() => handleNavigation("/team-admin")}>
           Hackathon + Workshop Entries
         </button>
-        <button onClick={() => handleNavigation(ROUTES.JUDGING_PANEL)}>
+        <button onClick={() => handleNavigation("/techtankRV98nd3oij24-12-34-juddqx10394999qjfuh9828dccn839ooil")}>
           Judging Panel
         </button>
       </div>
