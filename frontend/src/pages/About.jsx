@@ -847,7 +847,8 @@ const About = () => {
         </li>
       </ul>
     </div>
- {/* Teammate Finder Section */}
+ {/* 
+ Teammate Finder Section
 <section
   id="teammates"
   ref={addSectionRef("teammates")}
@@ -870,7 +871,7 @@ const About = () => {
       className="bg-gradient-to-r from-[#38AAC9]/10 to-[#E4CD15]/10 p-6 rounded-xl border-l-4 border-[#38AAC9] shadow-lg hover:shadow-xl transition-all duration-300"
     >
       <div className="flex flex-col md:flex-row gap-8 items-center">
-        {/* Content */}
+        {/* Content 
         <div className="w-full md:w-2/3">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">
             Join Our Networking Group
@@ -898,7 +899,7 @@ const About = () => {
           </div>
         </div>
 
-        {/* Placeholder Image */}
+        {/* Placeholder Image 
         <div className="w-full md:w-1/3 flex justify-center">
           <div className="relative w-64 h-64">
             <div className="absolute inset-0 bg-[#38AAC9]/20 rounded-full animate-pulse"></div>
@@ -916,7 +917,8 @@ const About = () => {
       </div>
     </motion.div>
   </div>
-</section>     
+</section>    
+  */}
 
 
         
