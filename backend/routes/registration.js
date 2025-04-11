@@ -223,7 +223,6 @@ router.get("/teams", async (req, res) => {
     if (!includeScreenshots) {
       teamsQuery = teamsQuery.select("-screenshot");
     }
-
     const teams = await teamsQuery.lean();
 
     res.json({
@@ -293,6 +292,32 @@ router.post("/send-email", async (req, res) => {
       error: "Failed to send email",
       details:
         process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  }
+});
+
+// Admin-only endpoint to add score and isSelected fields to all teams
+router.patch("/update-teams-fields", async (req, res) => {
+  try {
+    const result = await Team.updateMany(
+      {},
+      {
+        $set: {
+          score: 0,
+          isSelected: false,
+        },
+      }
+    );
+
+    res.status(200).json({
+      message: "Fields added to all teams",
+      matchedCount: result.matchedCount,
+      modifiedCount: result.modifiedCount,
+    });
+  } catch (error) {
+    console.error("Error updating teams:", error);
+    res.status(500).json({
+      error: "Failed to update team documents",
     });
   }
 });

@@ -59,6 +59,14 @@ const TeamSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    isSelected: {
+      type: Boolean,
+      default: false,
+    },
+    score: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
