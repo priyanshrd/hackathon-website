@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "node server.cjs",
+    "start": "npm run dev",
     "start:frontend": "cd admin && npm run dev",
     "start:backend": "node server.cjs"
   },
