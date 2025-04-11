@@ -68,7 +68,7 @@ const JudgingPanel = () => {
     const fetchTeams = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get('http://localhost:5000/api/teams');
+        const response = await axios.get('https://techtank-admin-backend.vercel.app/');
         setTeams(response.data);
         if (response.data.length > 0) {
           setSelectedTeam(response.data[0]._id);
