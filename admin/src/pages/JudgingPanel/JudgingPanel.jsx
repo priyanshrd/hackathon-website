@@ -7,11 +7,11 @@ const JudgingPanel = () => {
   const [teams, setTeams] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState('');
   const [scores, setScores] = useState({
-    technicalExecution: 5,
-    solutionValue: 5,
-    innovation: 5,
-    designQuality: 5,
-    scalability: 5
+    technicalExecution: 0,
+    solutionValue: 0,
+    innovation: 0,
+    designQuality: 0,
+    scalability: 0
   });
 
   const [comments, setComments] = useState('');

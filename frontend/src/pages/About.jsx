@@ -664,6 +664,20 @@ const About = () => {
               image: "/mentor16.jpeg",
               linkedin: "prabhav-b-kashyap",
               description: "Web technologies and UX specialist with industry consulting experience"
+            },
+            {
+              name: "Kaushik B A",
+              title: "SDE @Ping Identity",
+              image: "/mentor18.jpeg",
+              linkedin: "kaushik-bandodkar-02744b225",
+              description: "Web technologies and UX specialist with industry consulting experience"
+            },
+            {
+              name: "Sagar A",
+              title: "SDE @ThoughtWorks",
+              image: "/mentor19.jpeg",
+              linkedin: "kaushik-bandodkar-02744b225",
+              description: "Web technologies and UX specialist with industry consulting experience"
             }
 
           ].map((mentor, index) => (
