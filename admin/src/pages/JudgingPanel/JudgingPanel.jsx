@@ -68,17 +68,27 @@ const JudgingPanel = () => {
     const fetchTeams = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get('https://techtank-admin-backend.vercel.app/');
-        setTeams(response.data);
-        if (response.data.length > 0) {
-          setSelectedTeam(response.data[0]._id);
-          if (response.data[0].score) {
-            setScores(response.data[0].score);
-          }
-          setComments(response.data[0].comments || '');
+        const response = await axios.get('http://localhost:5000/api/teams');
+        
+        // Ensure we always have an array, even if response.data is null/undefined
+        const teamsData = Array.isArray(response?.data) ? response.data : [];
+        
+        setTeams(teamsData);
+        
+        if (teamsData.length > 0) {
+          setSelectedTeam(teamsData[0]._id);
+          setScores(teamsData[0].score || {
+            technicalExecution: 0,
+            solutionValue: 0,
+            innovation: 0,
+            designQuality: 0,
+            scalability: 0
+          });
+          setComments(teamsData[0].comments || '');
         }
       } catch (error) {
         console.error('Error fetching teams:', error);
+        setTeams([]); // Ensure teams is always an array
       } finally {
         setIsLoading(false);
       }
@@ -163,7 +173,7 @@ const JudgingPanel = () => {
     </div>
   );
 
-  if (teams.length === 0) return (
+  if (!Array.isArray(teams) || teams.length === 0) return (
     <div style={{
       display: 'flex',
       flexDirection: 'column',
@@ -356,35 +366,37 @@ const JudgingPanel = () => {
               Select Team
             </h2>
             <select 
-              value={selectedTeam}
-              onChange={(e) => {
-                const team = teams.find(t => t._id === e.target.value);
-                setSelectedTeam(team._id);
-                setScores(team.score || {
-                  technicalExecution: 0,
-                  solutionValue: 0,
-                  innovation: 0,
-                  designQuality: 0,
-                  scalability: 0
-                });
-                setComments(team.comments || '');
-              }}
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                backgroundColor: '#333',
-                color: '#fff',
-                border: '1px solid #38AAC9',
-                borderRadius: '5px',
-                fontSize: '1rem'
-              }}
-            >
-              {teams.map(team => (
-                <option key={team._id} value={team._id}>
-                  {team.teamName} ({Object.values(team.score || {}).reduce((a, b) => a + b, 0) || 0}/50)
-                </option>
-              ))}
-            </select>
+  value={selectedTeam}
+  onChange={(e) => {
+    const team = Array.isArray(teams) ? teams.find(t => t._id === e.target.value) : null;
+    if (team) {
+      setSelectedTeam(team._id);
+      setScores(team.score || {
+        technicalExecution: 0,
+        solutionValue: 0,
+        innovation: 0,
+        designQuality: 0,
+        scalability: 0
+      });
+      setComments(team.comments || '');
+    }
+  }}
+  style={{
+    width: '100%',
+    padding: '0.75rem',
+    backgroundColor: '#333',
+    color: '#fff',
+    border: '1px solid #38AAC9',
+    borderRadius: '5px',
+    fontSize: '1rem'
+  }}
+>
+  {Array.isArray(teams) && teams.map(team => (
+    <option key={team._id} value={team._id}>
+      {team.teamName} ({Object.values(team.score || {}).reduce((a, b) => a + b, 0) || 0}/50)
+    </option>
+  ))}
+</select>
           </motion.div>
 
           {/* Scoring Guidelines */}
