@@ -165,7 +165,7 @@ const Leaderboard = () => {
             className="text-center mb-8"
           >
             <motion.h1 style={{ color: colors.blue }} className="text-3xl sm:text-4xl font-bold mb-2">
-              Round 2 Selected Teams
+              Live Leaderboard
             </motion.h1>
             <motion.div
               initial={{ scaleX: 0 }}
@@ -180,7 +180,7 @@ const Leaderboard = () => {
               className="text-xl mt-4 font-medium"
               style={{ color: colors.yellow }}
             >
-              {sortedTeams.length} teams advancing to the next round
+              Podium Scores
             </motion.p>
           </motion.div>
 
