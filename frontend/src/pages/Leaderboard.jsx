@@ -74,18 +74,72 @@ const Leaderboard = () => {
     }
   };
 
-  // Sort teams by score (descending)
-  const sortedTeams = [...teams].sort((a, b) => {
-    const scoreA = a.score || 0;
-    const scoreB = b.score || 0;
-    
-    // First sort by score (descending)
-    if (scoreA > scoreB) return -1;
-    if (scoreA < scoreB) return 1;
-    
-    // If scores are equal, sort alphabetically by teamName (ascending)
-    return a.teamName.localeCompare(b.teamName);
-  });
+  // Process teams to combine those with same scores (except zero)
+  const processTeams = (teams) => {
+    // Sort teams by score (descending)
+    const sorted = [...teams].sort((a, b) => {
+      const scoreA = a.score || 0;
+      const scoreB = b.score || 0;
+      
+      // First sort by score (descending)
+      if (scoreA > scoreB) return -1;
+      if (scoreA < scoreB) return 1;
+      
+      // If scores are equal, sort alphabetically by teamName (ascending)
+      return a.teamName.localeCompare(b.teamName);
+    });
+
+    // Group teams by score (except zero)
+    const grouped = [];
+    let currentGroup = [];
+    let currentScore = null;
+    let position = 0;
+
+    sorted.forEach((team, index) => {
+      const score = team.score || 0;
+      
+      // Skip grouping for zero scores
+      if (score === 0) {
+        grouped.push({
+          teams: [team],
+          score: score,
+          position: index + 1,
+          isGroup: false
+        });
+        return;
+      }
+
+      if (score !== currentScore) {
+        if (currentGroup.length > 0) {
+          grouped.push({
+            teams: [...currentGroup],
+            score: currentScore,
+            position: position + 1,
+            isGroup: currentGroup.length > 1
+          });
+          position += currentGroup.length;
+        }
+        currentGroup = [team];
+        currentScore = score;
+      } else {
+        currentGroup.push(team);
+      }
+    });
+
+    // Add the last group
+    if (currentGroup.length > 0) {
+      grouped.push({
+        teams: [...currentGroup],
+        score: currentScore,
+        position: position + 1,
+        isGroup: currentGroup.length > 1
+      });
+    }
+
+    return grouped;
+  };
+
+  const groupedTeams = processTeams(teams);
 
   if (loading) {
     return (
@@ -116,7 +170,7 @@ const Leaderboard = () => {
     );
   }
 
-  if (sortedTeams.length === 0) {
+  if (groupedTeams.length === 0) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0a]">
         <div className="text-center p-6 bg-[#1a1a1a] rounded-lg border border-[#38AAC9]/50">
@@ -131,6 +185,21 @@ const Leaderboard = () => {
         </div>
       </div>
     );
+  }
+
+  // Get top 3 teams for podium display
+  const topTeams = [];
+  let count = 0;
+  for (const group of groupedTeams) {
+    for (const team of group.teams) {
+      if (count < 3) {
+        topTeams.push(team);
+        count++;
+      } else {
+        break;
+      }
+    }
+    if (count >= 3) break;
   }
 
   return (
@@ -185,7 +254,7 @@ const Leaderboard = () => {
           </motion.div>
 
           {/* Top 3 Podium */}
-          {sortedTeams.length >= 3 && (
+          {topTeams.length >= 3 && (
             <div className="flex justify-center mb-8 h-24">
               {/* 2nd Place */}
               <motion.div 
@@ -198,7 +267,7 @@ const Leaderboard = () => {
                   <div className="text-center font-bold" style={{ color: colors.blue }}>02</div>
                 </div>
                 <div className={`w-full p-2 text-center ${getTeamStyle(1).scoreBg} rounded-b-lg`}>
-                  <span className="font-mono">{sortedTeams[1].score || 0}</span>
+                  <span className="font-mono">{topTeams[1].score || 0}</span>
                 </div>
               </motion.div>
               
@@ -213,7 +282,7 @@ const Leaderboard = () => {
                   <div className="text-center font-bold" style={{ color: colors.yellow }}>01</div>
                 </div>
                 <div className={`w-full p-2 text-center ${getTeamStyle(0).scoreBg} rounded-b-lg`}>
-                  <span className="font-mono">{sortedTeams[0].score || 0}</span>
+                  <span className="font-mono">{topTeams[0].score || 0}</span>
                 </div>
               </motion.div>
               
@@ -228,7 +297,7 @@ const Leaderboard = () => {
                   <div className="text-center font-bold" style={{ color: colors.blue }}>03</div>
                 </div>
                 <div className={`w-full p-2 text-center ${getTeamStyle(2).scoreBg} rounded-b-lg`}>
-                  <span className="font-mono">{sortedTeams[2].score || 0}</span>
+                  <span className="font-mono">{topTeams[2].score || 0}</span>
                 </div>
               </motion.div>
             </div>
@@ -243,35 +312,46 @@ const Leaderboard = () => {
             }}
           >
             <div className="space-y-2">
-              {sortedTeams.map((team, index) => {
-                const style = getTeamStyle(index);
-                return (
-                  <motion.div
-                    key={team._id}
-                    initial={{ x: -50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ 
-                      type: "spring",
-                      stiffness: 100,
-                      damping: 10,
-                      delay: 0.8 + (index * 0.03)
-                    }}
-                    className={`p-3 rounded-lg ${style.bg} ${style.border} transition-all duration-300 group flex justify-between items-center`}
-                    whileHover={{ scale: index < 3 ? 1 : 1.02 }}
-                  >
-                    <div className="flex items-center">
-                      <span className={`text-lg font-mono mr-4 w-8 text-right ${index < 3 ? 'font-bold' : ''} ${style.text}`}>
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <span className={`text-lg ${style.text} ${index < 3 ? 'font-bold' : 'font-medium'}`}>
-                        {team.teamName}
-                      </span>
-                    </div>
-                    <div className={`px-3 py-1 rounded-full ${style.scoreBg} font-mono`}>
-                      {team.score || 0}
-                    </div>
-                  </motion.div>
-                );
+              {groupedTeams.map((group, groupIndex) => {
+                return group.teams.map((team, teamIndex) => {
+                  // For groups, all teams share the same position
+                  // For non-groups, position is just their index + 1
+                  const position = group.position;
+                  // Use groupIndex for styling to maintain podium colors
+                  const styleIndex = Math.min(groupIndex, 2); // Cap at 2 for styling (3rd place)
+                  const style = getTeamStyle(styleIndex);
+                  
+                  return (
+                    <motion.div
+                      key={team._id}
+                      initial={{ x: -50, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ 
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 10,
+                        delay: 0.8 + (groupIndex * 0.03) + (teamIndex * 0.01)
+                      }}
+                      className={`p-3 rounded-lg ${style.bg} ${style.border} transition-all duration-300 group flex justify-between items-center`}
+                      whileHover={{ scale: groupIndex < 3 ? 1 : 1.02 }}
+                    >
+                      <div className="flex items-center">
+                        <span className={`text-lg font-mono mr-4 w-8 text-right ${groupIndex < 3 ? 'font-bold' : ''} ${style.text}`}>
+                          {String(position).padStart(2, '0')}
+                        </span>
+                        <span className={`text-lg ${style.text} ${groupIndex < 3 ? 'font-bold' : 'font-medium'}`}>
+                          {team.teamName}
+                        </span>
+                        {group.isGroup && teamIndex === 0 && (
+                          <span className="ml-2 text-xs text-gray-400">(Tied)</span>
+                        )}
+                      </div>
+                      <div className={`px-3 py-1 rounded-full ${style.scoreBg} font-mono`}>
+                        {team.score || 0}
+                      </div>
+                    </motion.div>
+                  );
+                });
               })}
             </div>
           </div>
