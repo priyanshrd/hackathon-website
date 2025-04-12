@@ -119,7 +119,7 @@ const JudgingPanel = () => {
       const totalScore = calculateTotal();
       
       const response = await axios.patch(
-        `https://techtank-admin-backend/${selectedTeam}`,
+        `http://localhost:5000/api/teams/${selectedTeam}`,
         {
           scores: scores,
           comments: comments
