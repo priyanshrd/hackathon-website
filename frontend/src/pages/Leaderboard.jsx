@@ -18,6 +18,7 @@ const Leaderboard = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showCriteria, setShowCriteria] = useState(false);
 
   // Fetch selected teams data from backend
   useEffect(() => {
@@ -242,6 +243,118 @@ const Leaderboard = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="h-1 w-32 mx-auto bg-gradient-to-r from-[#38AAC9] to-[#E4CD15] rounded-full"
             ></motion.div>
+
+<motion.button
+    onClick={() => setShowCriteria(true)}
+    className="mt-4 px-4 py-2 rounded-md text-sm font-medium"
+    style={{
+      backgroundColor: colors.blue,
+      color: '#000000', // Black text for contrast
+      border: `1px solid ${colors.blue}`
+    }}
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    View Judging Criteria
+  </motion.button>
+  {showCriteria && (
+  <motion.div 
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+  >
+    <motion.div
+      className="bg-[#1a1a1a] rounded-xl border border-[#38AAC9]/50 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+      initial={{ scale: 0.9, y: 20 }}
+      animate={{ scale: 1, y: 0 }}
+      exit={{ scale: 0.9, y: 20 }}
+    >
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold" style={{ color: colors.yellow }}>
+            Judging Criteria
+          </h2>
+          <button 
+            onClick={() => setShowCriteria(false)}
+            className="text-gray-400 hover:text-white text-2xl"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div className="space-y-6">
+          {/* Technical Execution */}
+          <div className="bg-[#2a2a2a]/50 p-4 rounded-lg border-l-4 border-[#38AAC9]">
+            <h3 className="text-lg font-bold mb-2" style={{ color: colors.blue }}>
+              Technical Execution
+            </h3>
+            <ul className="list-disc pl-5 space-y-1 text-gray-300">
+              <li>Quality of implementation and code robustness</li>
+              <li>Technical sophistication and proper use of technologies</li>
+              <li>Functionality completeness and bug-free operation</li>
+            </ul>
+          </div>
+
+          {/* Market Readiness */}
+          <div className="bg-[#2a2a2a]/50 p-4 rounded-lg border-l-4 border-[#E4CD15]">
+            <h3 className="text-lg font-bold mb-2" style={{ color: colors.yellow }}>
+              Market Readiness & Business Viability
+            </h3>
+            <ul className="list-disc pl-5 space-y-1 text-gray-300">
+              <li>Real-world deployment potential</li>
+              <li>Clear business model and revenue strategy</li>
+              <li>Sustainability and long-term viability</li>
+            </ul>
+          </div>
+
+          {/* Innovation */}
+          <div className="bg-[#2a2a2a]/50 p-4 rounded-lg border-l-4 border-[#38AAC9]">
+            <h3 className="text-lg font-bold mb-2" style={{ color: colors.blue }}>
+              Innovation & Creativity
+            </h3>
+            <ul className="list-disc pl-5 space-y-1 text-gray-300">
+              <li>Originality of the solution</li>
+              <li>Novel approach to solving the problem</li>
+              <li>Unique value proposition</li>
+            </ul>
+          </div>
+
+          {/* Design */}
+          <div className="bg-[#2a2a2a]/50 p-4 rounded-lg border-l-4 border-[#E4CD15]">
+            <h3 className="text-lg font-bold mb-2" style={{ color: colors.yellow }}>
+              Design - System Architecture & UI/UX 
+            </h3>
+            <ul className="list-disc pl-5 space-y-1 text-gray-300">
+              <li>Clean and scalable system architecture</li>
+              <li>User-friendly interface and experience</li>
+              <li>Technical design decisions and documentation</li>
+            </ul>
+          </div>
+
+          {/* Scalability */}
+          <div className="bg-[#2a2a2a]/50 p-4 rounded-lg border-l-4 border-[#38AAC9]">
+            <h3 className="text-lg font-bold mb-2" style={{ color: colors.blue }}>
+              Scalability & Maintainability 
+            </h3>
+            <ul className="list-disc pl-5 space-y-1 text-gray-300">
+              <li>Potential for growth and scaling</li>
+              <li>Ease of future development and maintenance</li>
+              <li>Code organization and documentation quality</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-[#38AAC9]/30">
+          <p className="text-sm text-gray-400">
+            Note: Scores are calculated based on weighted averages of these criteria.
+            Each judge will evaluate teams on a scale of 1-10 for each category.
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  </motion.div>
+)}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

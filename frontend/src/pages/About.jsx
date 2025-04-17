@@ -6,9 +6,12 @@ import { useInView } from "react-intersection-observer";
 const About = () => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState({});
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const sectionRefs = useRef({});
   const registrationRef = useRef(null);
   const controls = useAnimation();
+
+
   const [ref, inView] = useInView({
     threshold: 0.2,
     triggerOnce: false,
@@ -173,62 +176,45 @@ const About = () => {
 
  {/* Download Brochure Dropdown */}
 <div className="relative inline-block group">
-  <motion.button
-    className="relative overflow-hidden px-6 py-3 rounded-full font-bold text-lg mb-8"
-    style={{
-      boxShadow: '0 4px 15px rgba(56, 170, 201, 0.4)'
-    }}
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-  >
-    {/* Animated Gradient Background */}
-    <span className="absolute inset-0 bg-gradient-to-r from-[#38AAC9] via-[#E4CD15] to-[#38AAC9] bg-[length:200%_100%] animate-gradient-flow"></span>
-    
-    {/* Content */}
-    <span className="relative z-10 flex items-center">
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        className="h-5 w-5 mr-2" 
-        viewBox="0 0 20 20" 
-        fill="currentColor"
-      >
-        <path 
-          fillRule="evenodd" 
-          d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" 
-          clipRule="evenodd" 
-        />
-      </svg>
-      Download Documents
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        className="h-4 w-4 ml-2 transition-transform duration-200 group-hover:rotate-180" 
-        viewBox="0 0 20 20" 
-        fill="currentColor"
-      >
-        <path 
-          fillRule="evenodd" 
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" 
-          clipRule="evenodd" 
-        />
-      </svg>
-    </span>
-  </motion.button>
+<motion.button
+  className="relative overflow-hidden px-6 py-3 rounded-full font-bold text-lg mb-8"
+  style={{
+    background: '#38AAC9', // Higher contrast blue
+    color: '#000000', // Black text for maximum contrast (7.43:1 ratio)
+    boxShadow: '0 4px 15px rgba(56, 170, 201, 0.4)'
+  }}
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+>
+  {/* Remove gradient background span */}
+  <span className="relative z-10 flex items-center">
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      className="h-5 w-5 mr-2" 
+      viewBox="0 0 20 20" 
+      fill="currentColor"
+    >
+      <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+    </svg>
+    Download Documents
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      className="h-4 w-4 ml-2 transition-transform duration-200 group-hover:rotate-180" 
+      viewBox="0 0 20 20" 
+      fill="currentColor"
+    >
+      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+    </svg>
+  </span>
+</motion.button>
 
   {/* Dropdown Menu */}
   <div className="absolute left-0 mt-2 w-56 origin-top-left rounded-md bg-[#1a1a1a] shadow-lg ring-1 ring-[#38AAC9] ring-opacity-50 focus:outline-none opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-    <div className="py-1">
-      <button
-        onClick={() => {
-          const pdfUrl = "/TechTankRVCE_Brochure.pdf";
-          const link = document.createElement("a");
-          link.href = pdfUrl;
-          link.download = "TechTankRVCE_Brochure.pdf";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }}
-        className="flex items-center px-4 py-3 text-sm text-white hover:bg-[#38AAC9]/20 w-full text-left"
-      >
+  <div className="py-1">
+    <button
+      onClick={downloadBrochure}
+      className="flex items-center px-4 py-3 text-white bg-[#2d2d2d] hover:bg-[#38AAC9] w-full text-left"
+    >
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
           className="h-4 w-4 mr-3 text-[#E4CD15]" 
@@ -681,6 +667,7 @@ const About = () => {
             }
 
           ].map((mentor, index) => (
+          
             <motion.div
               key={`expanded-${mentor.name}-${index}`}
               initial={{ opacity: 0, y: 20 }}
@@ -729,6 +716,7 @@ const About = () => {
               </div>
             </motion.div>
           ))}
+          
         </div>
       </div>
     
@@ -1048,14 +1036,204 @@ const About = () => {
   
 </section>
 
+{/* Developers Section */}
+{/* Developers Section */}
+<section
+  id="developers"
+  ref={addSectionRef("developers")}
+  className={`py-16 px-4 ${
+    isVisible["developers"]
+      ? "opacity-100 translate-y-0"
+      : "opacity-0 translate-y-10"
+  } transition-all duration-1000 ease-out`}
+>
+  <div className="max-w-6xl mx-auto">
+    <h2 className="text-2xl md:text-3xl font-bold mb-10 text-[#E4CD15] inline-block relative">
+      Website Developers
+      <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#38AAC9] -mb-1"></span>
+    </h2>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Primary Contributor */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isVisible["developers"] ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="bg-[#1a1a1a] p-4 rounded-md shadow-md border border-[#38AAC9]/20"
+      >
+        <div className="flex items-center space-x-4 mb-3">
+          <a
+            href="https://github.com/priyanshrd"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-10 h-10 rounded-full overflow-hidden border border-[#38AAC9]/50 hover:border-[#E4CD15] transition-all duration-300"
+          >
+            <img
+              src="./pgit.png"
+              alt="Lead Developer Profile"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15'%3E%3Cpath d='M12 4a4 4 0 100 8 4 4 0 000-8zm0 10c4.41 0 8 1.79 8 4v2H4v-2c0-2.21 3.59-4 8-4z'/></svg>";
+              }}
+            />
+          </a>
+          <div>
+            <h3 className="text-lg font-semibold text-[#E4CD15]">priyanshrd</h3>
+            <p className="text-sm text-[#38AAC9]">Web Team Lead</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Secondary Contributor */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isVisible["developers"] ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="bg-[#1a1a1a] p-4 rounded-md shadow-md border border-[#38AAC9]/20"
+      >
+        <div className="flex items-center space-x-4 mb-3">
+          <a
+            href="https://github.com/VishalBhat07"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-10 h-10 rounded-full overflow-hidden border border-[#38AAC9]/50 hover:border-[#E4CD15] transition-all duration-300"
+          >
+            <img
+              src="./vgit.jpeg"
+              alt="Core Developer Profile"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15'%3E%3Cpath d='M12 4a4 4 0 100 8 4 4 0 000-8zm0 10c4.41 0 8 1.79 8 4v2H4v-2c0-2.21 3.59-4 8-4z'/></svg>";
+              }}
+            />
+          </a>
+          <div>
+            <h3 className="text-lg font-semibold text-[#E4CD15]">Vishal Bhat</h3>
+            <p className="text-sm text-[#38AAC9]">Backend Developer</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Tertiary Contributor */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isVisible["developers"] ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className="bg-[#1a1a1a] p-4 rounded-md shadow-md border border-[#38AAC9]/20"
+      >
+        <div className="flex items-center space-x-4 mb-3">
+          <a
+            href="https://github.com/Tharun151425"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-10 h-10 rounded-full overflow-hidden border border-[#38AAC9]/50 hover:border-[#E4CD15] transition-all duration-300"
+          >
+            <img
+              src="./tgit.jpeg"
+              alt="Contributing Developer Profile"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15'%3E%3Cpath d='M12 4a4 4 0 100 8 4 4 0 000-8zm0 10c4.41 0 8 1.79 8 4v2H4v-2c0-2.21 3.59-4 8-4z'/></svg>";
+              }}
+            />
+          </a>
+          <div>
+            <h3 className="text-lg font-semibold text-[#E4CD15]">Tharunkrishna</h3>
+            <p className="text-sm text-[#38AAC9]">UI/UX Designer</p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  </div>
+</section>
 
 
 
 <footer className="py-8 border-t border-[#38AAC9]/30 text-center mt-12">
+  <div className="flex flex-wrap justify-center gap-4 md:gap-8 mt-8">
+    <button 
+      onClick={() => setShowPrivacyModal(true)}
+      className="text-gray-400 hover:text-[#38AAC9] transition-colors"
+    >
+      Privacy Policy
+    </button>
+  </div>
   <div className="max-w-6xl mx-auto px-4">
     <p>© 2025 Tech Tank | RVCE ACM Student Chapter & GDG RVCE</p>
   </div>
 </footer>
+
+{/* Privacy Policy Section */}
+{/* Privacy Policy Modal */}
+{showPrivacyModal && (
+  <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div className="bg-[#0d0d0d] max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-xl border border-[#38AAC9]/50 p-8 relative">
+      <button 
+        onClick={() => setShowPrivacyModal(false)}
+        className="absolute top-4 right-4 text-gray-400 hover:text-[#E4CD15] text-2xl"
+      >
+        &times;
+      </button>
+      
+      <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[#E4CD15] inline-block relative">
+        Privacy Policy
+        <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#38AAC9] -mb-2"></span>
+      </h2>
+      
+      <div className="prose prose-invert max-w-none text-gray-300">
+        <p className="mb-6">Last Updated: 15/04/2025</p>
+        
+        <h3 className="text-2xl text-[#38AAC9] mt-8 mb-4">1. Information We Collect</h3>
+        <p>We may collect the following types of information when you use our website:</p>
+        <ul className="list-disc pl-6 mb-6">
+          <li>Personal identification information (Name, email address, phone number)</li>
+          <li>Technical data (IP address, browser type, device information)</li>
+          <li>Usage data (pages visited, time spent, interactions)</li>
+          <li>Registration information for events/hackathons</li>
+        </ul>
+        
+        <h3 className="text-2xl text-[#38AAC9] mt-8 mb-4">2. How We Use Your Information</h3>
+        <p>We use the collected information for:</p>
+        <ul className="list-disc pl-6 mb-6">
+          <li>Providing and maintaining our service</li>
+          <li>Event registration and management</li>
+          <li>Improving user experience</li>
+          <li>Communicating important updates</li>
+          <li>Analyzing website usage</li>
+        </ul>
+        
+        <h3 className="text-2xl text-[#38AAC9] mt-8 mb-4">3. Data Protection Rights Under GDPR</h3>
+        <p>As a user, you have the right to:</p>
+        <ul className="list-disc pl-6 mb-6">
+          <li><strong>Access</strong> - Request copies of your personal data</li>
+          <li><strong>Rectification</strong> - Request correction of inaccurate data</li>
+          <li><strong>Erasure</strong> - Request deletion of your personal data</li>
+          <li><strong>Restriction</strong> - Request limitation of processing</li>
+          <li><strong>Portability</strong> - Request transfer of your data</li>
+          <li><strong>Objection</strong> - Object to our processing of your data</li>
+        </ul>
+        
+        <h3 className="text-2xl text-[#38AAC9] mt-8 mb-4">4. Data Security</h3>
+        <p>We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, or destruction.</p>
+        
+        <h3 className="text-2xl text-[#38AAC9] mt-8 mb-4">5. Third-Party Services</h3>
+        <p>We may use third-party services (e.g., Google Analytics) that collect, monitor, and analyze information to improve user experience.</p>
+        
+        <h3 className="text-2xl text-[#38AAC9] mt-8 mb-4">6. Changes to This Policy</h3>
+        <p>We may update our Privacy Policy periodically. We will notify you of any changes by posting the new policy on this page.</p>
+        
+        <h3 className="text-2xl text-[#38AAC9] mt-8 mb-4">7. Contact Us</h3>
+        <p>For any questions about this Privacy Policy, please contact us at:</p>
+        <p className="mt-2">
+          Email: <a href="mailto:priyanshrajivd.cs22@rvce.edu.in" className="text-[#E4CD15] hover:underline">Priyansh, RVCE</a>
+        </p>
+      </div>
+    </div>
+  </div>
+)}
 
       <style jsx>{`
         @keyframes scale-in {
