@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import DeveloperShowcase1 from "../components/devshow1.jsx"
+import DeveloperShowcase2 from "../components/devshow2.jsx"
+import DeveloperShowcase3 from "../components/devshow3.jsx"
 
 const About = () => {
   const navigate = useNavigate();
@@ -1032,125 +1035,10 @@ const About = () => {
   </motion.div>
 
 
-
   
 </section>
 
-{/* Developers Section */}
-{/* Developers Section */}
-<section
-  id="developers"
-  ref={addSectionRef("developers")}
-  className={`py-16 px-4 ${
-    isVisible["developers"]
-      ? "opacity-100 translate-y-0"
-      : "opacity-0 translate-y-10"
-  } transition-all duration-1000 ease-out`}
->
-  <div className="max-w-6xl mx-auto">
-    <h2 className="text-2xl md:text-3xl font-bold mb-10 text-[#E4CD15] inline-block relative">
-      Website Developers
-      <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#38AAC9] -mb-1"></span>
-    </h2>
-
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* Primary Contributor */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isVisible["developers"] ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="bg-[#1a1a1a] p-4 rounded-md shadow-md border border-[#38AAC9]/20"
-      >
-        <div className="flex items-center space-x-4 mb-3">
-          <a
-            href="https://github.com/priyanshrd"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-10 h-10 rounded-full overflow-hidden border border-[#38AAC9]/50 hover:border-[#E4CD15] transition-all duration-300"
-          >
-            <img
-              src="./pgit.png"
-              alt="Lead Developer Profile"
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15'%3E%3Cpath d='M12 4a4 4 0 100 8 4 4 0 000-8zm0 10c4.41 0 8 1.79 8 4v2H4v-2c0-2.21 3.59-4 8-4z'/></svg>";
-              }}
-            />
-          </a>
-          <div>
-            <h3 className="text-lg font-semibold text-[#E4CD15]">priyanshrd</h3>
-            <p className="text-sm text-[#38AAC9]">Web Team Lead</p>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Secondary Contributor */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isVisible["developers"] ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="bg-[#1a1a1a] p-4 rounded-md shadow-md border border-[#38AAC9]/20"
-      >
-        <div className="flex items-center space-x-4 mb-3">
-          <a
-            href="https://github.com/VishalBhat07"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-10 h-10 rounded-full overflow-hidden border border-[#38AAC9]/50 hover:border-[#E4CD15] transition-all duration-300"
-          >
-            <img
-              src="./vgit.jpeg"
-              alt="Core Developer Profile"
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15'%3E%3Cpath d='M12 4a4 4 0 100 8 4 4 0 000-8zm0 10c4.41 0 8 1.79 8 4v2H4v-2c0-2.21 3.59-4 8-4z'/></svg>";
-              }}
-            />
-          </a>
-          <div>
-            <h3 className="text-lg font-semibold text-[#E4CD15]">Vishal Bhat</h3>
-            <p className="text-sm text-[#38AAC9]">Backend Developer</p>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Tertiary Contributor */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isVisible["developers"] ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        className="bg-[#1a1a1a] p-4 rounded-md shadow-md border border-[#38AAC9]/20"
-      >
-        <div className="flex items-center space-x-4 mb-3">
-          <a
-            href="https://github.com/Tharun151425"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-10 h-10 rounded-full overflow-hidden border border-[#38AAC9]/50 hover:border-[#E4CD15] transition-all duration-300"
-          >
-            <img
-              src="./tgit.jpeg"
-              alt="Contributing Developer Profile"
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E4CD15'%3E%3Cpath d='M12 4a4 4 0 100 8 4 4 0 000-8zm0 10c4.41 0 8 1.79 8 4v2H4v-2c0-2.21 3.59-4 8-4z'/></svg>";
-              }}
-            />
-          </a>
-          <div>
-            <h3 className="text-lg font-semibold text-[#E4CD15]">Tharunkrishna</h3>
-            <p className="text-sm text-[#38AAC9]">UI/UX Designer</p>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  </div>
-</section>
-
-
+<DeveloperShowcase3></DeveloperShowcase3>
 
 <footer className="py-8 border-t border-[#38AAC9]/30 text-center mt-12">
   <div className="flex flex-wrap justify-center gap-4 md:gap-8 mt-8">
