@@ -53,7 +53,7 @@ const DeveloperShowcase3 = () => {
       github: "https://github.com/priyanshrd",
       linkedin: "https://www.linkedin.com/in/priyanshrd/",
       imgSrc: "./pgit.png",
-      color: "#E4CD15"
+      color: "#38AAC9"
     },
     {
         id: "dev2",
@@ -139,8 +139,8 @@ return (
               function handleMouseMove(event) {
                   if (!cardRef.current) return;
                   const rect = cardRef.current.getBoundingClientRect();
-                  const centerX = rect.left + rect.width / 2;
-                  const centerY = rect.top + rect.height / 2;
+                  const centerX = rect.left + rect.width / 1.2;
+                  const centerY = rect.top + rect.height / 1.2;
                   x.set(event.clientX - centerX);
                   y.set(event.clientY - centerY);
                 }
