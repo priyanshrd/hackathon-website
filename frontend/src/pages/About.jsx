@@ -1079,7 +1079,7 @@ const About = () => {
             />
           </a>
           <div>
-            <h3 className="text-lg font-semibold text-[#E4CD15]">priyanshrd</h3>
+            <h3 className="text-lg font-semibold text-[#E4CD15]">Priyansh Rajiv Dhotar</h3>
             <p className="text-sm text-[#38AAC9]">Web Team Lead</p>
           </div>
         </div>
@@ -1110,7 +1110,7 @@ const About = () => {
             />
           </a>
           <div>
-            <h3 className="text-lg font-semibold text-[#E4CD15]">Vishal Bhat</h3>
+            <h3 className="text-lg font-semibold text-[#E4CD15]">Vishal K Bhat</h3>
             <p className="text-sm text-[#38AAC9]">Backend Developer</p>
           </div>
         </div>
@@ -1141,7 +1141,7 @@ const About = () => {
             />
           </a>
           <div>
-            <h3 className="text-lg font-semibold text-[#E4CD15]">Tharunkrishna</h3>
+            <h3 className="text-lg font-semibold text-[#E4CD15]">Tharunkrishna M</h3>
             <p className="text-sm text-[#38AAC9]">UI/UX Designer</p>
           </div>
         </div>
