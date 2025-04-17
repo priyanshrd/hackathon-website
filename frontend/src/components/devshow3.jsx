@@ -51,55 +51,52 @@ const DeveloperShowcase3 = () => {
       name: "Priyansh R D",
       role: "Web Team Lead",
       github: "https://github.com/priyanshrd",
-      linkedin: "#",
+      linkedin: "https://www.linkedin.com/in/priyanshrd/",
       imgSrc: "./pgit.png",
       color: "#E4CD15"
     },
     {
-      id: "dev2",
-      name: "Tharunkrishna M",
-      role: "UI/UX Developer",
-      github: "https://github.com/Tharun151425",
-      linkedin: "#",
-      imgSrc: "./tgit.jpeg",
-      color: "#E4CD15"
+        id: "dev2",
+        name: "Tharunkrishna M",
+        role: "UI/UX Developer",
+        github: "https://github.com/Tharun151425",
+        linkedin: "https://www.linkedin.com/in/tharunkrishna-m/",
+        imgSrc: "./tgit.jpeg",
+        color: "#E4CD15"
     },
     {
-      id: "dev3",
-      name: "Vishal K Bhat",
-      role: "Backend Developer",
-      github: "https://github.com/VishalBhat07",
-      linkedin: "#",
+        id: "dev3",
+        name: "Vishal K Bhat",
+        role: "Backend Developer",
+        github: "https://github.com/VishalBhat07",
+        linkedin: "https://www.linkedin.com/in/vishalbhat07/",
       imgSrc: "./vgit.jpeg",
       color: "#38AAC9"
     }
-  ];
-  
-  // Terminal typing effect
-  useState(() => {
+];
+
+useState(() => {
     let index = 0;
     const interval = setInterval(() => {
-      setCurrentText(terminalTexts[index]);
-      index = (index + 1) % terminalTexts.length;
+        setCurrentText(terminalTexts[index]);
+        index = (index + 1) % terminalTexts.length;
     }, 2000);
     
     return () => clearInterval(interval);
-  }, []);
+}, []);
 
-  return (
+return (
     <section className="py-20 px-4 bg-[#0a0a0a] relative">
-      {/* Cyberpunk grid overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0a0a]"></div>
       <div 
         className="absolute inset-0 overflow-hidden" 
         style={{
-          backgroundImage: 'linear-gradient(#38AAC922 1px, transparent 1px), linear-gradient(90deg, #38AAC922 1px, transparent 1px)',
-          backgroundSize: '40px 40px'
+            backgroundImage: 'linear-gradient(#38AAC922 1px, transparent 1px), linear-gradient(90deg, #38AAC922 1px, transparent 1px)',
+            backgroundSize: '40px 40px'
         }}
-      ></div>
+        ></div>
       
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Terminal-style header */}
         <div className="mb-12">
           <motion.div 
             className="bg-[#1a1a1a] border border-[#38AAC9] rounded-md p-3 max-w-lg mx-auto shadow-lg"
@@ -107,7 +104,7 @@ const DeveloperShowcase3 = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-          >
+            >
             <div className="flex items-center mb-2">
               <div className="w-3 h-3 rounded-full bg-[#E4CD15] mr-2"></div>
               <div className="w-3 h-3 rounded-full bg-[#38AAC9] mr-2"></div>
@@ -133,56 +130,53 @@ const DeveloperShowcase3 = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {developers.map((dev, index) => {
-            // Create unique refs for each card to handle tilt effect
-            const cardRef = useRef(null);
-            const x = useMotionValue(0);
-            const y = useMotionValue(0);
-            const rotateX = useTransform(y, [-100, 100], [30, -30]);
-            const rotateY = useTransform(x, [-100, 100], [-30, 30]);
+              const cardRef = useRef(null);
+              const x = useMotionValue(0);
+              const y = useMotionValue(0);
+              const rotateX = useTransform(y, [-100, 100], [30, -30]);
+              const rotateY = useTransform(x, [-100, 100], [-30, 30]);
+              
+              function handleMouseMove(event) {
+                  if (!cardRef.current) return;
+                  const rect = cardRef.current.getBoundingClientRect();
+                  const centerX = rect.left + rect.width / 2;
+                  const centerY = rect.top + rect.height / 2;
+                  x.set(event.clientX - centerX);
+                  y.set(event.clientY - centerY);
+                }
+                
+                function handleMouseLeave() {
+                    x.set(0);
+                    y.set(0);
+                    setHoveredCard(null);
+                }
 
-    function handleMouseMove(event) {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        x.set(event.clientX - centerX);
-        y.set(event.clientY - centerY);
-    }
-  
-  function handleMouseLeave() {
-    x.set(0);
-    y.set(0);
-    setHoveredCard(null);
-  }
-
-  return (
-    <motion.div
-      key={dev.id}
-      ref={cardRef}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.15 }}
-      viewport={{ once: true }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onMouseEnter={() => setHoveredCard(dev.id)}
-      className="bg-[#1a1a1a] border border-transparent hover:border-[#38AAC9] rounded-lg p-6 shadow-xl relative overflow-hidden group"
-    >
-      {/* Glowing effect when hovered */}
+                return (
+                    <motion.div
+                    key={dev.id}
+                    ref={cardRef}
+                    style={{
+                        rotateX,
+                        rotateY,
+                        transformStyle: "preserve-3d",
+                    }}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.15 }}
+                    viewport={{ once: true }}
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                    onMouseEnter={() => setHoveredCard(dev.id)}
+                    className="bg-[#1a1a1a] border border-transparent hover:border-[#38AAC9] rounded-lg p-6 shadow-xl relative overflow-hidden group"
+                    >
       <motion.div 
         className="absolute inset-0 bg-gradient-to-br from-[#38AAC922] to-transparent opacity-0 group-hover:opacity-100"
         animate={{ 
-          opacity: hoveredCard === dev.id ? 0.3 : 0,
+            opacity: hoveredCard === dev.id ? 0.3 : 0,
         }}
         transition={{ duration: 0.3 }}
-      />
+        />
       
-      {/* Circuit-like lines in background */}
       <div className="absolute inset-0 overflow-hidden opacity-10">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <path 
@@ -190,47 +184,45 @@ const DeveloperShowcase3 = () => {
             stroke={dev.color}
             strokeWidth="2"
             fill="none"
-          />
+            />
           <path 
             d={`M${index * 30},${150 + index * 10} Q${250 - index * 20},${200 + index * 10} ${300 - index * 30},${250 - index * 15}`} 
             stroke={dev.color}
             strokeWidth="2"
             fill="none"
-          />
+            />
         </svg>
       </div>
       
-      {/* Profile Image */}
       <div className="flex justify-center" style={{ transform: "translateZ(20px)" }}>
         <motion.div 
           className={`w-24 h-24 rounded-full p-1 bg-gradient-to-r from-[#38AAC9] to-[${dev.color}]`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-        >
+          >
           <div className="w-full h-full rounded-full overflow-hidden bg-[#0a0a0a]">
             <img 
               src={dev.imgSrc} 
               alt={dev.name}
               className="w-full h-full object-cover"
               onError={(e) => {
-                e.target.src = `https://ui-avatars.com/api/?name=${dev.name}&background=38AAC9&color=fff`;
-              }}
-            />
+                  e.target.src = `https://ui-avatars.com/api/?name=${dev.name}&background=38AAC9&color=fff`;
+                }}
+                />
           </div>
         </motion.div>
       </div>
       
-      {/* Dev Info */}
       <div className="mt-4 text-center" style={{ transform: "translateZ(30px)" }}>
         <h3 className="text-xl font-bold text-white mb-1 font-mono">{dev.name}</h3>
         <div className="flex items-center justify-center text-[#38AAC9] mb-4 text-sm">
           {dev.role === "Web Team Lead" && <TerminalIcon />}
           {dev.role === "Backend Developer" && <CodeIcon />}
-          {dev.role === "UI/UX Designer" && <LayoutIcon />}
+          {dev.role === "UI/UX Designer" && <LayoutIcon />} 
+                {/* // {Done by Tharun151425} */}
           <span className="ml-1">{dev.role}</span>
         </div>
         
-        {/* Cyberpunk-style skill bar */}
         <div className="mb-4 bg-[#2a2a2a] h-2 rounded-full overflow-hidden">
           <motion.div 
             className={`h-full rounded-full`}
@@ -242,7 +234,6 @@ const DeveloperShowcase3 = () => {
           />
         </div>
         
-        {/* Social links */}
         <div className="flex justify-center space-x-6">
           <motion.a 
             href={dev.github}
@@ -275,7 +266,6 @@ const DeveloperShowcase3 = () => {
         </div>
       </div>
       
-      {/* Cyberpunk badge */}
       <div 
         className="absolute top-4 right-4 font-mono text-xs text-[#cccccc] bg-[#2a2a2a] px-2 py-1 rounded"
         style={{ transform: "translateZ(20px)" }}
@@ -287,7 +277,6 @@ const DeveloperShowcase3 = () => {
 })}
 </div>
 
-{/* Animated highlight line */}
 <motion.div 
 className="h-px bg-gradient-to-r from-transparent via-[#38AAC9] to-transparent my-12"
 initial={{ scaleX: 0, opacity: 0 }}
@@ -296,7 +285,6 @@ transition={{ duration: 1.5 }}
 viewport={{ once: true }}
 />
 
-{/* Terminal footer */}
 <motion.div 
 className="font-mono text-center text-sm text-[#cccccc]"
 initial={{ opacity: 0 }}

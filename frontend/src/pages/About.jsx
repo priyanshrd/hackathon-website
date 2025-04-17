@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import DeveloperShowcase1 from "../components/devshow1.jsx"
-import DeveloperShowcase2 from "../components/devshow2.jsx"
 import DeveloperShowcase3 from "../components/devshow3.jsx"
 
 const About = () => {
@@ -1038,7 +1036,7 @@ const About = () => {
   
 </section>
 
-<DeveloperShowcase3></DeveloperShowcase3>
+<DeveloperShowcase3/>
 
 <footer className="py-8 border-t border-[#38AAC9]/30 text-center mt-12">
   <div className="flex flex-wrap justify-center gap-4 md:gap-8 mt-8">
