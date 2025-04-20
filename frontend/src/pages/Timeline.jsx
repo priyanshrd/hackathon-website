@@ -35,7 +35,7 @@ const Timeline = () => {
           Venue: IEM Auditorium, RVCE.
         </>
       ),
-      highlight: true
+      highlight: false
     },
     {
       title: "Online Ideation Round 1 Submission",
@@ -86,7 +86,8 @@ const Timeline = () => {
         <>
           Winners will be declared on the <a href="/leaderboard" className="text-[#E4CD15] font-medium">Leaderboard!</a>
         </>
-      )
+      ),
+      highlight: true
     }
   ];
 
