@@ -3,8 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AnimatedNavbar from "./components/AnimatedNavbar";
 import Timeline from "./pages/Timeline";
-import SubmitIdea from "./pages/SubmitIdea";
-import ComingSoon from "./pages/ComingSoon.jsx";
+import FeedbackForm from "./pages/ComingSoon.jsx";
 import Stepper from "./components/stepperform.jsx";
 import About from "./pages/About";
 import Leaderboard from "./pages/Leaderboard.jsx"
@@ -21,7 +20,7 @@ const App = () => {
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/hackathon" element={<Stepper />} />
             {/* <Route path="/idea" element={<SubmitIdea />} /> */}
-            <Route path="/idea" element={<ComingSoon />} />
+            <Route path="/idea" element={<FeedbackForm />} />
 
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/workshop" element={<Workshop />} />
