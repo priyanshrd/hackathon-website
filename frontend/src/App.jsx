@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Leaderboard from "./pages/Leaderboard.jsx"
 // import RegisterPage from "./pages/Registration";
 import Workshop from "./pages/Workshop.jsx";
+import Gallery from "./pages/Gallery.jsx";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/hackathon" element={<Stepper />} />
             {/* <Route path="/idea" element={<SubmitIdea />} /> */}
             <Route path="/idea" element={<FeedbackForm />} />
+            <Route path="/gallery" element={<Gallery />} />
 
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/workshop" element={<Workshop />} />
