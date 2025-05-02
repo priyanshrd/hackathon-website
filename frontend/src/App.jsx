@@ -20,7 +20,7 @@ const App = () => {
           <Routes>
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/hackathon" element={<Stepper />} />
-            {/* <Route path="/idea" element={<SubmitIdea />} /> */}
+            <Route path="/feedback" element={<FeedbackForm />} />
             <Route path="/idea" element={<FeedbackForm />} />
             <Route path="/gallery" element={<Gallery />} />
 

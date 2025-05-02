@@ -126,7 +126,7 @@ const AnimatedNavbar = () => {
   const navItems = [
     { name: "Home", path: "/", icon: <HomeIcon /> },
     { name: "Timeline", path: "/timeline", icon: <TimelineIcon /> },
-    // { name: "Feedback Form", path: "/idea", icon: <IdeaIcon /> },
+    { name: "Feedback", path: "/idea", icon: <IdeaIcon /> },
     { name: "Leaderboard", path: "/leaderboard", icon: <LeaderboardIcon /> },
     { name: "Gallery", path: "/gallery", icon: <GalleryIcon /> } // Added Gallery
   ];
