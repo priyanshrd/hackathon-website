@@ -50,7 +50,7 @@ const RatingButton = memo(({ value, currentValue, onChange, emoji, label }) => {
         opacity-0 group-hover:opacity-100 transition-opacity
         pointer-events-none whitespace-nowrap mb-2
       ">
-        {label || (value === 0 ? 'Not Attended' : ['Poor', 'Average', 'Good'][value - 1])}
+        {label || (value === 0 ? 'Not Attended' : ['Poor', 'Average', 'Good', 'Loved It'][value - 1])}
         <div className="absolute top-full left-1/2 w-2 h-2 bg-[#333] transform -translate-x-1/2 -translate-y-1/2 rotate-45"></div>
       </div>
     </div>
@@ -236,14 +236,14 @@ const FeedbackForm = () => {
                 Overall, how would you rate Tech Tank 2025?
               </h3>
               <div className="flex justify-center space-x-3">
-                {[0, 1, 2, 3].map((num) => (
+                {[1, 2, 3, 4].map((num) => (
                   <RatingButton
                     key={num}
                     value={num}
                     currentValue={formData.overallRating}
                     onChange={(val) => handleRatingChange('overallRating', val)}
-                    emoji={['🚫', '👎', '😐', '👍'][num]}
-                    label={['Not Rated', 'Poor', 'Average', 'Good'][num]}
+                    emoji={['🚫','👎', '😐', '👍', '💖'][num]}
+                    label={['Not Rated', 'Poor', 'Average', 'Good', 'Loved It'][num]}
                   />
                 ))}
               </div>
@@ -280,7 +280,7 @@ const FeedbackForm = () => {
                 <div key={section.name} className="bg-[#242424] p-4 rounded-lg">
                   <h3 className="text-gray-200 mb-3">{section.label}</h3>
                   <div className="flex justify-center space-x-3">
-                    {[0, 1, 2, 3].map((num) => (
+                    {[0, 1, 2, 3, 4].map((num) => (
                       <RatingButton
                         key={num}
                         value={num}
@@ -290,8 +290,8 @@ const FeedbackForm = () => {
                         onChange={(val) => section.name in formData.eventRatings ? 
                           handleEventRatingChange(section.name, val) : 
                           handleRatingChange(section.name, val)}
-                        emoji={['🚫', '👎', '😐', '👍'][num]}
-                        label={['Not Attended', 'Poor', 'Average', 'Good'][num]}
+                        emoji={['🚫', '👎', '😐', '👍', '💖'][num]}
+                        label={['Not Attended', 'Poor', 'Average', 'Good', 'Loved It'][num]}
                       />
                     ))}
                   </div>
