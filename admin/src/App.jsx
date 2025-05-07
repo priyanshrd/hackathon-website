@@ -75,9 +75,15 @@ function App() {
         <button onClick={() => handleNavigation("/team-admin")}>
           Hackathon + Workshop Entries
         </button>
-        <button onClick={() => handleNavigation("/techtankRV98nd3oij24-12-34-juddqx10394999qjfuh9828dccn839ooil")}>
-          Judging Panel
+        <button onClick={() => handleNavigation("/feedback-respones")}>
+          Feedback Responses
         </button>
+        <button onClick={() => handleNavigation("/sentiment-analysis")}>
+          Sentiment Analysis
+        </button>
+        {/* <button onClick={() => handleNavigation("/techtankRV98nd3oij24-12-34-juddqx10394999qjfuh9828dccn839ooil")}>
+          Judging Panel
+        </button> */}
       </div>
     </div>
   );
