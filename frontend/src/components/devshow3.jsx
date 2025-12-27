@@ -48,10 +48,10 @@ const DeveloperShowcase3 = () => {
   const developers = [
     {
       id: "dev1",
-      name: "Tanisha Agarwal",
+      name: "Priyansh Rajiv Dhotar",
       role: "Web Team Lead",
-      github: "https://github.com/tanishaaa17",
-      linkedin: "https://www.linkedin.com/in/tanishaagarwal003/",
+      github: "https://github.com/priyanshrd",
+      linkedin: "https://www.linkedin.com/in/priyanshrd/",
       imgSrc: "./pgit.png",
       color: "#38AAC9"
     },
